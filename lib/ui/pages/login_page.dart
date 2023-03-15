@@ -1,4 +1,5 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app_natalia_francisca/ui/validator/login_validator.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with LoginValidator{
   final _loginController = TextEditingController();
   final _senhaController = TextEditingController();
 
@@ -18,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
+        key: _formKey,
         child: Container(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -58,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                 keyboardType: TextInputType.emailAddress,
                 inputIcon: Icon(Icons.person, size: 22, color: AppColors.iconPrimaryColor),
                 requestFocus: _focusSenha,
+                validator: validateLogin
               ),
 
               SizedBox(height: 20.0),
@@ -70,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                 keyboardType: TextInputType.visiblePassword,
                 inputIcon: Icon(Icons.lock, size: 22, color: AppColors.iconPrimaryColor),
                 requestFocus: _focusSenha,
+                validator: validateSenha
               ),
 
               SizedBox(height: 20.0),
@@ -78,7 +82,11 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   child: ElevatedButton(
                       onPressed: (){
-                        print("fui clicado");
+                        if(_formKey.currentState.validate()){
+                          print("validou os campos");
+                        }else{
+                          print("alguma coisa está errado");
+                        }
                       },
                       child: Text(
                           'Entrar'.toUpperCase(),

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatefulWidget {
-  String labelText;
-  String hintText;
-  TextInputType keyboardType;
-  Icon inputIcon;
-  bool obscureText;
-  TextEditingController controller;
-  FocusNode focusNode;
-  FocusNode requestFocus;
+  final String labelText;
+  final String hintText;
+  final TextInputType keyboardType;
+  final inputIcon;
+  final bool obscureText;
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final FocusNode requestFocus;
+  final FormFieldValidator<String> validator;
 
   CustomTextFormField({
     @required this.controller,
@@ -19,6 +20,7 @@ class CustomTextFormField extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.focusNode,
     this.requestFocus,
+    this.validator
   });
 
   @override
@@ -32,23 +34,33 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: widget.obscureText ? _obscureText : false,
+      validator: widget.validator,
+
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
             borderRadius: BorderRadius.circular(15.0),
           ),
+
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+
           labelText: widget.labelText,
           labelStyle: TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.w400,
               fontFamily: "Montserrat"
           ),
+
           hintText: widget.hintText,
           hintStyle: TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.w300,
               color: Colors.grey[600]
           ),
+
           alignLabelWithHint: true,
           contentPadding: EdgeInsets.only(bottom: 15.0),
           prefixIcon: widget.inputIcon,
