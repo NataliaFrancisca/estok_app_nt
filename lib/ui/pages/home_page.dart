@@ -1,3 +1,4 @@
+import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -5,43 +6,111 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
+  TabController _tabController;
+
+  static const List<Tab> homePageTabs = <Tab>[
+    Tab(text: 'Todos'),
+    Tab(text: 'Em estoque'),
+    Tab(text: 'Em aviso'),
+    Tab(text: 'Em falta')
+  ];
+
   @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primaryVariant,
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-
-              Text(
-                "ESTOK APP",
-                style: TextStyle(
-                  fontFamily: "Montserrat",
-                  fontWeight: FontWeight.w400,
-                  fontSize: 34,
-                  color: Colors.white,
-
-                ),
-              ),
-
-              SizedBox(height: 23.0),
-
-              CircularProgressIndicator(
-                value: 0.8,
-                backgroundColor: Colors.transparent,
-                semanticsLabel: 'Circular progress indicator',
-              )
-            ]
+      appBar: AppBar(
+        title: Text(
+          "ESTOK APP",
+          style: TextStyle(
+            color: AppColors.primaryColor,
+            fontWeight: FontWeight.w700,
+            fontSize: 15
           ),
         ),
-      )
+
+        leading: Icon(
+            Icons.menu,
+            color: AppColors.primaryColor,
+        ),
+
+        centerTitle: true,
+        backgroundColor: new Color(0xFFF7F2F8),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(84),
+
+          child: TabBar(
+            controller: _tabController,
+            labelColor: AppColors.primaryColor,
+            labelStyle: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500
+            ),
+            indicator: UnderlineTabIndicator(
+              borderSide: BorderSide(width: 6.0, color: AppColors.primaryColor)
+            ),
+            unselectedLabelStyle: TextStyle(
+              color: new Color(0xFF909FAD),
+            ),
+            tabs: homePageTabs
+          ),
+        ),
+      ),
+
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          Center(
+            child: Text("teste")
+          ),
+
+          Center(
+              child: Text("teste 1")
+          ),
+
+          Center(
+              child: Text("teste 2")
+          ),
+
+          Center(
+              child: Text("teste 3")
+          ),
+        ],
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        unselectedLabelStyle: TextStyle(
+          color: new Color(0xFF909FAD),
+        ),
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home'
+          ),
+
+          BottomNavigationBarItem(
+              icon: Icon(Icons.playlist_add),
+              label: 'Historico'
+          ),
+
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_rounded),
+              label: 'Perfil'
+          ),
+        ]
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => print("AAAA BUTTON"),
+        tooltip: 'Increment Counter',
+        child: const Icon(Icons.add),
+      ),
+      
     );
   }
 }
-
