@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+class SplashScreen extends StatefulWidget {
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<SplashScreen> createState() => _SplashScreen();
 }
 
-class _HomePageState extends State<HomePage> {
+class _SplashScreen extends State<SplashScreen> {
   @override
 
   Widget build(BuildContext context) {
