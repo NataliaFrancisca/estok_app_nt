@@ -1,4 +1,4 @@
-import 'package:estok_app_natalia_francisca/colors.dart';
+import '../../colors.dart';
 import 'package:estok_app_natalia_francisca/ui/validator/login_validator.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
