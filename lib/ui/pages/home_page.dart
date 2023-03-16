@@ -1,4 +1,5 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app_natalia_francisca/ui/widgets/custom_list_view.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -66,19 +67,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
         controller: _tabController,
         children: [
           Center(
-            child: Text("teste")
+            child: CustomListView()
           ),
 
           Center(
-              child: Text("teste 1")
+              child: CustomListView()
           ),
 
           Center(
-              child: Text("teste 2")
+              child: CustomListView()
           ),
 
           Center(
-              child: Text("teste 3")
+              child: CustomListView()
           ),
         ],
       ),
