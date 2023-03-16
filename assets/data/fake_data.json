@@ -1,0 +1,38 @@
+{
+  "stock": [
+    {
+      "id": 0,
+      "stock_name": "BEBIDAS Heineken",
+      "stock_total": 400,
+      "stock_type_grid": "grade"
+    },
+
+    {
+      "id": 1,
+      "stock_name": "Produtos de Limpeza OMO",
+      "stock_total": 5,
+      "stock_type_grid": "pacote"
+    },
+
+    {
+      "id": 2,
+      "stock_name": "Produtos de Limpeza codor",
+      "stock_total": 0,
+      "stock_type_grid": "caixa"
+    },
+
+    {
+      "id": 3,
+      "stock_name": "BEBIDAS Coca-Cola",
+      "stock_total": 1200,
+      "stock_type_grid": "grade"
+    },
+
+    {
+      "id": 4,
+      "stock_name": "Gelatina Sorriso",
+      "stock_total": 2,
+      "stock_type_grid": "pacote"
+    }
+  ]
+}
