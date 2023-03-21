@@ -20,7 +20,7 @@ class UserModel extends Model{
       await UserRepository.instance.saveUsuario(user);
       onSuccess();
     }else{
-      onFail("Erro ao efetuar login para $email");
+      onFail("Erro ao efetuar login!");
     }
   }
 
