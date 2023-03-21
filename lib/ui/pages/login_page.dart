@@ -1,7 +1,12 @@
+import 'package:estok_app_natalia_francisca/models/user_model.dart';
+import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
+
 import '../../colors.dart';
 import 'package:estok_app_natalia_francisca/ui/validator/login_validator.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,10 +19,12 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
 
   final FocusNode _focusSenha = FocusNode();
   final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Form(
         key: _formKey,
         child: Container(
@@ -82,11 +89,7 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
                   width: double.infinity,
                   child: ElevatedButton(
                       onPressed: (){
-                        if(_formKey.currentState.validate()){
-                          print("validou os campos");
-                        }else{
-                          print("alguma coisa está errado");
-                        }
+                       _loginOnPressed(context);
                       },
                       child: Text(
                           'Entrar'.toUpperCase(),
@@ -105,12 +108,43 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
                         backgroundColor: MaterialStateProperty.all(new Color(0xFFF7F2F8)),
                       )
                   )
-                ),
+              ),
             ],
           )
           )
 
       )
     );
+  }
+
+
+  void _loginOnPressed(BuildContext context) {
+    FocusScope.of(context).unfocus();
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+
+    UserModel.of(context).login(_loginController.text, _senhaController.text,
+        onSuccess: () {
+          Message.onSuccess(
+              scaffoldKey: _scaffoldKey,
+              message: "Usuário logado com sucesso!",
+              // onPop: (value) {
+              //   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
+              //     return HomePage();
+              //   }));
+              // }
+          );
+          return;
+        }, onFail: (String message) {
+          Message.onFail(
+              scaffoldKey: _scaffoldKey,
+              message: message,
+              onPop: (value){
+                print("something wrong..");
+              }
+          );
+          return;
+        });
   }
 }
