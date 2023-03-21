@@ -11,7 +11,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   TabController _tabController;
 
   static const List<Tab> homePageTabs = <Tab>[
-    Tab(text: 'Todos'),
+    Tab(text: 'TODOS'),
     Tab(text: 'Em estoque'),
     Tab(text: 'Em aviso'),
     Tab(text: 'Em falta')
@@ -55,9 +55,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
             indicator: UnderlineTabIndicator(
               borderSide: BorderSide(width: 6.0, color: AppColors.primaryColor)
             ),
-            unselectedLabelStyle: TextStyle(
-              color: new Color(0xFF909FAD),
-            ),
+            unselectedLabelColor: new Color(0xFF909FAD),
             tabs: homePageTabs
           ),
         ),
