@@ -1,11 +1,9 @@
 import 'package:estok_app_natalia_francisca/models/user_model.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
-
-import '../../colors.dart';
 import 'package:estok_app_natalia_francisca/ui/validator/login_validator.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-
+import '../../colors.dart';
 import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -28,7 +26,7 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
       body: Form(
         key: _formKey,
         child: Container(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(26.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -39,7 +37,7 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
               Text(
                 "ESTOK APP",
                 style: TextStyle(
-                  fontFamily: "Montserrat",
+                  fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w400,
                   fontSize: 34,
                   color: AppColors.blackTextColor,
@@ -83,7 +81,7 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
                 validator: validateSenha
               ),
 
-              SizedBox(height: 20.0),
+              SizedBox(height: 38.0),
 
               SizedBox(
                   width: double.infinity,
@@ -117,7 +115,6 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
     );
   }
 
-
   void _loginOnPressed(BuildContext context) {
     FocusScope.of(context).unfocus();
     if (!_formKey.currentState.validate()) {
@@ -129,11 +126,11 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
           Message.onSuccess(
               scaffoldKey: _scaffoldKey,
               message: "Usuário logado com sucesso!",
-              // onPop: (value) {
-              //   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-              //     return HomePage();
-              //   }));
-              // }
+              onPop: (value) {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
+                  return HomePage();
+                }));
+              }
           );
           return;
         }, onFail: (String message) {
@@ -141,7 +138,7 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
               scaffoldKey: _scaffoldKey,
               message: message,
               onPop: (value){
-                print("something wrong..");
+                print("Algo de errado com o login!");
               }
           );
           return;
