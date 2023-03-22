@@ -49,6 +49,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/data/fake_data.json
+    - assets/images/back_account.png
 
   fonts:
     - family: Montserrat
