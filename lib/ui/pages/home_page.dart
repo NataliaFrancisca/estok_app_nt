@@ -97,6 +97,59 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
         tooltip: 'Increment Counter',
         child: const Icon(Icons.add),
       ),
+
+      drawer: SafeArea(
+        child: Drawer(
+          child: ListView(
+            children: [
+              UserAccountsDrawerHeader(
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/back_account.png'),
+                ),
+
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/0/04/Convenience_store_interior.jpg'),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(Colors.transparent.withOpacity(0.60), BlendMode.colorBurn)
+                  ),
+                ),
+                
+                accountName: Text('Michael Jackson'),
+                accountEmail: Text("michaeljackson@mail.com"),
+              ),
+
+              SizedBox(height: 14.0),
+
+              ListTile(
+                  leading: Icon(Icons.account_circle_rounded),
+                  title: Text('Meu Perfil'),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 20),
+                  onTap: (){
+                },
+              ),
+
+              ListTile(
+                  leading: Icon(Icons.store),
+                  title: Text('Estoques'),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 20),
+                  onTap: (){
+                },
+              ),
+
+              ListTile(
+                  leading: Icon(Icons.playlist_add),
+                  title: Text('Histórico'),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 20),
+                  onTap: (){
+                },
+              ),
+
+            ],
+          )
+        ),
+
+      ),
       
     );
   }
