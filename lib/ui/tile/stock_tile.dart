@@ -6,6 +6,7 @@ class StockTile extends StatelessWidget with StockStatusValidator{
   final Stock _stock;
   StockTile(this._stock);
 
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -41,7 +42,7 @@ class StockTile extends StatelessWidget with StockStatusValidator{
                       crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                     Text(
-                      'Total: 200'.toUpperCase(),
+                      'Total: ${this._stock.quantidade_total}'.toUpperCase(),
                       style: TextStyle(
                         fontSize: 12,
                         fontFamily: 'Montserrat',
@@ -69,18 +70,18 @@ class StockTile extends StatelessWidget with StockStatusValidator{
                 children: [
                   Icon(
                     Icons.circle,
-                    color: status(200)['color'],
+                    color: status(this._stock.quantidade_total)['color'],
                   ),
 
                   SizedBox(height: 15.0),
 
                   Text(
-                    '${status(200)['message']}'.toUpperCase(),
+                    '${status(this._stock.quantidade_total)['message']}'.toUpperCase(),
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 11,
                       fontFamily: 'Montserrat',
-                      color: status(200)['color'],
+                      color: status(this._stock.quantidade_total)['color'],
                     ),
                   )
                 ],
