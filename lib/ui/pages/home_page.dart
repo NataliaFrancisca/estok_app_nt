@@ -1,4 +1,5 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app_natalia_francisca/ui/tabs/home_tab.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_list_view.dart';
 import 'package:flutter/material.dart';
 
@@ -64,21 +65,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
       body: TabBarView(
         controller: _tabController,
         children: [
-          Center(
-            child: CustomListView()
-          ),
-
-          Center(
-              child: CustomListView()
-          ),
-
-          Center(
-              child: CustomListView()
-          ),
-
-          Center(
-              child: CustomListView()
-          ),
+          HomeTab('todos'),
+          HomeTab('Em estoque'),
+          HomeTab('Em aviso'),
+          HomeTab('Em falta'),
         ],
       ),
 
