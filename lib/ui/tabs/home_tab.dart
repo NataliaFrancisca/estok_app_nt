@@ -1,6 +1,7 @@
+import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
 import 'package:estok_app_natalia_francisca/models/stock_model.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_card_stock.dart';
+import 'package:estok_app_natalia_francisca/ui/tile/stock_tile.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -35,7 +36,7 @@ class _HomeTabState extends State<HomeTab> {
             case ConnectionState.none:
               return Message.alert("Não foi possivel obter os dados necessários");
             case ConnectionState.waiting:
-              return Message.loading(context, color: Colors.red);
+              return Message.loading(context, color: AppColors.primaryColor);
             
             default:
               if(snapshot.hasError){
@@ -53,7 +54,7 @@ class _HomeTabState extends State<HomeTab> {
                       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
                       itemCount: snapshot.data.length,
                       itemBuilder: (BuildContext context, int index){
-                        return CustomCardStock(snapshot.data[index]);
+                        return StockTile(snapshot.data[index]);
                       },
                     ),
                   );
