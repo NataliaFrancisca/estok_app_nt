@@ -1,6 +1,5 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/ui/tabs/home_tab.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_list_view.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,13 +9,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   TabController _tabController;
-
-  static const List<Tab> homePageTabs = <Tab>[
-    Tab(text: 'TODOS'),
-    Tab(text: 'Em estoque'),
-    Tab(text: 'Em aviso'),
-    Tab(text: 'Em falta')
-  ];
 
   @override
   void initState() {
@@ -51,13 +43,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
             labelColor: AppColors.primaryColor,
             labelStyle: TextStyle(
               fontSize: 12,
-              fontWeight: FontWeight.w500
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Montserrat',
             ),
             indicator: UnderlineTabIndicator(
               borderSide: BorderSide(width: 6.0, color: AppColors.primaryColor)
             ),
             unselectedLabelColor: new Color(0xFF909FAD),
-            tabs: homePageTabs
+            tabs: [
+              Tab(text: 'TODOS'),
+              Tab(text: 'Em estoque'),
+              Tab(text: 'Em aviso'),
+              Tab(text: 'Em falta')
+            ]
           ),
         ),
       ),
