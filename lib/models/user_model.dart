@@ -1,5 +1,5 @@
 import 'package:estok_app_natalia_francisca/entities/user.dart';
-import 'package:estok_app_natalia_francisca/repository/api/user.dart';
+import 'package:estok_app_natalia_francisca/repository/api/user_api.dart';
 import 'package:estok_app_natalia_francisca/repository/local/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
