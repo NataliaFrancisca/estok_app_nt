@@ -70,8 +70,8 @@ class _CustomDateInputFieldState extends State<CustomDateInputField> {
         
           DateTime pickedDate = await showDatePicker(
             context: context,
-            initialDate: DateTime.now(), //get today's date
-            firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+            initialDate: DateTime.now(), 
+            firstDate: DateTime(2012), 
             lastDate: DateTime(2101),
 
             builder: (context, child) {
@@ -88,9 +88,7 @@ class _CustomDateInputFieldState extends State<CustomDateInputField> {
           );
 
           if(pickedDate != null ){
-            print(pickedDate); 
             String formattedDate = tranformDate(pickedDate); 
-            print(formattedDate);
             setState(() {
               widget.controller.text = formattedDate;
             });
