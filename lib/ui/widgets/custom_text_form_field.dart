@@ -10,6 +10,8 @@ class CustomTextFormField extends StatefulWidget {
   final FocusNode focusNode;
   final FocusNode requestFocus;
   final FormFieldValidator<String> validator;
+  final FloatingLabelBehavior behaviorLabel;
+  final EdgeInsets inputPadding;
 
   CustomTextFormField({
     @required this.controller,
@@ -20,7 +22,9 @@ class CustomTextFormField extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.focusNode,
     this.requestFocus,
-    this.validator
+    this.validator,
+    this.behaviorLabel = FloatingLabelBehavior.auto,
+    this.inputPadding = const EdgeInsets.only(bottom: 20.0)
   });
 
   @override
@@ -63,8 +67,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           ),
 
           alignLabelWithHint: true,
-          contentPadding: EdgeInsets.only(bottom: 15.0),
+          contentPadding: widget.inputPadding,
           prefixIcon: widget.inputIcon,
+          floatingLabelBehavior: widget.behaviorLabel,
+
           suffixIcon: widget.obscureText ? new GestureDetector(
             onTap:(){
               setState(() {
