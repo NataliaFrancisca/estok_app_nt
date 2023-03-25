@@ -1,6 +1,10 @@
+import 'package:estok_app_natalia_francisca/entities/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductTile extends StatelessWidget {
+  final Product _product;
+  ProductTile(this._product);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -10,7 +14,9 @@ class ProductTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image(
-                image: AssetImage('assets/images/back_account.png'),
+                image: _product.image != null 
+                ? NetworkImage('${_product.image}')
+                : AssetImage('assets/images/back_account.png'), 
                 fit: BoxFit.contain,
                 width: 85,
                 height: 74,
@@ -25,7 +31,7 @@ class ProductTile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "UM PRODUTO",
+                              '${_product.nome}',
                               style: TextStyle(
                                   fontSize: 18,
                                   color: new Color(0xFF555353),
@@ -33,7 +39,7 @@ class ProductTile extends StatelessWidget {
                             ),
                             SizedBox(height: 10),
                             Text(
-                              "Uma das melhores marcas em uma casa só",
+                              "${_product.descricao}",
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
@@ -46,8 +52,8 @@ class ProductTile extends StatelessWidget {
                       width: 100,
                       child: Column(
                         children: [
-                          Text('R\$25,00'),
-                          Text('R\$25,00'),
+                          Text('R\$${_product.valor_item}'),
+                          Text('R\$${_product.valor_unitario}'),
                         ],
                       ),
                     )
@@ -62,7 +68,7 @@ class ProductTile extends StatelessWidget {
 									crossAxisAlignment: CrossAxisAlignment.center,
 									mainAxisAlignment: MainAxisAlignment.spaceBetween,
 									children: [
-										Text('10'),
+										Text('${_product.quantidade}'),
 										ButtonBar(
 											children: [
 												IconButton(
