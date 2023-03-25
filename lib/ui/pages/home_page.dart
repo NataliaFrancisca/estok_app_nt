@@ -1,4 +1,5 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/new_stock_page.dart';
 import 'package:estok_app_natalia_francisca/ui/tabs/home_tab.dart';
 import 'package:flutter/material.dart';
 
@@ -93,7 +94,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () => print("AAAA BUTTON"),
+        onPressed: () => {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
+            return NewStockPage();
+          }))
+        },
         tooltip: 'Increment Counter',
         child: const Icon(Icons.add),
       ),
