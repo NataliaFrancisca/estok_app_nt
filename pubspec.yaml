@@ -50,6 +50,7 @@ flutter:
   assets:
     - assets/data/fake_data.json
     - assets/images/back_account.png
+    - assets/images/default_product.png
 
   fonts:
     - family: Montserrat
