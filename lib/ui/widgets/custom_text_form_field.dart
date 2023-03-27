@@ -12,19 +12,21 @@ class CustomTextFormField extends StatefulWidget {
   final FormFieldValidator<String> validator;
   final FloatingLabelBehavior behaviorLabel;
   final EdgeInsets inputPadding;
+  final int maxLines;
 
   CustomTextFormField({
     @required this.controller,
-    @required this.labelText,
+    this.labelText,
     @required this.hintText,
-    @required this.inputIcon,
+    this.inputIcon,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.focusNode,
     this.requestFocus,
     this.validator,
     this.behaviorLabel = FloatingLabelBehavior.auto,
-    this.inputPadding = const EdgeInsets.only(bottom: 20.0)
+    this.inputPadding = const EdgeInsets.only(bottom: 20.0),
+    this.maxLines = 1
   });
 
   @override
@@ -40,7 +42,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       obscureText: widget.obscureText ? _obscureText : false,
       validator: widget.validator,
       controller: widget.controller,
-
+      maxLines: widget.maxLines,
+  
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
@@ -56,7 +59,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           labelStyle: TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.w400,
-              fontFamily: "Montserrat"
+              fontFamily: "Montserrat",
           ),
 
           hintText: widget.hintText,
@@ -65,6 +68,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               fontWeight: FontWeight.w300,
               color: Colors.grey[600]
           ),
+
 
           alignLabelWithHint: true,
           contentPadding: widget.inputPadding,
