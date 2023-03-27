@@ -3,6 +3,7 @@ import 'package:estok_app_natalia_francisca/entities/product.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
 import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/new_product_page.dart';
 import 'package:estok_app_natalia_francisca/ui/tile/product.tile.dart';
 import 'package:estok_app_natalia_francisca/ui/validator/stock_status_validator.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_stock_details.dart';
@@ -58,6 +59,16 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
           actions: [],
           centerTitle: true,
           backgroundColor: new Color(0xFFF7F2F8),
+        ),
+
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
+              return NewProductPage(widget._stock);
+            }))
+          },
+          tooltip: 'Add New Product',
+          child: const Icon(Icons.add)
         ),
 
         body: Center(
