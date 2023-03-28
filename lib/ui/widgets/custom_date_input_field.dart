@@ -49,7 +49,6 @@ class _CustomDateInputFieldState extends State<CustomDateInputField> {
               fontSize: 15.0,
               fontWeight: FontWeight.w400,
               fontFamily: "Montserrat",
-
           ),
 
           hintText: widget.hintText,
@@ -90,7 +89,7 @@ class _CustomDateInputFieldState extends State<CustomDateInputField> {
           if(pickedDate != null ){
             String formattedDate = tranformDate(pickedDate); 
             setState(() {
-              widget.controller.text = formattedDate;
+              widget.controller.text = pickedDate.toString();
             });
             FocusManager.instance.primaryFocus.unfocus();
         }else{
