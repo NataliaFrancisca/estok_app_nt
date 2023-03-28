@@ -20,9 +20,9 @@ class Stock{
 
   factory Stock.fromJson(Map<String, dynamic> json){
     return Stock(
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] != null) ? (json['id'] as num).toInt() : null,
       descricao: (json['descricao'] as String),
-      quantidade_total: (json['quantidade_total'] as num).toInt(),
+      quantidade_total: (json['quantidade_total'] != null) ? (json['quantidade_total'] as num).toInt() : null,
       data_entrada: (json['data_entrada'] as String),
       data_validade: (json['data_validade'] as String),
       tipo: (json['tipo'] as String),
@@ -39,6 +39,16 @@ class Stock{
       "data_validade": this.data_validade,
       "tipo": this.tipo,
       "status_estoque": this.status_estoque
+    };
+  }
+
+   Map<String, dynamic> toJsonRequest(){
+    return<String, dynamic>{
+      "descricao": this.descricao,
+      "quantidade_total": this.quantidade_total,
+      "data_entrada": this.data_entrada,
+      "data_validade": this.data_validade,
+      "tipo": this.tipo,
     };
   }
 
