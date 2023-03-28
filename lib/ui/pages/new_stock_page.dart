@@ -1,7 +1,11 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app_natalia_francisca/entities/stock.dart';
+import 'package:estok_app_natalia_francisca/models/stock_model.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/stock_page.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_date_input_field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_label_input.field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
+import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
 import 'package:flutter/material.dart';
 
 import 'home_page.dart';
@@ -15,14 +19,22 @@ class _NewStockPageState extends State<NewStockPage> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController entryDateController = TextEditingController();
   TextEditingController expirationDateController = TextEditingController();
-  String selectedValue = "GRADE";
+  String selectedValue = "Grade";
 
   final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  var stock = Stock();
+
+  @override
+  void initState(){
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
           "NOVO ESTOQUE",
@@ -64,7 +76,6 @@ class _NewStockPageState extends State<NewStockPage> {
                     labelText: 'Descrição',
                     hintText: 'Descrição do produto',
                     keyboardType: TextInputType.text,
-                    inputIcon: null,
                     requestFocus: null,
                     behaviorLabel: FloatingLabelBehavior.never,
                     inputPadding: EdgeInsets.only(left: 25, top: 18, bottom: 18),
@@ -124,9 +135,9 @@ class _NewStockPageState extends State<NewStockPage> {
                         icon: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
                         value: selectedValue,
                         items: [
-                          DropdownMenuItem(child: Center(child: Text("PACOTE")),value: "PACOTE"),
-                          DropdownMenuItem(child: Center(child: Text("GRADE")),value: "GRADE"),
-                          DropdownMenuItem(child: Center(child: Text("CAIXA")),value: "CAIXA"),
+                          DropdownMenuItem(child: Center(child: Text("Pacote")), value: "Pacote"),
+                          DropdownMenuItem(child: Center(child: Text("Grade")) ,value: "Grade"),
+                          DropdownMenuItem(child: Center(child: Text("Caixa")), value: "Caixa"),
                         ],
                         onChanged: (String newValue){
                           setState(() {
@@ -176,10 +187,35 @@ class _NewStockPageState extends State<NewStockPage> {
     if (!_formKey.currentState.validate()) {
       return;
     }
+    
+    this.stock.descricao = this.descriptionController.text;
+    this.stock.data_entrada = this.entryDateController.text;
+    this.stock.data_validade = this.expirationDateController.text;
+    this.stock.tipo = this.selectedValue;
+    this.stock.quantidade_total = 0;
 
-    print(this.entryDateController.text);
-    print(this.expirationDateController.text);
-    print(this.descriptionController.text);
-    print(this.selectedValue);
+    StockModel.of(context).addStock(
+      this.stock,
+      onSuccess: (){
+        Message.onSuccess(
+          scaffoldKey: _scaffoldKey,
+          message: 'Estoque salvo com sucesso',
+          seconds: 2,
+          onPop: (value){
+             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
+              return HomePage();
+            }));
+          }
+        );
+        return;
+      },
+      onFail: (String message){
+        Message.onFail(
+          scaffoldKey: _scaffoldKey,
+          message: message
+        );
+        return;
+      }
+    );
   }
 }
