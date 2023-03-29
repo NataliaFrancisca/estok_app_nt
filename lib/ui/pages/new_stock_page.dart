@@ -92,7 +92,7 @@ class _NewStockPageState extends State<NewStockPage> {
                             labelText: "Data de Entrada",
                             inputField: CustomDateInputField(
                                 controller: this.entryDateController,
-                                hintText: '12/12/2012'
+                                hintText: '12/12/2012',
                             ),
                           ),
                         ),
@@ -103,7 +103,7 @@ class _NewStockPageState extends State<NewStockPage> {
                             labelText: "Data de Validade",
                             inputField: CustomDateInputField(
                                 controller: this.expirationDateController,
-                                hintText: '12/12/2012'
+                                hintText: '12/12/2012',
                             ),
                           ),
                         ),
@@ -202,9 +202,9 @@ class _NewStockPageState extends State<NewStockPage> {
           message: 'Estoque salvo com sucesso',
           seconds: 2,
           onPop: (value){
-             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-              return HomePage();
-            }));
+            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                return HomePage();
+            })); 
           }
         );
         return;
