@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app_natalia_francisca/entities/product.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
+import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/stock_page.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_label_input.field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class NewProductPage extends StatefulWidget {
   final Stock _stock;
@@ -14,7 +20,15 @@ class NewProductPage extends StatefulWidget {
 
 class _NewProductPageState extends State<NewProductPage> {
   TextEditingController nameProductController = TextEditingController();
-  
+
+  ImageProvider getImage(ProductStockModel productStockModel){
+    if(productStockModel.file == null){
+      return AssetImage('assets/images/upload_image.png');
+    }else{
+      return FileImage(productStockModel.file);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,9 +63,48 @@ class _NewProductPageState extends State<NewProductPage> {
           child: Container(
             padding: const EdgeInsets.all(26.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              
               children: [
-                SizedBox(height: 50.0),
+                SizedBox(height: 30.0),
+
+                ScopedModelDescendant<ProductStockModel>(builder: (context, child, productStockModel){
+                  return SizedBox(
+                    child: InkWell(
+                      onTap: (){
+                        _onTapImageSheet(productStockModel, context);
+                      },
+                      child: Container(
+                        width: 200,
+                        height: 160,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: getImage(productStockModel),
+                            fit: BoxFit.fitHeight,
+                          )
+                        ),
+                      )
+                    )
+                  );
+                }),
+
+                SizedBox(height: 11.0),
+
+                Text(
+                  'Clique na imagem para tirar uma foto',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontFamily: 'Montserrat'
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+
+                SizedBox(height: 15.0),
+
+                Divider(),
+
+                SizedBox(height: 15.0),
 
                 CustomLabelInput(
                   labelText: 'Nome',
@@ -162,6 +215,52 @@ class _NewProductPageState extends State<NewProductPage> {
       ),
 
 
+    );
+  }
+
+  void _onTapImageSheet(ProductStockModel productModel, BuildContext context){
+    showModalBottomSheet(
+      context: context,
+      builder: (context){
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FlatButton(
+              onPressed: () async{
+                var picker = ImagePicker();
+                var pickedFile = await picker.getImage(source: ImageSource.camera);
+              
+                if(pickedFile != null){
+                  productModel.file = File(pickedFile.path);
+                }else{
+                  productModel.file = null;
+                }
+
+                productModel.setState();
+                Navigator.of(context).pop();
+              }, 
+              child: Text('Camera')
+            ),
+
+            FlatButton(
+               onPressed: () async{
+                var picker = ImagePicker();
+                var pickedFile = await picker.getImage(source: ImageSource.gallery);
+              
+                if(pickedFile != null){
+                  productModel.file = File(pickedFile.path);
+                }else{
+                  productModel.file = null;
+                }
+
+                productModel.setState();
+                Navigator.of(context).pop();
+              }, 
+              child: Text('Galeria')
+            ),
+          ],
+        );
+      }
     );
   }
 }
