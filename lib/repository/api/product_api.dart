@@ -33,11 +33,39 @@ class ProductApi{
 
       var responseData = json.decode(utf8.decode(response.bodyBytes));
       var data = responseData['data'];
-      print("RESPONSE[PRODUCT] $data");
 
       product = (data as List)?.map((json){
         return Product.fromJson(json as Map<String, dynamic>);
       })?.toList();
+
+      return product;
+    }on Exception catch(error){
+      print("Algo de errado na API Products");
+      return null;
+    }
+  }
+
+  Future<List<Product>> delete(int idStock, int idProduct) async{
+    List<Product> product;
+
+    try{
+      String url = "http://54.90.203.92/estoques/$idStock/produtos/$idProduct";
+      User user = await UserRepository.instance.getUsuario();
+      String authorization = 'Bearer ${user.token}';
+
+      var response = await http.delete(url,
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': authorization
+        },
+      );
+
+      if(response.statusCode != 200){
+        return null;
+      }
+
+      var responseData = json.decode(utf8.decode(response.bodyBytes));
+      print("PRODUTO DELETADO COM SUCESSO $responseData");
 
       return product;
     }on Exception catch(error){
