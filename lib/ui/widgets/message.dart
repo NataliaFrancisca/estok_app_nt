@@ -1,3 +1,4 @@
+import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:flutter/material.dart';
 
 class Message extends StatelessWidget {
@@ -67,6 +68,74 @@ class Message extends StatelessWidget {
         fontWeight: fontWeight ?? FontWeight.bold,
         color: color ?? Colors.grey[600],
       ))
+    );
+  }
+
+  static void alertDialog(BuildContext context, {
+    String title = '',
+    String subtitle = '',
+    @required String textOkButton,
+    @required Function onPressedOkButton,
+    String textNoButton = 'Não',
+    Function onPressedNoButton,
+  }){
+    
+    showDialog(context: context,
+      builder: (context){
+        return Container(
+          child: AlertDialog(
+            title: Text(
+              title,
+              textAlign: TextAlign.center
+            ),
+            titleTextStyle: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              color: AppColors.primaryColor
+            ),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: [
+                  Text(subtitle,
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
+            ),
+            actions: [
+              textNoButton == null ? Container() :
+              FlatButton(
+                child: Text(
+                  textNoButton,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.primaryColor
+                  ),
+                ),
+
+                onPressed: onPressedNoButton
+                
+              ),
+
+              FlatButton(
+                child: Text(
+                  textOkButton,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.primaryColor
+                  ),
+                ),
+
+                onPressed: onPressedOkButton
+              ),
+
+              
+            ],
+          ),
+        );
+      }
     );
   }
 }
