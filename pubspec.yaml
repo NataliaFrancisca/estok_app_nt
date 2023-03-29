@@ -32,6 +32,7 @@ dependencies:
   http: ^0.12.0+2
   shared_preferences: ^0.5.4+3
   google_fonts: ^1.1.2
+  image_picker: ^0.6.7+22
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +52,7 @@ flutter:
     - assets/data/fake_data.json
     - assets/images/back_account.png
     - assets/images/default_product.png
+    - assets/images/upload_image.png
 
   fonts:
     - family: Montserrat
