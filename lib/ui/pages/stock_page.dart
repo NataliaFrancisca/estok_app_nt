@@ -2,6 +2,7 @@ import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/entities/product.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
 import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
+import 'package:estok_app_natalia_francisca/models/stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/new_product_page.dart';
 import 'package:estok_app_natalia_francisca/ui/tile/product.tile.dart';
@@ -25,6 +26,9 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
     return "${date.day}/$month/${date.year}";
   }
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
   @override
   void initState(){
     super.initState();
@@ -38,6 +42,7 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
         appBar: AppBar(
           title: Text(
             '${widget._stock.descricao}',
@@ -121,7 +126,21 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                         SizedBox(height: 17),
                         IconButton(
                             icon: Icon(Icons.delete, color: Colors.black),
-                            onPressed: null),
+                            onPressed: (){
+                              Message.alertDialog(
+                                context,
+                                title: 'Deseja excuir o estoque?',
+                                textOkButton: 'Sim',
+                                onPressedOkButton: (){
+                                  deleteStock();
+                                  Navigator.of(context).pop();
+                                },
+                                onPressedNoButton: (){
+                                  Navigator.of(context).pop();
+                                }
+                              );
+                            }
+                        )     
                       ],
                     ),
                   ],
@@ -156,7 +175,7 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                 SizedBox(height: 20),
 
                 Expanded(
-                  child:ScopedModelDescendant<ProductStockModel>(
+                  child: ScopedModelDescendant<ProductStockModel>(
                     builder: (context, child, productStockModel){
                       return FutureBuilder(
                         future: productStockModel.futureProduct,
@@ -198,50 +217,33 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
             ),
           ),
         )
-      );
+      );     
+  }
 
-
-
-        
-
-        // body: ScopedModelDescendant<ProductStockModel>(
-        //       builder: (context, child, productStockModel){
-        //         return FutureBuilder(
-        //           future: productStockModel.futureProduct,
-        //           builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot){
-        //             switch(snapshot.connectionState){
-        //               case ConnectionState.none:
-        //                 return Message.alert("Não foi possivel obter os dados necessários");
-        //               case ConnectionState.waiting:
-        //                 return Message.loading(context, color: AppColors.primaryColor);
-                      
-        //               default:
-        //                 if(snapshot.hasError){
-        //                   return Message.alert("Não foi possível obter os dados do servidor");
-        //                 } else if(!snapshot.hasData){
-        //                   return Message.alert("Não foi possivel obter os dados dos estoques");
-        //                 } else if(snapshot.data.isEmpty){
-        //                   return Message.alert("Nenhum estoque encontrado", fontSize: 16);
-        //                 } else{
-        //                     return RefreshIndicator(
-        //                       onRefresh: () async{
-        //                         this._reload();
-        //                       },
-        //                       child: ListView.builder(
-        //                         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-        //                         itemCount: snapshot.data.length,
-        //                         itemBuilder: (BuildContext context, int index){
-        //                           return ProductTile(snapshot.data[index]);
-        //                         },
-        //                       ),
-        //                     );
-        //                 }
-        //             }
-        //           }
-        //         );
-        //       }
-        //     ),
-          
-       
+  void deleteStock(){
+    StockModel.of(context).deleteStock(
+      widget._stock.id,
+       onSuccess: (){
+        Message.onSuccess(
+          scaffoldKey: _scaffoldKey,
+          message: 'Estoque deletado com sucesso',
+          seconds: 2,
+          onPop: (value){
+            // Navigator.of(context).pop();
+            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                return HomePage();
+            })); 
+          }
+        );
+        return;
+      },
+      onFail: (String message){
+        Message.onFail(
+          scaffoldKey: _scaffoldKey,
+          message: message
+        );
+        return;
+      }
+    );
   }
 }
