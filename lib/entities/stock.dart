@@ -42,8 +42,19 @@ class Stock{
     };
   }
 
-   Map<String, dynamic> toJsonRequest(){
+  Map<String, dynamic> toJsonRequest(){
     return<String, dynamic>{
+      "descricao": this.descricao,
+      "quantidade_total": this.quantidade_total,
+      "data_entrada": this.data_entrada,
+      "data_validade": this.data_validade,
+      "tipo": this.tipo,
+    };
+  }
+
+   Map<String, dynamic> toJsonUpdate(){
+    return<String, dynamic>{
+      "id": this.id,
       "descricao": this.descricao,
       "quantidade_total": this.quantidade_total,
       "data_entrada": this.data_entrada,
