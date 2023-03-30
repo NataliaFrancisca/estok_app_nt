@@ -7,6 +7,7 @@ import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/stock_page.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_label_input.field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
+import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -20,6 +21,16 @@ class NewProductPage extends StatefulWidget {
 
 class _NewProductPageState extends State<NewProductPage> {
   TextEditingController nameProductController = TextEditingController();
+  TextEditingController descriptionProductController = TextEditingController();
+  TextEditingController priceItemProductController = TextEditingController();
+  TextEditingController priceUnitProductController = TextEditingController();
+  TextEditingController quantityProductController = TextEditingController();
+  TextEditingController siteProductController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  var product = Product();
 
   ImageProvider getImage(ProductStockModel productStockModel){
     if(productStockModel.file == null){
@@ -30,8 +41,14 @@ class _NewProductPageState extends State<NewProductPage> {
   }
 
   @override
+  void initState(){
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
           'NOVO PRODUTO',
@@ -59,7 +76,7 @@ class _NewProductPageState extends State<NewProductPage> {
 
       body: SingleChildScrollView(
         child: Form(
-          key: null,
+          key: _formKey,
           child: Container(
             padding: const EdgeInsets.all(26.0),
             child: Column(
@@ -122,7 +139,7 @@ class _NewProductPageState extends State<NewProductPage> {
                 CustomLabelInput(
                   labelText: 'Descrição',
                   inputField: CustomTextFormField(
-                    controller: this.nameProductController,
+                    controller: this.descriptionProductController,
                     hintText: 'Uma das melhores marcas em uma casa só',
                     keyboardType: TextInputType.text,
                     requestFocus: null,
@@ -135,7 +152,7 @@ class _NewProductPageState extends State<NewProductPage> {
                 CustomLabelInput(
                   labelText: 'Valor Item',
                   inputField: CustomTextFormField(
-                    controller: this.nameProductController,
+                    controller: this.priceItemProductController,
                     hintText: 'R\$45.00',
                     keyboardType: TextInputType.number,
                     requestFocus: null,
@@ -147,7 +164,7 @@ class _NewProductPageState extends State<NewProductPage> {
                 CustomLabelInput(
                   labelText: 'Valor Unitário',
                   inputField: CustomTextFormField(
-                    controller: this.nameProductController,
+                    controller: this.priceUnitProductController,
                     hintText: 'R\$7.00',
                     keyboardType: TextInputType.number,
                     requestFocus: null,
@@ -159,7 +176,7 @@ class _NewProductPageState extends State<NewProductPage> {
                 CustomLabelInput(
                   labelText: 'Quantidade',
                   inputField: CustomTextFormField(
-                    controller: this.nameProductController,
+                    controller: this.quantityProductController,
                     hintText: '10',
                     keyboardType: TextInputType.number,
                     requestFocus: null,
@@ -171,7 +188,7 @@ class _NewProductPageState extends State<NewProductPage> {
                 CustomLabelInput(
                   labelText: 'Site',
                   inputField: CustomTextFormField(
-                    controller: this.nameProductController,
+                    controller: this.siteProductController,
                     hintText: 'Informe a URL',
                     keyboardType: TextInputType.text,
                     requestFocus: null,
@@ -186,7 +203,7 @@ class _NewProductPageState extends State<NewProductPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                         onPressed: (){
-                        //  registerStock();
+                          registerProduct();
                         },
                         child: Text(
                             'CADASTRAR'.toUpperCase(),
@@ -213,8 +230,6 @@ class _NewProductPageState extends State<NewProductPage> {
           )
         )
       ),
-
-
     );
   }
 
@@ -260,6 +275,48 @@ class _NewProductPageState extends State<NewProductPage> {
             ),
           ],
         );
+      }
+    );
+  }
+
+  void registerProduct(){
+    if(!_formKey.currentState.validate()){
+      return;
+    }
+
+    this.product.estoque_id = widget._stock.id;
+    this.product.nome = this.nameProductController.text;
+    this.product.descricao = this.descriptionProductController.text;
+    this.product.valor_item = double.parse(this.priceUnitProductController.text);
+    this.product.valor_unitario = double.parse(this.priceUnitProductController.text);
+    this.product.quantidade = int.parse(this.quantityProductController.text);
+    this.product.site = this.siteProductController.text;
+
+    print("ID ${widget._stock.id}");
+    print(product); 
+
+    ProductStockModel.of(context).addProduct(
+      this.product,
+      onSuccess: (){
+        Message.onSuccess(
+          scaffoldKey: _scaffoldKey,
+          message: "Produto salvo com sucesso",
+          seconds: 2,
+          onPop: (value){
+            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+              return StockPage(widget._stock);
+          })); 
+          }
+        );
+        return;
+      },
+
+      onFail: (String message){
+        Message.onFail(
+          scaffoldKey: _scaffoldKey,
+          message: message
+        );
+        return;
       }
     );
   }
