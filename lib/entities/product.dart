@@ -27,7 +27,7 @@ class Product{
       estoque_id: (json['estoque_id'] != null) ? (json['estoque_id'] as num).toInt() : null,
       nome: (json['nome'] as String),
       descricao: (json['descricao'] as String),
-      imagem: (json['image'] as String),
+      imagem: (json['imagem'] as String),
       valor_item: (json['valor_item'] != null) ? (json['valor_item'] as num).toDouble() : null,
       valor_unitario: (json['valor_unitario'] != null) ? (json['valor_unitario'] as num).toDouble() : null,
       quantidade: (json['quantidade'] != null) ? (json['quantidade'] as num).toInt() : null,
