@@ -87,9 +87,8 @@ class _CustomDateInputFieldState extends State<CustomDateInputField> {
           );
 
           if(pickedDate != null ){
-            String formattedDate = tranformDate(pickedDate); 
             setState(() {
-              widget.controller.text = pickedDate.toString();
+              widget.controller.text = tranformDate(pickedDate); 
             });
             FocusManager.instance.primaryFocus.unfocus();
         }else{
