@@ -15,8 +15,8 @@ class ProductTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image(
-                image: _product.image != null 
-                ? NetworkImage('${_product.image}')
+                image: _product.imagem != null 
+                ? NetworkImage('${_product.imagem}')
                 : AssetImage('assets/images/default_product.png'), 
                 fit: BoxFit.contain,
                 width: 100,
