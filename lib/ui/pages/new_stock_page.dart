@@ -2,6 +2,7 @@ import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
 import 'package:estok_app_natalia_francisca/models/stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/stock_page.dart';
+import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_date_input_field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_label_input.field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
@@ -11,6 +12,14 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 
 class NewStockPage extends StatefulWidget {
+  final Stock stockEdit;
+  final bool isEditStock;
+
+  NewStockPage({
+    this.stockEdit,
+    this.isEditStock = false
+  });
+
   @override
   State<NewStockPage> createState() => _NewStockPageState();
 }
@@ -29,6 +38,18 @@ class _NewStockPageState extends State<NewStockPage> {
   @override
   void initState(){
     super.initState();
+    if(widget.isEditStock){
+      descriptionController.text = widget.stockEdit.descricao;
+      entryDateController.text = widget.stockEdit.data_entrada;
+      expirationDateController.text = widget.stockEdit.data_validade;
+      selectedValue = captalize(widget.stockEdit.tipo);
+    }
+  }
+
+  String captalize(String value){
+    var firstLetter = value[0].toUpperCase();
+    var restPhrase = value.substring(1, value.length).toLowerCase();
+    return firstLetter + restPhrase;
   }
 
   @override
@@ -37,7 +58,7 @@ class _NewStockPageState extends State<NewStockPage> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
-          "NOVO ESTOQUE",
+          widget.isEditStock ? "EDITAR ESTOQUE" : "NOVO ESTOQUE",
           style: TextStyle(
             color: AppColors.primaryColor,
             fontWeight: FontWeight.w700,
@@ -135,9 +156,9 @@ class _NewStockPageState extends State<NewStockPage> {
                         icon: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
                         value: selectedValue,
                         items: [
-                          DropdownMenuItem(child: Center(child: Text("Pacote")), value: "Pacote"),
-                          DropdownMenuItem(child: Center(child: Text("Grade")) ,value: "Grade"),
-                          DropdownMenuItem(child: Center(child: Text("Caixa")), value: "Caixa"),
+                          DropdownMenuItem(child: Center(child: Text("Pacote".toUpperCase())), value: "Pacote"),
+                          DropdownMenuItem(child: Center(child: Text("Grade".toUpperCase())) ,value: "Grade"),
+                          DropdownMenuItem(child: Center(child: Text("Caixa".toUpperCase())), value: "Caixa"),
                         ],
                         onChanged: (String newValue){
                           setState(() {
@@ -154,10 +175,10 @@ class _NewStockPageState extends State<NewStockPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                         onPressed: (){
-                         registerStock();
+                         widget.isEditStock ? updateStock() : registerStock();
                         },
                         child: Text(
-                            'CADASTRAR'.toUpperCase(),
+                            widget.isEditStock ? "EDITAR" : "CADASTRAR",
                           style: TextStyle(fontSize: 15,
                           color: AppColors.blackTextColor)
                         ),
@@ -189,8 +210,8 @@ class _NewStockPageState extends State<NewStockPage> {
     }
     
     this.stock.descricao = this.descriptionController.text;
-    this.stock.data_entrada = this.entryDateController.text;
-    this.stock.data_validade = this.expirationDateController.text;
+    this.stock.data_entrada = tranformStringDate(this.entryDateController.text).toString();
+    this.stock.data_validade = tranformStringDate(this.expirationDateController.text).toString();
     this.stock.tipo = this.selectedValue;
     this.stock.quantidade_total = 0;
 
@@ -218,4 +239,43 @@ class _NewStockPageState extends State<NewStockPage> {
       }
     );
   }
+
+  void updateStock(){
+
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+
+    widget.stockEdit.descricao = this.descriptionController.text;
+    widget.stockEdit.data_entrada = tranformStringDate(this.entryDateController.text).toString();
+    widget.stockEdit.data_validade = tranformStringDate(this.expirationDateController.text).toString();
+    widget.stockEdit.tipo = this.selectedValue;
+
+    StockModel.of(context).updateStock(
+      widget.stockEdit,
+      onSuccess: (){
+        Message.onSuccess(
+          scaffoldKey: _scaffoldKey,
+          message: 'Estoque atualizado com sucesso',
+          seconds: 2,
+          onPop: (value){
+            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                return StockPage(widget.stockEdit);
+            })); 
+          }
+        );
+        return;
+      },
+      onFail: (String message){
+        Message.onFail(
+          scaffoldKey: _scaffoldKey,
+          message: message
+        );
+        return;
+      }
+    );
+  }
+
+
+
 }
