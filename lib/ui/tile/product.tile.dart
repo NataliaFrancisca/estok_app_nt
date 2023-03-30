@@ -1,5 +1,6 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/entities/product.dart';
+import 'package:estok_app_natalia_francisca/ui/utils/format_money.dart';
 import 'package:flutter/material.dart';
 
 class ProductTile extends StatelessWidget {
@@ -16,7 +17,7 @@ class ProductTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image(
-                image: this._product.imagem != null 
+                image: this._product.imagem != null && this._product.imagem.contains('http')
                 ? NetworkImage('${_product.imagem}')
                 : AssetImage('assets/images/default_product.png'), 
                 fit: BoxFit.contain,
@@ -61,7 +62,7 @@ class ProductTile extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'R\$${_product.valor_item}',
+                            '${formatValueTypeMoney(_product.valor_item)}',
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'Montserrat',
@@ -73,7 +74,7 @@ class ProductTile extends StatelessWidget {
                           SizedBox(height: 5),
 
                           Text(
-                            'R\$${_product.valor_unitario}',
+                            '${formatValueTypeMoney(_product.valor_unitario)}',
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'Montserrat',
