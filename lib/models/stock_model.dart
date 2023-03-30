@@ -1,4 +1,5 @@
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
+import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
 import 'package:estok_app_natalia_francisca/repository/api/product_api.dart';
 import 'package:estok_app_natalia_francisca/repository/api/stock_api.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +43,15 @@ class StockModel extends Model{
     }
   }
 
-  void editStock(Stock stock, {VoidCallback onSuccess, VoidCallback onFail(String message)}){
+  void updateStock(Stock stock, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
+    Stock stockUpdated = await StockApi.instance.update(stock);
 
+    if(stockUpdated != null){
+      onSuccess();
+    }else{
+      onFail('Algo de errado ao tentar atualizar o estoque');
+    }
   }
+
 
 }
