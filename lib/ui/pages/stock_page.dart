@@ -5,12 +5,16 @@ import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
 import 'package:estok_app_natalia_francisca/models/stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/new_product_page.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/new_stock_page.dart';
 import 'package:estok_app_natalia_francisca/ui/tile/product.tile.dart';
+import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
+import 'package:estok_app_natalia_francisca/ui/utils/format_money.dart';
 import 'package:estok_app_natalia_francisca/ui/validator/stock_status_validator.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_stock_details.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:intl/intl.dart';
 
 class StockPage extends StatefulWidget {
   final Stock _stock;
@@ -20,12 +24,6 @@ class StockPage extends StatefulWidget {
 }
 
 class _StockPageState extends State<StockPage> with StockStatusValidator {
-  String tranformDate(String value) {
-    final date = DateTime.parse(value);
-    var month = date.month < 10 ? "0${date.month}" : date.month;
-    return "${date.day}/$month/${date.year}";
-  }
-
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
 
@@ -91,13 +89,15 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                       children: [
                         CustomTextStockDetails('TIPO: ${widget._stock.tipo}'),
                         CustomTextStockDetails(
-                            'Entrada em: ${tranformDate(widget._stock.data_entrada)}'),
+                            'Entrada em: ${tranformDate(DateTime.parse(widget._stock.data_entrada))}'),
                         CustomTextStockDetails(
-                            'Validade: ${tranformDate(widget._stock.data_validade)}'),
+                            'Validade: ${tranformDate(DateTime.parse(widget._stock.data_validade))}'),
                         CustomTextStockDetails(
-                            'Valor Total: ${widget._stock.tipo}'),
+                            'Valor Total: ${formatValueTypeMoney(20000)}')
                       ],
                     ),
+
+                    
                     Column(
                       children: [
                         SizedBox(height: 10),
@@ -121,7 +121,15 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                         SizedBox(height: 17),
                         IconButton(
                           icon: Icon(Icons.edit, color: Colors.black),
-                          onPressed: null,
+                          onPressed: (){
+                            // StockModel.of(context).editStock(widget._stock);
+                            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                              return NewStockPage(
+                                stockEdit: widget._stock,
+                                isEditStock: true,
+                              );
+                            })); 
+                          },
                         ),
                         SizedBox(height: 17),
                         IconButton(
