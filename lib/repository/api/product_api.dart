@@ -45,6 +45,39 @@ class ProductApi{
     }
   }
 
+  Future<Product> save(Product product) async{
+    try{
+      var encode = json.encode(product.toJsonRequest());
+      String url = "http://54.90.203.92/estoques/${product.estoque_id}/produtos/";
+      User user = await UserRepository.instance.getUsuario();
+      String authorization = 'Bearer ${user.token}';
+
+      print("AAAAAAA $encode");
+
+       var response = await http.post(url,
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': authorization
+        },
+        body: encode
+      );
+
+      print("RESPONSE[STATUS] ${response.statusCode}");
+
+      if(response.statusCode == 200){
+        var responseData = json.decode(utf8.decode(response.bodyBytes));
+        Product product = Product.fromJson(responseData);
+        print("LOG[STOCKAPI] - product salvo");
+        return product;
+      }else{
+        return null;
+      }
+
+    } on Exception catch(error){
+      return null;
+    }
+  }
+
   Future<List<Product>> delete(int idStock, int idProduct) async{
     List<Product> product;
 
