@@ -51,9 +51,6 @@ class ProductApi{
       String url = "http://54.90.203.92/estoques/${product.estoque_id}/produtos/";
       User user = await UserRepository.instance.getUsuario();
       String authorization = 'Bearer ${user.token}';
-
-      print("AAAAAAA $encode");
-
        var response = await http.post(url,
         headers: {
           'Content-type': 'application/json',
@@ -62,12 +59,9 @@ class ProductApi{
         body: encode
       );
 
-      print("RESPONSE[STATUS] ${response.statusCode}");
-
       if(response.statusCode == 200){
         var responseData = json.decode(utf8.decode(response.bodyBytes));
         Product product = Product.fromJson(responseData);
-        print("LOG[STOCKAPI] - product salvo");
         return product;
       }else{
         return null;
