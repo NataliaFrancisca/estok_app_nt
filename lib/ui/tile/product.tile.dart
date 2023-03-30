@@ -10,12 +10,13 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image(
-                image: _product.imagem != null 
+                image: this._product.imagem != null 
                 ? NetworkImage('${_product.imagem}')
                 : AssetImage('assets/images/default_product.png'), 
                 fit: BoxFit.contain,
@@ -41,6 +42,7 @@ class ProductTile extends StatelessWidget {
                                   color: new Color(0xFF555353),
                                   fontWeight: FontWeight.w700),
                             ),
+                            
                             SizedBox(height: 10),
                             Text(
                               "${_product.descricao}",
