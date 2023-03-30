@@ -34,7 +34,6 @@ class StockApi{
 
       var responseData = json.decode(utf8.decode(response.bodyBytes));
       var data = responseData["data"];
-      print('RESPONSE[STOCK] $responseData');
 
       stock = (data as List)?.map((json){
         return Stock.fromJson(json as Map<String, dynamic>);
@@ -93,9 +92,6 @@ class StockApi{
         }
       );
 
-      print('RESPONSE[STATUS] ${response.statusCode}');
-
-
       if(response.statusCode == 200){
         var responseData = json.decode(utf8.decode(response.bodyBytes));
         return responseData;
@@ -103,6 +99,38 @@ class StockApi{
         return null;
       }
     } on Exception catch(error){
+      return null;
+    }
+  }
+
+  Future<Stock> update(Stock stock) async{
+    try{
+      var encode = json.encode(stock.toJsonUpdate());
+      String url = 'http://54.90.203.92/estoques/';
+      User user = await UserRepository.instance.getUsuario();
+      String authorization = 'Bearer ${user.token}';
+
+      print('ENCODE UPDATE STOCK $authorization');
+
+      var response = await http.put(url,
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': authorization
+        },
+        body: encode
+      );
+
+       print('STATUS CODE ${response.statusCode}');
+
+      if(response.statusCode == 200){
+        var responseData = json.decode(utf8.decode(response.bodyBytes));
+        Stock stock = Stock.fromJson(responseData);
+        print("LOG[STOCKAPI] - stock atualizado");
+        return stock;
+      }else{
+        return null;
+      }
+    }on Exception catch(error){
       return null;
     }
   }
