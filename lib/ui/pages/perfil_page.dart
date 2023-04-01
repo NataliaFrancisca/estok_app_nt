@@ -1,6 +1,7 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/models/user_model.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/logout_function.dart';
+import 'package:estok_app_natalia_francisca/ui/widgets/custom_bottom_nav_bar.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_navigation_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -20,46 +21,11 @@ class PerfilPage extends StatelessWidget {
             fontSize: 15
           ),
         ),
-
-        leading: IconButton(
-            icon: Icon(
-              Icons.menu, 
-              color: AppColors.primaryColor
-            ),
-            onPressed: () {
-              _scaffoldKey.currentState.openDrawer();
-            },
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-        ),
-        
         centerTitle: true,
         backgroundColor: new Color(0xFFF7F2F8),
-
-        
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedLabelStyle: TextStyle(
-          color: new Color(0xFF909FAD),
-        ),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home'
-          ),
-
-          BottomNavigationBarItem(
-              icon: Icon(Icons.playlist_add),
-              label: 'Historico'
-          ),
-
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_rounded),
-              label: 'Perfil'
-          ),
-        ]
-      ),
-
+      bottomNavigationBar: CustomBottomNavBar('perfil_page'),
       drawer: CustomNavigationDrawer(_scaffoldKey),
 
       body: Center(
