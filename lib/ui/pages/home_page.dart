@@ -1,6 +1,7 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/new_stock_page.dart';
 import 'package:estok_app_natalia_francisca/ui/tabs/home_tab.dart';
+import 'package:estok_app_natalia_francisca/ui/widgets/custom_navigation_drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,6 +11,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   TabController _tabController;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -19,6 +21,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
 
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
           "ESTOK APP",
@@ -29,11 +32,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
           ),
         ),
 
-        leading: Icon(
-            Icons.menu,
-            color: AppColors.primaryColor,
+        leading: IconButton(
+            icon: Icon(
+              Icons.menu, 
+              color: AppColors.primaryColor
+            ),
+            onPressed: () {
+              _scaffoldKey.currentState.openDrawer();
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
         ),
-
+        
         centerTitle: true,
         backgroundColor: new Color(0xFFF7F2F8),
         bottom: PreferredSize(
@@ -103,58 +112,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
         child: const Icon(Icons.add),
       ),
 
-      drawer: SafeArea(
-        child: Drawer(
-          child: ListView(
-            children: [
-              UserAccountsDrawerHeader(
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/back_account.png'),
-                ),
-
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/0/04/Convenience_store_interior.jpg'),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(Colors.transparent.withOpacity(0.60), BlendMode.colorBurn)
-                  ),
-                ),
-                
-                accountName: Text('Michael Jackson'),
-                accountEmail: Text("michaeljackson@mail.com"),
-              ),
-
-              SizedBox(height: 14.0),
-
-              ListTile(
-                  leading: Icon(Icons.account_circle_rounded),
-                  title: Text('Meu Perfil'),
-                  trailing: Icon(Icons.arrow_forward_ios, size: 20),
-                  onTap: (){
-                },
-              ),
-
-              ListTile(
-                  leading: Icon(Icons.store),
-                  title: Text('Estoques'),
-                  trailing: Icon(Icons.arrow_forward_ios, size: 20),
-                  onTap: (){
-                },
-              ),
-
-              ListTile(
-                  leading: Icon(Icons.playlist_add),
-                  title: Text('Histórico'),
-                  trailing: Icon(Icons.arrow_forward_ios, size: 20),
-                  onTap: (){
-                },
-              ),
-
-            ],
-          )
-        ),
-
-      ),
+      drawer: CustomNavigationDrawer()
       
     );
   }
