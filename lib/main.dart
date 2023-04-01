@@ -38,6 +38,7 @@ class _MyAppState extends State<MyApp> {
               theme: ThemeData(
                 primaryColor: AppColors.primaryColor,
                 accentColor: AppColors.primaryColor,
+                
               ),
                 debugShowCheckedModeBanner: false,
               home: LoginPage()
