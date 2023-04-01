@@ -54,6 +54,7 @@ flutter:
     - assets/images/default_product.png
     - assets/images/upload_image.png
     - assets/images/default_user.png
+    - assets/images/box_decoration_default.jpg
 
   fonts:
     - family: Montserrat
