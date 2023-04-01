@@ -1,5 +1,7 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/historic_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/new_stock_page.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/perfil_page.dart';
 import 'package:estok_app_natalia_francisca/ui/tabs/home_tab.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_navigation_drawer.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +12,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
-  TabController _tabController;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  TabController _tabController;
+  int _selectedIndex = 0;
+
+  static List _widgetOptions = <Widget>[
+    HomePage(),
+    HistoricPage(),
+    PerfilPage(),
+  ];
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
   }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
+        return _widgetOptions[index];
+      }));
+    });
+  }
+
+  
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,47 +92,40 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
 
       body: TabBarView(
         controller: _tabController,
-        children: [
-          HomeTab('todos'),
-          HomeTab('Em estoque'),
-          HomeTab('Em aviso'),
-          HomeTab('Em falta'),
-        ],
+          children: [
+            HomeTab('todos'),
+            HomeTab('Em estoque'),
+            HomeTab('Em aviso'),
+            HomeTab('Em falta'),
+          ],
       ),
-
+      
       bottomNavigationBar: BottomNavigationBar(
         unselectedLabelStyle: TextStyle(
           color: new Color(0xFF909FAD),
         ),
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home'
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.playlist_add),label: 'Historico'),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle_rounded),label: 'Perfil'),
+        ],
 
-          BottomNavigationBarItem(
-              icon: Icon(Icons.playlist_add),
-              label: 'Historico'
-          ),
-
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_rounded),
-              label: 'Perfil'
-          ),
-        ]
+        currentIndex: _selectedIndex,
+        selectedItemColor: AppColors.primaryColor,
+        onTap: _onItemTapped,
       ),
 
       floatingActionButton: FloatingActionButton(
+        tooltip: 'Increment Counter',
+        child: const Icon(Icons.add),
         onPressed: () => {
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
             return NewStockPage();
           }))
         },
-        tooltip: 'Increment Counter',
-        child: const Icon(Icons.add),
       ),
 
-      drawer: CustomNavigationDrawer()
+      drawer: CustomNavigationDrawer(_scaffoldKey)
       
     );
   }
