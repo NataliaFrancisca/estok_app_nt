@@ -1,10 +1,8 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/models/user_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/login_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/perfil_page.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/logout_function.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -14,7 +12,6 @@ class CustomNavigationDrawer extends StatelessWidget {
   CustomNavigationDrawer(this._homeScaffoldKey);
 
   final TextStyle customNavigationTextStyle = TextStyle(
-    fontFamily: 'Montserrat',
     fontWeight: FontWeight.w400,
     fontSize: 16,
     color: AppColors.primaryColor
@@ -39,7 +36,7 @@ class CustomNavigationDrawer extends StatelessWidget {
 
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/0/04/Convenience_store_interior.jpg'),
+                        image: AssetImage('assets/images/box_decoration_default.jpg'),
                         fit: BoxFit.cover,
                         colorFilter: ColorFilter.mode(Colors.transparent.withOpacity(0.60), BlendMode.colorBurn)
                       ),
@@ -48,7 +45,6 @@ class CustomNavigationDrawer extends StatelessWidget {
                     accountName: Text(
                       userModel.user.nome,
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
                       ),
@@ -56,7 +52,6 @@ class CustomNavigationDrawer extends StatelessWidget {
                     accountEmail: Text(
                       userModel.user.email,
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
                       ),

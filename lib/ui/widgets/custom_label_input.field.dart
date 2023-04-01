@@ -23,7 +23,6 @@ class _CustomLabelInputState extends State<CustomLabelInput> {
         Text(
           '${widget.labelText}',
           style: TextStyle(
-            fontFamily: 'Montserrat',
             fontWeight: FontWeight.w400,
             fontSize: 16,
             color: AppColors.blackTextColor,

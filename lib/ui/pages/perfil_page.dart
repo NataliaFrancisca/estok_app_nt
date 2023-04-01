@@ -54,7 +54,6 @@ class PerfilPage extends StatelessWidget {
                       Text(
                         userModel.user.nome.toUpperCase(),
                         style: TextStyle(
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w500,
                           fontSize: 22,
                           color: AppColors.primaryColor
@@ -64,7 +63,6 @@ class PerfilPage extends StatelessWidget {
                       Text(
                         userModel.user.email,
                         style: TextStyle(
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
                           color: new Color(0xFF555353)
@@ -102,7 +100,6 @@ class PerfilPage extends StatelessWidget {
                             userModel.user.telefone,
                             style: TextStyle(
                               fontSize: 16,
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w500,
                             )
                           )
@@ -130,7 +127,6 @@ class PerfilPage extends StatelessWidget {
                             userModel.user.email,
                             style: TextStyle(
                               fontSize: 16,
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w500,
         
                             )

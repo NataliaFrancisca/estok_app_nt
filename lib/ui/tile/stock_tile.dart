@@ -36,7 +36,6 @@ class StockTile extends StatelessWidget with StockStatusValidator{
                         '${this._stock.descricao}'.toUpperCase(),
                         style: TextStyle(
                           fontSize: 13,
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700
                         ),
                     ),
@@ -51,7 +50,6 @@ class StockTile extends StatelessWidget with StockStatusValidator{
                         'Total: ${this._stock.quantidade_total}'.toUpperCase(),
                         style: TextStyle(
                           fontSize: 12,
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w400
                         )
                       ),
@@ -60,7 +58,6 @@ class StockTile extends StatelessWidget with StockStatusValidator{
                         'TIPO: ${this._stock.tipo}'.toUpperCase(),
                           style: TextStyle(
                               fontSize: 12,
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w400
                           )
                       ),
@@ -86,7 +83,6 @@ class StockTile extends StatelessWidget with StockStatusValidator{
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 11,
-                        fontFamily: 'Montserrat',
                         color: status(this._stock.quantidade_total)['color'],
                       ),
                     )

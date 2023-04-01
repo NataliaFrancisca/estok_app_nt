@@ -59,7 +59,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
             labelStyle: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              fontFamily: 'Montserrat',
             ),
             indicator: UnderlineTabIndicator(
               borderSide: BorderSide(width: 6.0, color: AppColors.primaryColor)

@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
               Text(
                 "ESTOK APP",
                 style: TextStyle(
-                  fontFamily: 'Montserrat',
+                  
                   fontWeight: FontWeight.w400,
                   fontSize: 34,
                   color: AppColors.blackTextColor,
@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
               Text(
                 "Login",
                 style: TextStyle(
-                  fontFamily: 'Montserrat',
+                  
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
                   color: AppColors.blackTextColor,

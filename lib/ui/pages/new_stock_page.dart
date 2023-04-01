@@ -147,7 +147,6 @@ class _NewStockPageState extends State<NewStockPage> {
                         ),
                         
                         style: TextStyle(
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
                           color: AppColors.primaryColor,

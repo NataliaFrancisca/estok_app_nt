@@ -112,7 +112,7 @@ class _NewProductPageState extends State<NewProductPage> {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
-                    fontFamily: 'Montserrat'
+                    
                   ),
                   textAlign: TextAlign.center,
                 ),

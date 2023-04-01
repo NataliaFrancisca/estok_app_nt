@@ -39,7 +39,6 @@ class ProductTile extends StatelessWidget {
                               '${_product.nome}',
                               style: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: 'Montserrat',
                                   color: new Color(0xFF555353),
                                   fontWeight: FontWeight.w700),
                             ),
@@ -49,7 +48,6 @@ class ProductTile extends StatelessWidget {
                               "${_product.descricao}",
                               style: TextStyle(
                                 fontSize: 12,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                                 color: new Color(0xFF949191)
                               ),
@@ -65,7 +63,6 @@ class ProductTile extends StatelessWidget {
                             '${formatValueTypeMoney(_product.valor_item)}',
                             style: TextStyle(
                               fontSize: 16,
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w800,
                               color: AppColors.primaryColor
                             ),
@@ -77,7 +74,6 @@ class ProductTile extends StatelessWidget {
                             '${formatValueTypeMoney(_product.valor_unitario)}',
                             style: TextStyle(
                               fontSize: 16,
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w400,
                             ),
                           
@@ -100,7 +96,6 @@ class ProductTile extends StatelessWidget {
                         '${_product.quantidade}',
                         style: TextStyle(
                           fontSize: 18,
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w400,
                         ),
                         

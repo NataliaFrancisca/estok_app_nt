@@ -21,7 +21,6 @@ class HistoricTile extends StatelessWidget {
                         'INSERÇÃO PRODUTO OMO',
                         style: TextStyle(
                           fontSize: 14,
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700
                         ),
                         overflow: TextOverflow.ellipsis,
@@ -31,7 +30,6 @@ class HistoricTile extends StatelessWidget {
                         'PRODUTO',
                         style: TextStyle(
                           fontSize: 12,
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w600,
                           color: new Color(0xFF949191)
                         )
@@ -47,7 +45,6 @@ class HistoricTile extends StatelessWidget {
                         '09/10/2022',
                         style: TextStyle(
                           fontSize: 14,
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700,
                           color: AppColors.primaryColor
                         )
@@ -57,7 +54,6 @@ class HistoricTile extends StatelessWidget {
                         '08:20',
                         style: TextStyle(
                           fontSize: 14,
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w400,
                         ),
 
