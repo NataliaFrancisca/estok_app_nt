@@ -11,9 +11,7 @@ class UserModel extends Model{
     return ScopedModel.of<UserModel>(context);
   }
 
-  void login(String email, String senha,
-   {VoidCallback onSuccess, VoidCallback onFail(String message)}) async {
-    // TODO informar a classe api os meus dados, obter esses dados, obter meu usuario
+  void login(String email, String senha, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async {
     user = await UserApi.instance.signIn(email, senha);
 
     if(user != null){
@@ -21,6 +19,17 @@ class UserModel extends Model{
       onSuccess();
     }else{
       onFail("Erro ao efetuar login!");
+    }
+  }
+
+  void logOut({VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
+    user = await UserApi.instance.signOut();
+
+    if(user != null){
+      await UserRepository.instance.deleteUsuario();
+      onSuccess();
+    }else{
+      onFail("Erro ao fazer logout");
     }
   }
 
