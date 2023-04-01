@@ -1,6 +1,9 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/models/user_model.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/login_page.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/perfil_page.dart';
+import 'package:estok_app_natalia_francisca/ui/utils/logout_function.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -75,7 +78,10 @@ class CustomNavigationDrawer extends StatelessWidget {
                     ),
                     trailing: Icon(Icons.arrow_forward_ios, size: 20),
                     onTap: (){
-                  },
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
+                        return PerfilPage();
+                      }));
+                    },
                 ),
             ),
 
@@ -89,7 +95,10 @@ class CustomNavigationDrawer extends StatelessWidget {
                   ),
                   trailing: Icon(Icons.arrow_forward_ios, size: 20),
                   onTap: (){
-                },
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
+                      return HomePage();
+                    }));
+                  },
               ),
             ),
 
@@ -111,7 +120,7 @@ class CustomNavigationDrawer extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 100),
               child: ElevatedButton(
                 onPressed: (){
-                  logOut(context);
+                  logOut(context, _homeScaffoldKey);
                 },
                 child: Text(
                     'Sair',
@@ -136,47 +145,6 @@ class CustomNavigationDrawer extends StatelessWidget {
           ],
         )
       )
-    );
-  }
-
-  void logOut(context){
-      UserModel.of(context).logOut(
-        onSuccess: (){
-          Message.onSuccess(
-            scaffoldKey: _homeScaffoldKey,
-            message: "Logout realizado com sucesso!",
-            seconds: 2,
-            onPop: (value){
-               Navigator.pushAndRemoveUntil(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (BuildContext context, Animation animation, Animation secondaryAnimation) {
-                    return LoginPage();
-                  },
-                  transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-                    return new SlideTransition(
-                      position: new Tween<Offset>(
-                        begin: const Offset(1.0, 0.0),
-                        end: Offset.zero,
-                      ).animate(animation),
-                      child: child,
-                    );
-                  }
-                ),
-
-                (Route route) => false);
-              }  
-          );
-        return;
-      },
-
-      onFail: (String message){
-        Message.onFail(
-          scaffoldKey: _homeScaffoldKey,
-          message: message
-        );
-        return;
-      }
     );
   }
 }
