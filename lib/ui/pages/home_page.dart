@@ -1,4 +1,5 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app_natalia_francisca/models/stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/historic_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/new_stock_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/perfil_page.dart';
@@ -16,13 +17,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   TabController _tabController;
 
-
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
+    StockModel.of(context).fetch();
   }
-
 
   Widget build(BuildContext context) {
     return Scaffold(
