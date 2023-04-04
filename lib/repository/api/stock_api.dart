@@ -13,7 +13,7 @@ class StockApi{
 
   BuildContext context;
 
-  Future<List<Stock>> getAll(type) async{
+  Future<List<Stock>> getAll() async{
     List<Stock> stock;
 
     try{
