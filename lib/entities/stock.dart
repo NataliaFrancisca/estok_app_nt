@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Stock{
   int id;
   String descricao;
@@ -63,6 +65,25 @@ class Stock{
     };
   }
 
+  static Map<String, dynamic> toMap(Stock stock) => {
+    "id": stock.id,
+    "descricao": stock.descricao,
+    "quantidade_total": stock.quantidade_total,
+    "data_entrada": stock.data_entrada,
+    "data_validade": stock.data_validade,
+    "tipo": stock.tipo,
+    "status_estoque": stock.status_estoque
+  };
+
+  static String encode(List<Stock> listStock){
+    return json.encode(
+      listStock.map<Map<String, dynamic>>((stock) => Stock.toMap(stock)).toList()
+    );
+  }
+
+  static List<Stock> decode(String listStock){
+    return (json.decode(listStock) as List<dynamic>).map<Stock>((item) => Stock.fromJson(item)).toList();
+  }
 }
 
 
