@@ -17,21 +17,21 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   @override
-  void initState(){
+
+  void initState() {
     super.initState();
-    StockModel.of(context).filterStock(widget.type);
+    _reload();
   }
 
-  void _reload(){
+  void _reload() {
     StockModel.of(context).fetch();
-    StockModel.of(context).filterStock(widget.type);
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<StockModel>(builder: (context, child, stockModel){
       return FutureBuilder(
-        future: stockModel.filteredStock,
+        future: stockModel.futureStock,
         builder: (BuildContext context, AsyncSnapshot<List<Stock>> snapshot){
             if(snapshot.hasError){
               return Message.alert("Não foi possível obter os dados do servidor");
