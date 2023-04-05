@@ -127,9 +127,10 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
               scaffoldKey: _scaffoldKey,
               message: "Usuário logado com sucesso!",
               onPop: (value) {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-                  return HomePage();
-                }));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
+                //   return HomePage();
+                // }));
               }
           );
           return;
