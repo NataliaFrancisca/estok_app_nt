@@ -222,9 +222,10 @@ class _NewStockPageState extends State<NewStockPage> {
           message: 'Estoque salvo com sucesso',
           seconds: 2,
           onPop: (value){
-            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                return HomePage();
-            })); 
+            Navigator.pop(context);
+            // Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+            //     return HomePage();
+            // })); 
           }
         );
         return;
@@ -258,9 +259,7 @@ class _NewStockPageState extends State<NewStockPage> {
           message: 'Estoque atualizado com sucesso',
           seconds: 2,
           onPop: (value){
-            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                return StockPage(widget.stockEdit);
-            })); 
+           Navigator.pop(context); 
           }
         );
         return;
@@ -275,6 +274,4 @@ class _NewStockPageState extends State<NewStockPage> {
     );
   }
 
-
-
-}
+  }
