@@ -11,7 +11,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 class ProductStockModel extends Model{
   Future<List<Product>> futureProduct;
-  Future<int> futureTotalProducts;
+  num futureTotalProducts = 100;
   File file;
 
   static ProductStockModel of (BuildContext context){
@@ -26,6 +26,21 @@ class ProductStockModel extends Model{
     this.futureProduct = Future.delayed(Duration(seconds: Duration.millisecondsPerDay));
     setState();
     this.futureProduct = ProductApi.instance.getAll(id);
+    setState();
+  }
+
+  teste(int id) async{
+    var teste = await ProductApi.instance.getAll(id);
+    num total = 0;
+
+    teste.forEach((element) {
+      double valorItem = element.toJson()['valor_item'];
+      int valorQuantidade = element.toJson()['quantidade'];
+      num sum = valorItem * valorQuantidade;
+      total += sum;
+    });
+
+    this.futureTotalProducts = total;
     setState();
   }
 
