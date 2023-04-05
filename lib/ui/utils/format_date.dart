@@ -6,7 +6,7 @@ String tranformDate(DateTime date) {
 
 DateTime tranformStringDate(String date){
   var arr = date.split('/').reversed.join('-');
-  return DateTime.parse(arr);
+  return DateTime.parse(arr).toLocal();
 }
 
 String removeTheUTC(String stringDate){
