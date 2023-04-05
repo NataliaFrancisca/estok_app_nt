@@ -49,10 +49,9 @@ class StockModel extends Model{
   }
 
   void deleteStock(int id, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
-    await deleteAllProductFromStock(id);
+    deleteAllProductFromStock(id);
     var stockDelete = await StockApi.instance.delete(id);
     List<Product> listProductsDeleted = await ProductApi.instance.getAll(id);
-
 
     if(stockDelete != null && listProductsDeleted.isEmpty){
       onSuccess();
@@ -77,7 +76,7 @@ class StockModel extends Model{
     print(this.filteredStock);
   }
 
-  Future<String> deleteAllProductFromStock(int stockID) async{
+  void deleteAllProductFromStock(int stockID) async{
     List<Product> listProducts = await ProductApi.instance.getAll(stockID);
     
     listProducts.forEach((Product product) {
