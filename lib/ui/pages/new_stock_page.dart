@@ -223,9 +223,6 @@ class _NewStockPageState extends State<NewStockPage> {
           seconds: 2,
           onPop: (value){
             Navigator.pop(context);
-            // Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-            //     return HomePage();
-            // })); 
           }
         );
         return;
