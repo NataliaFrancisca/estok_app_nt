@@ -18,10 +18,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   TabController _tabController;
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-    StockModel.of(context).fetch();
+    _tabController = TabController(initialIndex: 0, length: 4, vsync: this);
   }
 
   Widget build(BuildContext context) {
@@ -90,9 +89,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
         tooltip: 'Increment Counter',
         child: const Icon(Icons.add),
         onPressed: () => {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-            return NewStockPage();
-          }))
+          Navigator.push(context, MaterialPageRoute(builder: (context) => NewStockPage()))
         },
       ),
 
