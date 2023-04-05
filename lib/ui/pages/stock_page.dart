@@ -26,7 +26,6 @@ class StockPage extends StatefulWidget {
 class _StockPageState extends State<StockPage> with StockStatusValidator {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   @override
   void initState(){
     super.initState();
@@ -53,10 +52,7 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
             icon: Icon(Icons.arrow_back),
             color: AppColors.primaryColor,
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (BuildContext context) {
-                return HomePage();
-              }));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
             },
           ),
           actions: [],
@@ -66,9 +62,10 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
 
         floatingActionButton: FloatingActionButton(
           onPressed: () => {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-              return NewProductPage(widget._stock);
-            }))
+            Navigator.push(context, MaterialPageRoute(builder: (context) => NewProductPage(widget._stock)))
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
+            //   return NewProductPage(widget._stock);
+            // }))
           },
           tooltip: 'Add New Product',
           child: const Icon(Icons.add)
@@ -207,7 +204,6 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                                       this._reload();
                                     },
                                     child: ListView.builder(
-            
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (BuildContext context, int index){
                                         return ProductTile(snapshot.data[index]);
@@ -237,10 +233,7 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
           message: 'Estoque deletado com sucesso',
           seconds: 2,
           onPop: (value){
-            // Navigator.of(context).pop();
-            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                return HomePage();
-            })); 
+           Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
           }
         );
         return;
