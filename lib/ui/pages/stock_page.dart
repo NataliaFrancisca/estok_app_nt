@@ -34,6 +34,7 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
 
   void _reload(){
     ProductStockModel.of(context).fetch(widget._stock.id);
+    ProductStockModel.of(context).teste(widget._stock.id);
   }
 
   @override
@@ -63,9 +64,6 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
         floatingActionButton: FloatingActionButton(
           onPressed: () => {
             Navigator.push(context, MaterialPageRoute(builder: (context) => NewProductPage(widget._stock)))
-            // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-            //   return NewProductPage(widget._stock);
-            // }))
           },
           tooltip: 'Add New Product',
           child: const Icon(Icons.add)
@@ -80,21 +78,28 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomTextStockDetails('TIPO: ${widget._stock.tipo}'),
-                        CustomTextStockDetails(
-                            'Entrada em: ${tranformDate(DateTime.parse(widget._stock.data_entrada))}'),
-                        CustomTextStockDetails(
-                            'Validade: ${tranformDate(DateTime.parse(widget._stock.data_validade))}'),
-                        CustomTextStockDetails(
-                            'Valor Total: ${formatValueTypeMoney(20000)}')
-                      ],
+                    ScopedModelDescendant(
+                      builder: (BuildContext context, Widget child, ProductStockModel productStockModel){
+                          return Column(
+                            children: [
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      CustomTextStockDetails('TIPO: ${widget._stock.tipo}'),
+                                      CustomTextStockDetails(
+                                          'Entrada em: ${tranformDate(DateTime.parse(widget._stock.data_entrada))}'),
+                                      CustomTextStockDetails(
+                                          'Validade: ${tranformDate(DateTime.parse(widget._stock.data_validade))}'),
+                                      CustomTextStockDetails(
+                                          'Valor Total: ${formatValueTypeMoney(productStockModel.futureTotalProducts)}')
+                                    ],
+                              ),
+                            ],
+                          );
+                      }
                     ),
 
-                    
                     Column(
                       children: [
                         SizedBox(height: 10),
@@ -119,7 +124,6 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                         IconButton(
                           icon: Icon(Icons.edit, color: Colors.black),
                           onPressed: (){
-                            // StockModel.of(context).editStock(widget._stock);
                             Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                               return NewStockPage(
                                 stockEdit: widget._stock,
