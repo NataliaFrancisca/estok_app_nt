@@ -287,7 +287,7 @@ class _NewProductPageState extends State<NewProductPage> {
     this.product.estoque_id = widget._stock.id;
     this.product.nome = this.nameProductController.text;
     this.product.descricao = this.descriptionProductController.text;
-    this.product.valor_item = double.parse(this.priceUnitProductController.text);
+    this.product.valor_item = double.parse(this.priceItemProductController.text);
     this.product.valor_unitario = double.parse(this.priceUnitProductController.text);
     this.product.quantidade = int.parse(this.quantityProductController.text);
     this.product.site = this.siteProductController.text;
@@ -297,6 +297,7 @@ class _NewProductPageState extends State<NewProductPage> {
 
     ProductStockModel.of(context).addProduct(
       this.product,
+      widget._stock,
       onSuccess: (){
         Message.onSuccess(
           scaffoldKey: _scaffoldKey,
