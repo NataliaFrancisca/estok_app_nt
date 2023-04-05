@@ -12,9 +12,10 @@ class StockTile extends StatelessWidget with StockStatusValidator{
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-          return StockPage(this._stock);
-        }));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => StockPage(this._stock)));
+        // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
+        //   return StockPage(this._stock);
+        // }));
       },
       child: Card(
         margin: EdgeInsets.all(10.0),
