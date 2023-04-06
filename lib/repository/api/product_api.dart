@@ -100,4 +100,34 @@ class ProductApi{
       return null;
     }
   }
+
+  Future<Product> update(Product product) async{
+    try{
+      var encode = json.encode(product.toJson());
+      String url = "http://54.90.203.92/estoques/${product.estoque_id}/produtos/";
+      User user = await UserRepository.instance.getUsuario();
+      String authorization = 'Bearer ${user.token}';
+
+      var response = await http.put(url,
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': authorization
+        },
+        body: encode
+      );
+
+      if(response.statusCode == 200){
+        var responseData = json.decode(utf8.decode(response.bodyBytes));
+        Product product = Product.fromJson(responseData);
+        print("PRODUTO ATUALIZADO COM SUCESSO");
+        return product;
+      }else{
+        return null;
+      }
+
+    } on Exception catch(error){
+      return null;
+    }
+  }
+
 }
