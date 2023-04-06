@@ -110,8 +110,6 @@ class StockApi{
       User user = await UserRepository.instance.getUsuario();
       String authorization = 'Bearer ${user.token}';
 
-      print('ENCODE UPDATE STOCK $authorization');
-
       var response = await http.put(url,
         headers: {
           'Content-type': 'application/json',
@@ -119,8 +117,6 @@ class StockApi{
         },
         body: encode
       );
-
-       print('STATUS CODE ${response.statusCode}');
 
       if(response.statusCode == 200){
         var responseData = json.decode(utf8.decode(response.bodyBytes));
