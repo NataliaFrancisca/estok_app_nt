@@ -1,11 +1,14 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/entities/product.dart';
+import 'package:estok_app_natalia_francisca/entities/stock.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/new_product_page.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/format_money.dart';
 import 'package:flutter/material.dart';
 
 class ProductTile extends StatelessWidget {
   final Product _product;
-  ProductTile(this._product);
+  final Stock _stock;
+  ProductTile(this._product, this._stock);
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +107,9 @@ class ProductTile extends StatelessWidget {
                         children: [
                           IconButton(
                             icon: Icon(Icons.edit, color: Colors.black),
-                            onPressed: null),
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => NewProductPage(isEditProduct: true, productEdit: this._product, stock: this._stock)));
+                            }),
                           IconButton(
                             icon: Icon(Icons.share, color: Colors.black),
                             onPressed: null)
