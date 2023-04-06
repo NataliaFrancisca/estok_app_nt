@@ -80,7 +80,7 @@ class StockModel extends Model{
     List<Product> listProducts = await ProductApi.instance.getAll(stockID);
     
     listProducts.forEach((Product product) {
-      ProductApi.instance.delete(stockID, product.toJson()['id']);
+      ProductApi.instance.delete(product);
     });
   }
 
