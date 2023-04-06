@@ -11,7 +11,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 class ProductStockModel extends Model{
   Future<List<Product>> futureProduct;
-  num futureTotalProducts = 100;
+  num priceStock = 0;
   File file;
 
   static ProductStockModel of (BuildContext context){
@@ -27,41 +27,27 @@ class ProductStockModel extends Model{
     setState();
     this.futureProduct = ProductApi.instance.getAll(id);
     setState();
-  }
-
-  teste(int id) async{
-    var teste = await ProductApi.instance.getAll(id);
-    num total = 0;
-
-    teste.forEach((element) {
-      double valorItem = element.toJson()['valor_item'];
-      int valorQuantidade = element.toJson()['quantidade'];
-      num sum = valorItem * valorQuantidade;
-      total += sum;
-    });
-
-    this.futureTotalProducts = total;
-    setState();
+    getPriceStock();
   }
 
   void addProduct(Product product, Stock stock, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
-    
-    if(file != null){
-      String urlImage = await uploadImageFile(this.file);
-  
-      if(urlImage != null){
-        product.imagem = urlImage;
-        file = null;
-      }else{
-        onFail('Erro ao adicionar a imagem do produto');
-        return;
-      }
+    final resultCheckImageFile = await checkImageFile();
+    if(resultCheckImageFile == null){
+      onFail('Erro ao adicionar a imagem do produto');
+      return;
+    }else{
+      product.imagem = resultCheckImageFile; 
     }
 
     Product productSaved = await ProductApi.instance.save(product);
-    Stock updatedStock = await StockApi.instance.update(updateStockElements(stock, product));
+    bool shouldUpdateStock;
 
-    if(productSaved != null && updatedStock != null){
+    if(productSaved != null){
+      Stock updatedCountTotalStockProducts = await StockApi.instance.update(functionUpdateCountTotalProducts(stock, product, false));
+      shouldUpdateStock = updatedCountTotalStockProducts != null;
+    }
+
+    if(productSaved != null && shouldUpdateStock){
       product = productSaved;
       onSuccess();
     }else{
@@ -71,17 +57,82 @@ class ProductStockModel extends Model{
     setState();
   }
 
+  void updateProduct(
+    Product product,
+    Stock stock,
+    bool changedTheImageProduct,
+    bool changedTheProductTotal,
+    {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
+    
+    if(changedTheImageProduct){
+      final resultCheckImageFile = await checkImageFile();
+
+      if(resultCheckImageFile == null){
+        onFail('Erro ao atualizar a imagem do produto');
+        return;
+      }else{
+        product.imagem = resultCheckImageFile; 
+      }
+    }
+
+    Product productUpdated = await ProductApi.instance.update(product);
+    bool stockUpdated = true;
+
+    if(changedTheProductTotal){
+      Stock updatedCountStockTotalProducts = await StockApi.instance.update(functionUpdateCountTotalProducts(stock, product, false));
+      stockUpdated = updatedCountStockTotalProducts != null;
+    }
+
+    if(productUpdated != null && stockUpdated){
+      product = productUpdated;
+      onSuccess();
+    }else{
+      onFail('Erro ao atualizar o produto');
+    }
+
+    setState();
+  }
+
   Future<String> uploadImageFile(File file) async{
     return await UploadApi.instance.upload(file);
   }
 
-  Stock updateStockElements(Stock stock, Product product){
-    stock.quantidade_total = stock.quantidade_total + product.quantidade;
+  functionUpdateCountTotalProducts(Stock stock, Product product, bool isDeleteProduct){
+    stock.quantidade_total = isDeleteProduct ? stock.quantidade_total - product.quantidade : stock.quantidade_total + product.quantidade;
     stock.data_entrada = removeTheUTC(stock.data_entrada);
     stock.data_validade = removeTheUTC(stock.data_validade);
     return stock;
   }
 
+  checkImageFile() async{
+    if(file != null){
+      String urlImage = await uploadImageFile(this.file);
+      print("OLHA A URL $urlImage");
+      if(urlImage != null){
+        file = null;
+        return urlImage;
+      }else{
+        return null;
+      }
+    }
+  }
+  
+  getPriceStock() async{
+    List listProducts = await this.futureProduct;
+    num sumPrice = 0;
+
+    listProducts.forEach((element) {
+      double valorItem = element.toJson()['valor_item'];
+      int valorQuantidade = element.toJson()['quantidade'];
+
+      num sum = valorItem * valorQuantidade;
+      sumPrice += sum;
+    });
+
+    this.priceStock = sumPrice;
+    setState();
+  }
+  
 }
 
 
