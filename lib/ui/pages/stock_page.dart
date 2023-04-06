@@ -34,7 +34,6 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
 
   void _reload(){
     ProductStockModel.of(context).fetch(widget._stock.id);
-    ProductStockModel.of(context).teste(widget._stock.id);
   }
 
   @override
@@ -63,7 +62,7 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
 
         floatingActionButton: FloatingActionButton(
           onPressed: () => {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => NewProductPage(widget._stock)))
+            Navigator.push(context, MaterialPageRoute(builder: (context) => NewProductPage(stock: widget._stock)))
           },
           tooltip: 'Add New Product',
           child: const Icon(Icons.add)
@@ -92,7 +91,7 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                                       CustomTextStockDetails(
                                           'Validade: ${tranformDate(DateTime.parse(widget._stock.data_validade))}'),
                                       CustomTextStockDetails(
-                                          'Valor Total: ${formatValueTypeMoney(productStockModel.futureTotalProducts)}')
+                                          'Valor Total: ${formatValueTypeMoney(productStockModel.priceStock)}')
                                     ],
                               ),
                             ],
@@ -210,7 +209,7 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                                     child: ListView.builder(
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (BuildContext context, int index){
-                                        return ProductTile(snapshot.data[index]);
+                                        return ProductTile(snapshot.data[index], widget._stock);
                                       },
                                     ),
                                   );
