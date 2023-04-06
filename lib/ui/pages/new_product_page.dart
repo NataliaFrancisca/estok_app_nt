@@ -13,8 +13,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class NewProductPage extends StatefulWidget {
-  final Stock _stock;
-  NewProductPage(this._stock);
+  final Stock stock;
+  final Product productEdit;
+  final bool isEditProduct;
+
+  NewProductPage({
+    this.stock,
+    this.productEdit,
+    this.isEditProduct = false
+  });
+  
   @override
   _NewProductPageState createState() => _NewProductPageState();
 }
@@ -29,20 +37,44 @@ class _NewProductPageState extends State<NewProductPage> {
 
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  var changedTheImageProduct = false;
+  var changedTheProductTotal = false;
 
-  var product = Product();
-
-  ImageProvider getImage(ProductStockModel productStockModel){
-    if(productStockModel.file == null){
-      return AssetImage('assets/images/upload_image.png');
-    }else{
-      return FileImage(productStockModel.file);
-    }
-  }
+  Product product = Product();
 
   @override
   void initState(){
     super.initState();
+
+    updateControllers();
+    ProductStockModel.of(context).file = null;
+    ProductStockModel.of(context).setState();
+  }
+
+  ImageProvider getImage(ProductStockModel productStockModel){
+
+     if(widget.isEditProduct && widget.productEdit.imagem != null){
+      if(productStockModel.file != null){
+        return FileImage(productStockModel.file);
+      }else{
+        return NetworkImage(widget.productEdit.imagem);
+      }
+    }else if(productStockModel.file != null){
+      return FileImage(productStockModel.file);
+    }else{
+      return AssetImage('assets/images/upload_image.png');
+    }
+  }
+
+  void updateControllers(){
+    if(widget.isEditProduct){
+      nameProductController.text = widget.productEdit.nome;
+      descriptionProductController.text = widget.productEdit.nome;
+      priceItemProductController.text = widget.productEdit.valor_item.toString();
+      priceUnitProductController.text = widget.productEdit.valor_unitario.toString();
+      quantityProductController.text = widget.productEdit.quantidade.toString();
+      siteProductController.text = widget.productEdit.site;
+    }
   }
 
   @override
@@ -51,7 +83,7 @@ class _NewProductPageState extends State<NewProductPage> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
-          'NOVO PRODUTO',
+          widget.isEditProduct ? "EDITAR PRODUTO" : "NOVO PRODUTO",
           style: TextStyle(
             color: AppColors.primaryColor,
             fontWeight: FontWeight.w700,
@@ -64,7 +96,7 @@ class _NewProductPageState extends State<NewProductPage> {
           color: AppColors.primaryColor,
           onPressed: (){
             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-              return StockPage(widget._stock);
+              return StockPage(widget.stock);
             }));
           },
         ),
@@ -203,10 +235,10 @@ class _NewProductPageState extends State<NewProductPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                         onPressed: (){
-                          registerProduct();
+                          widget.isEditProduct ? updateProduct() : registerProduct();
                         },
                         child: Text(
-                            'CADASTRAR'.toUpperCase(),
+                          widget.isEditProduct ? "EDITAR" : "CADASTRAR",
                           style: TextStyle(fontSize: 15,
                           color: AppColors.blackTextColor)
                         ),
@@ -247,6 +279,9 @@ class _NewProductPageState extends State<NewProductPage> {
               
                 if(pickedFile != null){
                   productModel.file = File(pickedFile.path);
+                  if(widget.isEditProduct){
+                    changedTheImageProduct = true;
+                  }
                 }else{
                   productModel.file = null;
                 }
@@ -264,6 +299,9 @@ class _NewProductPageState extends State<NewProductPage> {
               
                 if(pickedFile != null){
                   productModel.file = File(pickedFile.path);
+                  if(widget.isEditProduct){
+                    changedTheImageProduct = true;
+                  }
                 }else{
                   productModel.file = null;
                 }
@@ -279,12 +317,57 @@ class _NewProductPageState extends State<NewProductPage> {
     );
   }
 
+  void updateProduct(){
+    if(!_formKey.currentState.validate()){
+      return;
+    }
+
+    if(widget.productEdit.quantidade != int.parse(quantityProductController.text)){
+      changedTheProductTotal = true;
+    }
+
+    widget.productEdit.nome = this.nameProductController.text;
+    widget.productEdit.descricao = this.descriptionProductController.text;
+    widget.productEdit.valor_item= double.parse(this.priceItemProductController.text);
+    widget.productEdit.valor_unitario = double.parse(this.priceUnitProductController.text);
+    widget.productEdit.quantidade = int.parse(this.quantityProductController.text);
+    widget.productEdit.site = this.siteProductController.text;
+
+    ProductStockModel.of(context).updateProduct(
+      widget.productEdit,
+      widget.stock,
+      changedTheImageProduct,
+      changedTheProductTotal,
+      onSuccess: (){
+        Message.onSuccess(
+          scaffoldKey: _scaffoldKey,
+          message: "Produto atualizado com sucesso",
+          seconds: 2,
+          onPop: (value){
+            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+              return StockPage(widget.stock);
+          })); 
+          }
+        );
+        return;
+      },
+
+      onFail: (String message){
+        Message.onFail(
+          scaffoldKey: _scaffoldKey,
+          message: message
+        );
+        return;
+      }
+    );
+  }
+  
   void registerProduct(){
     if(!_formKey.currentState.validate()){
       return;
     }
 
-    this.product.estoque_id = widget._stock.id;
+    this.product.estoque_id = widget.stock.id;
     this.product.nome = this.nameProductController.text;
     this.product.descricao = this.descriptionProductController.text;
     this.product.valor_item = double.parse(this.priceItemProductController.text);
@@ -292,12 +375,9 @@ class _NewProductPageState extends State<NewProductPage> {
     this.product.quantidade = int.parse(this.quantityProductController.text);
     this.product.site = this.siteProductController.text;
 
-    print("ID ${widget._stock.id}");
-    print(product); 
-
     ProductStockModel.of(context).addProduct(
       this.product,
-      widget._stock,
+      widget.stock,
       onSuccess: (){
         Message.onSuccess(
           scaffoldKey: _scaffoldKey,
@@ -305,7 +385,7 @@ class _NewProductPageState extends State<NewProductPage> {
           seconds: 2,
           onPop: (value){
             Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-              return StockPage(widget._stock);
+              return StockPage(widget.stock);
           })); 
           }
         );
