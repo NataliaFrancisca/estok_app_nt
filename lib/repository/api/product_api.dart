@@ -72,11 +72,9 @@ class ProductApi{
     }
   }
 
-  Future<List<Product>> delete(int idStock, int idProduct) async{
-    List<Product> product;
-
+  Future<Map<String, dynamic>> delete(Product product) async{
     try{
-      String url = "http://54.90.203.92/estoques/$idStock/produtos/$idProduct";
+      String url = "http://54.90.203.92/estoques/${product.estoque_id}/produtos/${product.id}";
       User user = await UserRepository.instance.getUsuario();
       String authorization = 'Bearer ${user.token}';
 
@@ -93,8 +91,7 @@ class ProductApi{
 
       var responseData = json.decode(utf8.decode(response.bodyBytes));
       print("PRODUTO DELETADO COM SUCESSO $responseData");
-
-      return product;
+      return responseData;
     }on Exception catch(error){
       print("Algo de errado na API Products");
       return null;
