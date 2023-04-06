@@ -93,6 +93,17 @@ class ProductStockModel extends Model{
     setState();
   }
 
+  void deleteProduct(Product product, Stock stock, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
+    var productDelete = await ProductApi.instance.delete(product);
+    var updatedCountStockTotalProducts = await StockApi.instance.update(functionUpdateCountTotalProducts(stock, product, true));
+
+    if(productDelete != null && updatedCountStockTotalProducts != null){
+      onSuccess();
+    }else{
+      onFail('Erro ao deletar o produto');
+    }
+  }
+
   Future<String> uploadImageFile(File file) async{
     return await UploadApi.instance.upload(file);
   }
