@@ -14,7 +14,6 @@ import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_stock_details
 import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:intl/intl.dart';
 
 class StockPage extends StatefulWidget {
   final Stock _stock;
@@ -73,87 +72,92 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                Container(
+                  child: 
                     ScopedModelDescendant(
                       builder: (BuildContext context, Widget child, ProductStockModel productStockModel){
-                          return Column(
-                            children: [
-                              Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      CustomTextStockDetails('TIPO: ${widget._stock.tipo}'),
-                                      CustomTextStockDetails(
-                                          'Entrada em: ${tranformDate(DateTime.parse(widget._stock.data_entrada))}'),
-                                      CustomTextStockDetails(
-                                          'Validade: ${tranformDate(DateTime.parse(widget._stock.data_validade))}'),
-                                      CustomTextStockDetails(
-                                          'Valor Total: ${formatValueTypeMoney(productStockModel.priceStock)}')
-                                    ],
-                              ),
-                            ],
-                          );
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomTextStockDetails('TIPO: ${widget._stock.tipo}'),
+                                  CustomTextStockDetails('Entrada em: ${tranformDate(DateTime.parse(widget._stock.data_entrada))}'),
+                                  CustomTextStockDetails('Validade: ${tranformDate(DateTime.parse(widget._stock.data_validade))}'),
+                                  CustomTextStockDetails('Valor Total: ${formatValueTypeMoney(productStockModel.priceStock)}'),      
+                                ],
+                            ),
+
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+
+                                children: [
+                                  SizedBox(height: 10),
+
+                                  Text(
+                                    "${widget._stock.quantidade_total}",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.blackTextColor
+                                      ),
+                                  ),
+
+                                  SizedBox(height: 10),
+
+                                  Text(
+                                    '${status(widget._stock.quantidade_total)['message']}'.toUpperCase(),
+                                      style: TextStyle(
+                                        color: status(widget._stock.quantidade_total)['color'],
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500
+                                      )
+                                  ),
+
+                                  SizedBox(height: 17),
+
+                                  IconButton(
+                                    icon: Icon(Icons.edit, color: Colors.black),
+                                    onPressed: (){
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                                        return NewStockPage(
+                                          stockEdit: widget._stock,
+                                          isEditStock: true,
+                                        );
+                                      })); 
+                                    },
+                                  ),
+
+                                  SizedBox(height: 17),
+
+                                  IconButton(
+                                    icon: Icon(Icons.delete, color: Colors.black),
+                                    onPressed: (){
+                                      Message.alertDialog(
+                                        context,
+                                        title: 'Deseja excuir o estoque?',
+                                        textOkButton: 'Sim',
+                                        onPressedOkButton: (){
+                                          deleteStock();
+                                          Navigator.of(context).pop();
+                                        },
+                                        onPressedNoButton: (){
+                                          Navigator.of(context).pop();
+                                        }
+                                      );
+                                    }
+                                  ) 
+                                ],
+                            )
+                          ]
+                        );
                       }
                     ),
-
-                    Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Text(
-                          "${widget._stock.quantidade_total}",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "Montserrat",
-                              color: AppColors.blackTextColor),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                            '${status(widget._stock.quantidade_total)['message']}'
-                                .toUpperCase(),
-                            style: TextStyle(
-                                color:
-                                    status(widget._stock.quantidade_total)['color'],
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500)),
-                        SizedBox(height: 17),
-                        IconButton(
-                          icon: Icon(Icons.edit, color: Colors.black),
-                          onPressed: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                              return NewStockPage(
-                                stockEdit: widget._stock,
-                                isEditStock: true,
-                              );
-                            })); 
-                          },
-                        ),
-                        SizedBox(height: 17),
-                        IconButton(
-                            icon: Icon(Icons.delete, color: Colors.black),
-                            onPressed: (){
-                              Message.alertDialog(
-                                context,
-                                title: 'Deseja excuir o estoque?',
-                                textOkButton: 'Sim',
-                                onPressedOkButton: (){
-                                  deleteStock();
-                                  Navigator.of(context).pop();
-                                },
-                                onPressedNoButton: (){
-                                  Navigator.of(context).pop();
-                                }
-                              );
-                            }
-                        )     
-                      ],
-                    ),
-                  ],
                 ),
-
+        
                 SizedBox(height: 40),
 
                 Row(
@@ -206,10 +210,31 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                                     onRefresh: () async{
                                       this._reload();
                                     },
+
                                     child: ListView.builder(
                                       itemCount: snapshot.data.length,
-                                      itemBuilder: (BuildContext context, int index){
-                                        return ProductTile(snapshot.data[index], widget._stock);
+                                      itemBuilder: (context, index) {
+                                        final item = snapshot.data[index];
+                                        return Dismissible(
+                                          key: Key(item.id.toString()),
+                                          onDismissed: (direction) {
+                                            Message.alertDialog(
+                                              context,
+                                              title: 'Deseja deletar o produto?',
+                                              textOkButton: 'Sim',
+                                              onPressedOkButton: (){
+                                                deleteProduct(item);
+                                                Navigator.of(context).pop();
+                                              },
+                                              onPressedNoButton: (){
+                                                Navigator.of(context).pop();
+                                                this._reload();
+                                              }
+                                            );
+                                          },
+                                          background: Container(color: Colors.red),
+                                          child: ProductTile(item, widget._stock)
+                                        );
                                       },
                                     ),
                                   );
@@ -225,6 +250,32 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
           ),
         )
       );     
+  }
+
+  void deleteProduct(Product product){
+    ProductStockModel.of(context).deleteProduct(
+      product,
+      widget._stock,
+       onSuccess: (){
+        Message.onSuccess(
+          scaffoldKey: _scaffoldKey,
+          message: 'Produto deletado com sucesso',
+          seconds: 2,
+          onPop: (value){
+            this._reload();
+          }
+        );
+        
+        return;
+      },
+      onFail: (String message){
+        Message.onFail(
+          scaffoldKey: _scaffoldKey,
+          message: message
+        );
+        return;
+      }
+    );
   }
 
   void deleteStock(){
