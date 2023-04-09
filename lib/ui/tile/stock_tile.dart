@@ -1,21 +1,22 @@
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
+import 'package:estok_app_natalia_francisca/models/stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/stock_page.dart';
 import 'package:estok_app_natalia_francisca/ui/validator/stock_status_validator.dart';
 import 'package:flutter/material.dart';
 
 class StockTile extends StatelessWidget with StockStatusValidator{
   final Stock _stock;
-  StockTile(this._stock);
-
+  final Function _reloadPage;
+  StockTile(this._stock, this._reloadPage);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => StockPage(this._stock)));
-        // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-        //   return StockPage(this._stock);
-        // }));
+      onTap: () async{
+        String refresh = await Navigator.push(context, MaterialPageRoute(builder: (context) => StockPage(this._stock)));
+          if(refresh == 'refresh'){
+            this._reloadPage();
+        }
       },
       child: Card(
         margin: EdgeInsets.all(10.0),
