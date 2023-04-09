@@ -124,8 +124,6 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
                                 controller: this.entryDateController,
                                 hintText: '12/12/2012',
                                 focusNode: _focusEntryDate,
-                                previousFocus: _focusDescription,
-                                nextFocus: _focusValidateDate,
                                 validator: (value){
                                   return validateEntryDate(value, this.expirationDateController.text);
                                 },
@@ -140,8 +138,6 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
                             inputField: CustomDateInputField(
                                 controller: this.expirationDateController,
                                 hintText: '12/12/2012',
-                                previousFocus: _focusEntryDate,
-                                nextFocus: _focusType,
                                 focusNode: _focusValidateDate,
                                 validator: (value){
                                   return validateExpirationDate(this.entryDateController.text, value);
@@ -165,10 +161,15 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
                             borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
                             borderRadius: BorderRadius.circular(15.0),
                           ),
+
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
                         ),
 
                         focusNode: _focusType,
-                        
+
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
@@ -246,7 +247,6 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
           seconds: 2,
           onPop: (value){
             Navigator.pop(context, 'refresh');
-            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
           }
         );
         return;
