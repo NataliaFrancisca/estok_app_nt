@@ -1,14 +1,34 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/entities/product.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
+import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/new_product_page.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/format_money.dart';
+import 'package:estok_app_natalia_francisca/ui/widgets/custom_product_updater.dart';
+import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
 import 'package:flutter/material.dart';
 
-class ProductTile extends StatelessWidget {
+class ProductTile extends StatefulWidget {
   final Product _product;
   final Stock _stock;
-  ProductTile(this._product, this._stock);
+  final Function _reloadPage;
+  final GlobalKey _scaffoldParentKey;
+  ProductTile(this._product, this._stock, this._reloadPage, this._scaffoldParentKey);
+
+  @override
+  _ProductTileState createState() => _ProductTileState();
+}
+
+class _ProductTileState extends State<ProductTile> {
+  Product previousProduct;
+  int quantityProductUpdated = 0;
+
+  @override
+  void initState(){
+    previousProduct = Product.clone(widget._product);
+    print(Product.clone(widget._product));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +40,8 @@ class ProductTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image(
-                image: this._product.imagem != null && this._product.imagem.contains('http')
-                ? NetworkImage('${_product.imagem}')
+                image: this.widget._product.imagem != null && this.widget._product.imagem.contains('http')
+                ? NetworkImage('${widget._product.imagem}')
                 : AssetImage('assets/images/default_product.png'), 
                 fit: BoxFit.contain,
                 width: 100,
@@ -39,7 +59,7 @@ class ProductTile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${_product.nome}',
+                              '${widget._product.nome}',
                               style: TextStyle(
                                   fontSize: 16,
                                   color: new Color(0xFF555353),
@@ -48,7 +68,7 @@ class ProductTile extends StatelessWidget {
                             
                             SizedBox(height: 10),
                             Text(
-                              "${_product.descricao}",
+                              "${widget._product.descricao}",
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
@@ -63,7 +83,7 @@ class ProductTile extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            '${formatValueTypeMoney(_product.valor_item)}',
+                            '${formatValueTypeMoney(widget._product.valor_item)}',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w800,
@@ -74,7 +94,7 @@ class ProductTile extends StatelessWidget {
                           SizedBox(height: 5),
 
                           Text(
-                            '${formatValueTypeMoney(_product.valor_unitario)}',
+                            '${formatValueTypeMoney(widget._product.valor_unitario)}',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
@@ -96,23 +116,33 @@ class ProductTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${_product.quantidade}',
+                        '${widget._product.quantidade}',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
                         ),
-                        
                       ),
                       ButtonBar(
                         children: [
                           IconButton(
+                            icon: Icon(Icons.share, color: Colors.black),
+                            onPressed: (){
+                              showDialog(
+                                context: context,
+                                child: CustomProductUpdater(
+                                  widget._product,
+                                  updateProduct
+                                )
+                              );
+                            },
+                          ),
+
+                          IconButton(
                             icon: Icon(Icons.edit, color: Colors.black),
                             onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => NewProductPage(isEditProduct: true, productEdit: this._product, stock: this._stock)));
-                            }),
-                          IconButton(
-                            icon: Icon(Icons.share, color: Colors.black),
-                            onPressed: null)
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => NewProductPage(isEditProduct: true, productEdit: this.widget._product, stock: this.widget._stock)));
+                            }
+                          ),
                         ],
                       )
                     ]
@@ -134,6 +164,44 @@ class ProductTile extends StatelessWidget {
         ),
         
       ]
+    );
+  }
+
+  void updateProduct(int productQuantity){
+    if(productQuantity < 0){
+      return;
+    }
+    
+    widget._product.quantidade = productQuantity;
+
+    bool changedTheImageProduct = false;
+    bool changedTheProductTotal = true;
+    
+    ProductStockModel.of(context).updateProduct(
+      widget._product,
+      previousProduct,
+      widget._stock,
+      changedTheImageProduct,
+      changedTheProductTotal,
+      onSuccess: (){
+        Message.onSuccess(
+          scaffoldKey: widget._scaffoldParentKey,
+          message: "Produto atualizado com sucesso",
+          seconds: 2,
+          onPop: (value){
+            widget._reloadPage();
+          }
+        );
+        return;
+      },
+
+      onFail: (String message){
+        Message.onFail(
+          scaffoldKey: widget._scaffoldParentKey,
+          message: message
+        );
+        return;
+      }
     );
   }
 }
