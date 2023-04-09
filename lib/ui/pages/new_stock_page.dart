@@ -3,6 +3,7 @@ import 'package:estok_app_natalia_francisca/entities/stock.dart';
 import 'package:estok_app_natalia_francisca/models/stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/stock_page.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
+import 'package:estok_app_natalia_francisca/ui/validator/stock_validator.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_date_input_field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_label_input.field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
@@ -24,7 +25,7 @@ class NewStockPage extends StatefulWidget {
   State<NewStockPage> createState() => _NewStockPageState();
 }
 
-class _NewStockPageState extends State<NewStockPage> {
+class _NewStockPageState extends State<NewStockPage> with StockValidator{
   TextEditingController descriptionController = TextEditingController();
   TextEditingController entryDateController = TextEditingController();
   TextEditingController expirationDateController = TextEditingController();
@@ -32,6 +33,11 @@ class _NewStockPageState extends State<NewStockPage> {
 
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final FocusNode _focusDescription = FocusNode();
+  final FocusNode _focusEntryDate = FocusNode();
+  final FocusNode _focusValidateDate = FocusNode();
+  final FocusNode _focusType = FocusNode();
 
   var stock = Stock();
 
@@ -97,9 +103,12 @@ class _NewStockPageState extends State<NewStockPage> {
                     labelText: 'Descrição',
                     hintText: 'Descrição do produto',
                     keyboardType: TextInputType.text,
-                    requestFocus: null,
+                    focusNode: _focusDescription,
+                    requestFocus: _focusEntryDate,
+                    nextFocus: _focusEntryDate,
                     behaviorLabel: FloatingLabelBehavior.never,
                     inputPadding: EdgeInsets.only(left: 25, top: 18, bottom: 18),
+                    validator: validateDescription,
                   )
                 ),
 
@@ -114,6 +123,12 @@ class _NewStockPageState extends State<NewStockPage> {
                             inputField: CustomDateInputField(
                                 controller: this.entryDateController,
                                 hintText: '12/12/2012',
+                                focusNode: _focusEntryDate,
+                                previousFocus: _focusDescription,
+                                nextFocus: _focusValidateDate,
+                                validator: (value){
+                                  return validateEntryDate(value, this.expirationDateController.text);
+                                },
                             ),
                           ),
                         ),
@@ -125,6 +140,12 @@ class _NewStockPageState extends State<NewStockPage> {
                             inputField: CustomDateInputField(
                                 controller: this.expirationDateController,
                                 hintText: '12/12/2012',
+                                previousFocus: _focusEntryDate,
+                                nextFocus: _focusType,
+                                focusNode: _focusValidateDate,
+                                validator: (value){
+                                  return validateExpirationDate(this.entryDateController.text, value);
+                                },
                             ),
                           ),
                         ),
@@ -145,6 +166,8 @@ class _NewStockPageState extends State<NewStockPage> {
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                         ),
+
+                        focusNode: _focusType,
                         
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
