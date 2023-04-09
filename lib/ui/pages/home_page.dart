@@ -21,6 +21,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   void initState(){
     super.initState();
     _tabController = TabController(initialIndex: 0, length: 4, vsync: this);
+    StockModel.of(context).fetch('todos');
+  }
+
+  _reloadData(){
+    StockModel.of(context).fetch('todos');
   }
 
   Widget build(BuildContext context) {
@@ -88,13 +93,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
       floatingActionButton: FloatingActionButton(
         tooltip: 'Increment Counter',
         child: const Icon(Icons.add),
-        onPressed: () => {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => NewStockPage()))
+        onPressed: () async {
+          String refresh = await Navigator.push(context, MaterialPageRoute(builder: (context) => NewStockPage()));
+          if(refresh == 'refresh'){
+            _reloadData();
+          }
         },
       ),
 
       drawer: CustomNavigationDrawer(_scaffoldKey)
-      
     );
   }
 }
