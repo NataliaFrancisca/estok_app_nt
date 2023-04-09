@@ -5,6 +5,7 @@ import 'package:estok_app_natalia_francisca/entities/product.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
 import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/stock_page.dart';
+import 'package:estok_app_natalia_francisca/ui/validator/product_validator.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_label_input.field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
@@ -27,7 +28,7 @@ class NewProductPage extends StatefulWidget {
   _NewProductPageState createState() => _NewProductPageState();
 }
 
-class _NewProductPageState extends State<NewProductPage> {
+class _NewProductPageState extends State<NewProductPage> with ProductValidator{
   TextEditingController nameProductController = TextEditingController();
   TextEditingController descriptionProductController = TextEditingController();
   TextEditingController priceItemProductController = TextEditingController();
@@ -37,6 +38,14 @@ class _NewProductPageState extends State<NewProductPage> {
 
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final FocusNode _focusName = FocusNode();
+  final FocusNode _focusDescription = FocusNode();
+  final FocusNode _focusPriceItem = FocusNode();
+  final FocusNode _focusPriceUnit = FocusNode();
+  final FocusNode _focusQuantity = FocusNode();
+  final FocusNode _focusSite = FocusNode();
+
   var changedTheImageProduct = false;
   var changedTheProductTotal = false;
 
@@ -45,14 +54,12 @@ class _NewProductPageState extends State<NewProductPage> {
   @override
   void initState(){
     super.initState();
-
     updateControllers();
     ProductStockModel.of(context).file = null;
     ProductStockModel.of(context).setState();
   }
 
   ImageProvider getImage(ProductStockModel productStockModel){
-
      if(widget.isEditProduct && widget.productEdit.imagem != null){
       if(productStockModel.file != null){
         return FileImage(productStockModel.file);
@@ -161,9 +168,12 @@ class _NewProductPageState extends State<NewProductPage> {
                     controller: this.nameProductController,
                     hintText: 'Heineken Original',
                     keyboardType: TextInputType.text,
-                    requestFocus: null,
+                    focusNode: _focusName,
+                    requestFocus: _focusDescription,
+                    nextFocus: _focusDescription,
                     behaviorLabel: FloatingLabelBehavior.never,
                     inputPadding: EdgeInsets.only(left: 25, top: 18, bottom: 18),
+                    validator: validateName,
                   )
                 ),
 
@@ -174,10 +184,13 @@ class _NewProductPageState extends State<NewProductPage> {
                     controller: this.descriptionProductController,
                     hintText: 'Uma das melhores marcas em uma casa só',
                     keyboardType: TextInputType.text,
-                    requestFocus: null,
+                    focusNode: _focusDescription,
+                    previousFocus: _focusName,
+                    nextFocus: _focusPriceItem,
                     behaviorLabel: FloatingLabelBehavior.never,
                     inputPadding: EdgeInsets.only(left: 25, top: 18, bottom: 18),
-                    maxLines: 4,
+                    // maxLines: 4,
+                    validator: validateDescription,
                   )
                 ),
 
@@ -187,9 +200,12 @@ class _NewProductPageState extends State<NewProductPage> {
                     controller: this.priceItemProductController,
                     hintText: 'R\$45.00',
                     keyboardType: TextInputType.number,
-                    requestFocus: null,
+                    focusNode: _focusPriceItem,
+                    previousFocus: _focusDescription,
+                    nextFocus: _focusPriceUnit,
                     behaviorLabel: FloatingLabelBehavior.never,
                     inputPadding: EdgeInsets.only(left: 25, top: 18, bottom: 18),
+                    validator: validateValueItem,
                   )
                 ),
 
@@ -199,9 +215,13 @@ class _NewProductPageState extends State<NewProductPage> {
                     controller: this.priceUnitProductController,
                     hintText: 'R\$7.00',
                     keyboardType: TextInputType.number,
-                    requestFocus: null,
+                    focusNode: _focusPriceUnit,
+                    previousFocus: _focusPriceItem,
+                    nextFocus: _focusQuantity,
+                    
                     behaviorLabel: FloatingLabelBehavior.never,
                     inputPadding: EdgeInsets.only(left: 25, top: 18, bottom: 18),
+                    validator: validateValueUnit,
                   )
                 ),
 
@@ -211,9 +231,12 @@ class _NewProductPageState extends State<NewProductPage> {
                     controller: this.quantityProductController,
                     hintText: '10',
                     keyboardType: TextInputType.number,
-                    requestFocus: null,
+                    focusNode: _focusQuantity,
+                    previousFocus: _focusPriceUnit,
+                    nextFocus: _focusSite,
                     behaviorLabel: FloatingLabelBehavior.never,
                     inputPadding: EdgeInsets.only(left: 25, top: 18, bottom: 18),
+                    validator: validateQuantity,
                   )
                 ),
 
@@ -223,9 +246,11 @@ class _NewProductPageState extends State<NewProductPage> {
                     controller: this.siteProductController,
                     hintText: 'Informe a URL',
                     keyboardType: TextInputType.text,
-                    requestFocus: null,
+                    focusNode: _focusSite,
+                    previousFocus: _focusQuantity,
                     behaviorLabel: FloatingLabelBehavior.never,
                     inputPadding: EdgeInsets.only(left: 25, top: 18, bottom: 18),
+                    validator: validateSite,
                   )
                 ),
 
