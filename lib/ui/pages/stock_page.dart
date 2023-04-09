@@ -288,7 +288,7 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
           message: 'Estoque deletado com sucesso',
           seconds: 2,
           onPop: (value){
-           Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+            Navigator.pop(context, 'refresh');
           }
         );
         return;
