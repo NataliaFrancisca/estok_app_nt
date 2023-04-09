@@ -10,8 +10,6 @@ class CustomDateInputField extends StatefulWidget {
   final FocusNode focusNode;
   final FocusNode requestFocus;
   final FormFieldValidator<String> validator;
-  final FocusNode previousFocus;
-  final FocusNode nextFocus;
 
   CustomDateInputField({
     @required this.controller,
@@ -21,8 +19,6 @@ class CustomDateInputField extends StatefulWidget {
     this.focusNode,
     this.requestFocus,
     this.validator,
-    this.previousFocus,
-    this.nextFocus
   });
 
   @override
@@ -37,11 +33,8 @@ class _CustomDateInputFieldState extends State<CustomDateInputField> {
       keyboardType: TextInputType.datetime,
       validator: widget.validator,
       focusNode: widget.focusNode,
+      readOnly: true,
 
-      onFieldSubmitted: (term){
-        _fieldFocusChange(context, widget.previousFocus, widget.nextFocus);
-      },
-  
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
@@ -78,6 +71,7 @@ class _CustomDateInputFieldState extends State<CustomDateInputField> {
           floatingLabelBehavior: FloatingLabelBehavior.never,
           
       ),
+      
 
       onTap: () async{
         FocusScope.of(context).requestFocus(new FocusNode());
@@ -105,19 +99,12 @@ class _CustomDateInputFieldState extends State<CustomDateInputField> {
               widget.controller.text = tranformDate(pickedDate); 
             });
 
-            _fieldFocusChange(context, widget.previousFocus, widget.nextFocus);
-
         }else{
             FocusManager.instance.primaryFocus.unfocus();
         }
       },
 
     );
-  }
-
-   _fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);  
   }
 }
 
