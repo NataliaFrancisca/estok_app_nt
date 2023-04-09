@@ -245,7 +245,8 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
           message: 'Estoque salvo com sucesso',
           seconds: 2,
           onPop: (value){
-            Navigator.pop(context);
+            Navigator.pop(context, 'refresh');
+            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
           }
         );
         return;
@@ -279,7 +280,7 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
           message: 'Estoque atualizado com sucesso',
           seconds: 2,
           onPop: (value){
-           Navigator.pop(context); 
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
           }
         );
         return;
