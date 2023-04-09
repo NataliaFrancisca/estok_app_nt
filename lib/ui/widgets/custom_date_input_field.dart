@@ -10,6 +10,8 @@ class CustomDateInputField extends StatefulWidget {
   final FocusNode focusNode;
   final FocusNode requestFocus;
   final FormFieldValidator<String> validator;
+  final FocusNode previousFocus;
+  final FocusNode nextFocus;
 
   CustomDateInputField({
     @required this.controller,
@@ -19,6 +21,8 @@ class CustomDateInputField extends StatefulWidget {
     this.focusNode,
     this.requestFocus,
     this.validator,
+    this.previousFocus,
+    this.nextFocus
   });
 
   @override
@@ -26,21 +30,32 @@ class CustomDateInputField extends StatefulWidget {
 }
 
 class _CustomDateInputFieldState extends State<CustomDateInputField> {
- final FocusNode _focusDataTime = FocusNode();
-
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: widget.controller,
       keyboardType: TextInputType.datetime,
-      focusNode: _focusDataTime,
+      validator: widget.validator,
+      focusNode: widget.focusNode,
+
+      onFieldSubmitted: (term){
+        _fieldFocusChange(context, widget.previousFocus, widget.nextFocus);
+      },
+  
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
             borderRadius: BorderRadius.circular(15.0),
           ),
 
+          errorMaxLines: 4,
+
           focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+
+          errorBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
             borderRadius: BorderRadius.circular(15.0),
           ),
@@ -65,8 +80,8 @@ class _CustomDateInputFieldState extends State<CustomDateInputField> {
       ),
 
       onTap: () async{
-        // WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-        
+        FocusScope.of(context).requestFocus(new FocusNode());
+
           DateTime pickedDate = await showDatePicker(
             context: context,
             initialDate: DateTime.now(), 
@@ -83,21 +98,26 @@ class _CustomDateInputFieldState extends State<CustomDateInputField> {
                 child: child,
               );
             },
-            
           );
 
-          if(pickedDate != null ){
+          if(pickedDate != null){
             setState(() {
               widget.controller.text = tranformDate(pickedDate); 
             });
-            FocusManager.instance.primaryFocus.unfocus();
+
+            _fieldFocusChange(context, widget.previousFocus, widget.nextFocus);
+
         }else{
-            print("Date is not selected");
             FocusManager.instance.primaryFocus.unfocus();
         }
       },
 
     );
+  }
+
+   _fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);  
   }
 }
 
