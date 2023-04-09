@@ -43,8 +43,6 @@ class UploadApi{
         }
       );
 
-      print("UPLOAD DA IMAGEMS[SUCESSO] $parameters");
-
       if(response.statusCode == 200){
         var responseData = convert.json.decode(convert.utf8.decode(response.bodyBytes));
         String urlImage = responseData['data']['url_image'];
