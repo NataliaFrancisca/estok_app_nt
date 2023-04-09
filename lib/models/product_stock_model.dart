@@ -33,7 +33,7 @@ class ProductStockModel extends Model{
   void addProduct(Product product, Stock stock, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
     final resultCheckImageFile = await checkImageFile();
     if(resultCheckImageFile == null){
-      onFail('Erro ao adicionar a imagem do produto');
+      onFail('Erro ao adicionar a imagem do produto, verifique um tamanho diferente de imagem ou tente novamente');
       return;
     }else{
       product.imagem = resultCheckImageFile; 
@@ -43,7 +43,7 @@ class ProductStockModel extends Model{
     bool shouldUpdateStock;
 
     if(productSaved != null){
-      Stock updatedCountTotalStockProducts = await StockApi.instance.update(functionUpdateCountTotalProducts(stock, product, false));
+      Stock updatedCountTotalStockProducts = await StockApi.instance.update(functionUpdateTotalProduct(stock, product, null, 'ADD'));
       shouldUpdateStock = updatedCountTotalStockProducts != null;
     }
 
@@ -59,6 +59,7 @@ class ProductStockModel extends Model{
 
   void updateProduct(
     Product product,
+    Product previousProduct,
     Stock stock,
     bool changedTheImageProduct,
     bool changedTheProductTotal,
@@ -79,7 +80,7 @@ class ProductStockModel extends Model{
     bool stockUpdated = true;
 
     if(changedTheProductTotal){
-      Stock updatedCountStockTotalProducts = await StockApi.instance.update(functionUpdateCountTotalProducts(stock, product, false));
+      Stock updatedCountStockTotalProducts = await StockApi.instance.update(functionUpdateTotalProduct(stock, product, previousProduct, 'UPDATE'));
       stockUpdated = updatedCountStockTotalProducts != null;
     }
 
@@ -95,7 +96,7 @@ class ProductStockModel extends Model{
 
   void deleteProduct(Product product, Stock stock, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
     var productDelete = await ProductApi.instance.delete(product);
-    var updatedCountStockTotalProducts = await StockApi.instance.update(functionUpdateCountTotalProducts(stock, product, true));
+    var updatedCountStockTotalProducts = await StockApi.instance.update(functionUpdateTotalProduct(stock, product, null, 'DELETE'));
 
     if(productDelete != null && updatedCountStockTotalProducts != null){
       onSuccess();
@@ -108,17 +109,27 @@ class ProductStockModel extends Model{
     return await UploadApi.instance.upload(file);
   }
 
-  functionUpdateCountTotalProducts(Stock stock, Product product, bool isDeleteProduct){
-    stock.quantidade_total = isDeleteProduct ? stock.quantidade_total - product.quantidade : stock.quantidade_total + product.quantidade;
+  functionUpdateTotalProduct(Stock stock, Product product, Product previousProduct, String type){
+    switch(type){
+      case 'DELETE':
+        stock.quantidade_total = stock.quantidade_total - product.quantidade;
+        break;
+      case 'ADD':
+        stock.quantidade_total = stock.quantidade_total + product.quantidade;
+        break;
+      case 'UPDATE':
+        stock.quantidade_total = (stock.quantidade_total - previousProduct.quantidade) + product.quantidade;
+        break;
+    }
     stock.data_entrada = removeTheUTC(stock.data_entrada);
     stock.data_validade = removeTheUTC(stock.data_validade);
+
     return stock;
   }
 
   checkImageFile() async{
     if(file != null){
       String urlImage = await uploadImageFile(this.file);
-      print("OLHA A URL $urlImage");
       if(urlImage != null){
         file = null;
         return urlImage;
