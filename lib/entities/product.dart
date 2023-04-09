@@ -61,4 +61,18 @@ class Product{
     };
   }
 
+  factory Product.clone(Product product) {
+      return Product(
+        id: product.id,
+        estoque_id: product.estoque_id,
+        nome: product.nome,
+        descricao: product.descricao,
+        imagem: product.imagem,
+        valor_item: product.valor_item,
+        valor_unitario: product.valor_unitario,
+        quantidade: product.quantidade,
+        site: product.site
+      );
+    }
+
 }
