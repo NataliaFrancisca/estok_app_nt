@@ -10,6 +10,7 @@ import 'package:estok_app_natalia_francisca/ui/tile/product.tile.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/format_money.dart';
 import 'package:estok_app_natalia_francisca/ui/validator/stock_status_validator.dart';
+import 'package:estok_app_natalia_francisca/ui/widgets/custom_product_updater.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_stock_details.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
 import 'package:flutter/material.dart';
@@ -233,7 +234,7 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                                             );
                                           },
                                           background: Container(color: Colors.red),
-                                          child: ProductTile(item, widget._stock)
+                                          child: ProductTile(item, widget._stock, this._reload, this._scaffoldKey)
                                         );
                                       },
                                     ),
