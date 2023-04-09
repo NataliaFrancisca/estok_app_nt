@@ -13,6 +13,8 @@ class CustomTextFormField extends StatefulWidget {
   final FloatingLabelBehavior behaviorLabel;
   final EdgeInsets inputPadding;
   final int maxLines;
+  final FocusNode previousFocus;
+  final FocusNode nextFocus;
 
   CustomTextFormField({
     @required this.controller,
@@ -26,7 +28,9 @@ class CustomTextFormField extends StatefulWidget {
     this.validator,
     this.behaviorLabel = FloatingLabelBehavior.auto,
     this.inputPadding = const EdgeInsets.only(bottom: 20.0),
-    this.maxLines = 1
+    this.maxLines = 1,
+    this.previousFocus,
+    this.nextFocus
   });
 
   @override
@@ -40,10 +44,15 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: widget.obscureText ? _obscureText : false,
+      focusNode: widget.focusNode,
       validator: widget.validator,
       controller: widget.controller,
       maxLines: widget.maxLines,
-  
+
+      onFieldSubmitted: (term){
+        _fieldFocusChange(context, widget.previousFocus, widget.nextFocus);
+      },
+
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
@@ -52,6 +61,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(width: 1, color: Colors.red),
             borderRadius: BorderRadius.circular(15.0),
           ),
 
@@ -87,5 +101,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
     );
   }
+
+    _fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+      currentFocus.unfocus();
+      FocusScope.of(context).requestFocus(nextFocus);  
+    }
 }
 
