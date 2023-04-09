@@ -21,21 +21,22 @@ class StockModel extends Model{
     notifyListeners();
   }
 
-  Future<void> fetch() async{
-    // List<Stock> listStock = await StockApi.instance.getAll();
+  Future<void> fetch(type) async{
+    List<Stock> listStock = await StockApi.instance.getAll();
 
-    // // if(listStock != null){
-    // //   await StockRepository.instance.saveStock(listStock);
-    // //   filterStock(type);
-    // //   print("STOCK SALVO COM SUCESSO");
-    // // }
+    if(listStock != null){
+      await StockRepository.instance.saveStock(listStock);
+      print("STOCK SALVO COM SUCESSO");
+    }
 
-    this.futureStock = Future.delayed(Duration(seconds: Duration.millisecondsPerDay));
-    setState();
-    this.futureStock = StockApi.instance.getAll();
-    setState();
+    filterStock(type);
 
-    print("GETTING ALL");
+    // this.futureStock = Future.delayed(Duration(seconds: Duration.millisecondsPerDay));
+    // setState();
+    // this.futureStock = StockApi.instance.getAll();
+    // setState();
+
+    // print("GETTING ALL");
   }
 
   void addStock(Stock stock, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
@@ -73,7 +74,7 @@ class StockModel extends Model{
   void filterStock(String type) async{
     Future<List<Stock>> listStock = filterDataTab(type);
     this.filteredStock = listStock;
-    print(this.filteredStock);
+    setState();
   }
 
   void deleteAllProductFromStock(int stockID) async{
