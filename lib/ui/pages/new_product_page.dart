@@ -318,6 +318,8 @@ class _NewProductPageState extends State<NewProductPage> {
   }
 
   void updateProduct(){
+    Product previousProduct = Product.clone(widget.productEdit);
+
     if(!_formKey.currentState.validate()){
       return;
     }
@@ -335,6 +337,7 @@ class _NewProductPageState extends State<NewProductPage> {
 
     ProductStockModel.of(context).updateProduct(
       widget.productEdit,
+      previousProduct,
       widget.stock,
       changedTheImageProduct,
       changedTheProductTotal,
