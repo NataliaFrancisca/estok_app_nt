@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/entities/product.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
@@ -6,7 +7,6 @@ import 'package:estok_app_natalia_francisca/ui/pages/new_product_page.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/format_money.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_product_updater.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
-import 'package:flutter/material.dart';
 
 class ProductTile extends StatefulWidget {
   final Product _product;
@@ -21,12 +21,10 @@ class ProductTile extends StatefulWidget {
 
 class _ProductTileState extends State<ProductTile> {
   Product previousProduct;
-  int quantityProductUpdated = 0;
 
   @override
   void initState(){
     previousProduct = Product.clone(widget._product);
-    print(Product.clone(widget._product));
     super.initState();
   }
 
@@ -62,7 +60,7 @@ class _ProductTileState extends State<ProductTile> {
                               '${widget._product.nome}',
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: new Color(0xFF555353),
+                                  color: AppColors.greyTextColor,
                                   fontWeight: FontWeight.w700),
                             ),
                             
