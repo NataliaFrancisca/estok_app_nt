@@ -1,4 +1,11 @@
+import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:flutter/material.dart';
+
+final borderStyle = (Color borderColor) => OutlineInputBorder(
+  borderSide: BorderSide(width: 1, color: borderColor),
+  borderRadius: BorderRadius.circular(15.0),
+);
+
 
 class CustomTextFormField extends StatefulWidget {
   final String labelText;
@@ -18,8 +25,8 @@ class CustomTextFormField extends StatefulWidget {
 
   CustomTextFormField({
     @required this.controller,
-    this.labelText,
     @required this.hintText,
+    this.labelText,
     this.inputIcon,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
@@ -54,31 +61,16 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       },
 
       decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
+          enabledBorder: borderStyle(AppColors.primaryColor),
+          focusedBorder: borderStyle(AppColors.primaryColor),
 
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Colors.red),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Colors.red),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
+          errorBorder: borderStyle(Colors.red),
+          focusedErrorBorder: borderStyle(Colors.red),
 
           labelText: widget.labelText,
           labelStyle: TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.w400,
-              fontFamily: "Montserrat",
           ),
 
           hintText: widget.hintText,
@@ -87,7 +79,6 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               fontWeight: FontWeight.w300,
               color: Colors.grey[600]
           ),
-
 
           alignLabelWithHint: true,
           contentPadding: widget.inputPadding,
