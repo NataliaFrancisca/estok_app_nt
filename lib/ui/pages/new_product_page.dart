@@ -169,7 +169,7 @@ class _NewProductPageState extends State<NewProductPage> with ProductValidator{
                     hintText: 'Heineken Original',
                     keyboardType: TextInputType.text,
                     focusNode: _focusName,
-                    requestFocus: _focusDescription,
+                    previousFocus: _focusName,
                     nextFocus: _focusDescription,
                     behaviorLabel: FloatingLabelBehavior.never,
                     inputPadding: EdgeInsets.only(left: 25, top: 18, bottom: 18),
