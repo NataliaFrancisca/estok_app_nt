@@ -12,3 +12,9 @@ DateTime tranformStringDate(String date){
 String removeTheUTC(String stringDate){
   return DateTime.parse(stringDate).toLocal().toString();
 }
+
+String tranformDateHour(DateTime date){
+  var hour = date.hour < 10 ? "0${date.hour}" : date.hour;
+  var minute = date.minute < 10 ? "0${date.minute}" : date.minute;
+  return "$hour:$minute";
+}
