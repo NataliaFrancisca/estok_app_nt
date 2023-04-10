@@ -1,3 +1,8 @@
+import 'dart:async';
+
+import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/login_page.dart';
+import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -8,9 +13,16 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreen extends State<SplashScreen> {
   @override
 
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 4),
+    () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => LoginPage())));
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primaryVariant,
+      backgroundColor: AppColors.primaryColor,
       body: Center(
         child: Container(
           padding: EdgeInsets.all(20),
@@ -32,11 +44,14 @@ class _SplashScreen extends State<SplashScreen> {
 
               SizedBox(height: 23.0),
 
-              CircularProgressIndicator(
-                value: 0.8,
-                backgroundColor: Colors.transparent,
-                semanticsLabel: 'Circular progress indicator',
-              )
+
+              Message.loading(context, color: Colors.white)
+
+              // CircularProgressIndicator(
+              //   value: 0.8,
+              //   backgroundColor: Colors.transparent,
+              //   semanticsLabel: 'Circular progress indicator',
+              // )
             ]
           ),
         ),
