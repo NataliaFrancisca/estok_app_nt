@@ -69,6 +69,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             borderRadius: BorderRadius.circular(15.0),
           ),
 
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(width: 1, color: Colors.red),
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+
           labelText: widget.labelText,
           labelStyle: TextStyle(
               fontSize: 15.0,
