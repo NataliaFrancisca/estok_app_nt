@@ -1,10 +1,9 @@
 import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 import 'package:estok_app_natalia_francisca/entities/product.dart';
 import 'package:estok_app_natalia_francisca/entities/user.dart';
 import 'package:estok_app_natalia_francisca/repository/local/user_repository.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
 
 class ProductApi{
   static final ProductApi instance  = ProductApi._();
@@ -62,8 +61,10 @@ class ProductApi{
       if(response.statusCode == 200){
         var responseData = json.decode(utf8.decode(response.bodyBytes));
         Product product = Product.fromJson(responseData);
+        print("[API] Produto salvo com sucesso!");
         return product;
       }else{
+        print("[API] Erro ao salvar produto!");
         return null;
       }
 
@@ -90,10 +91,10 @@ class ProductApi{
       }
 
       var responseData = json.decode(utf8.decode(response.bodyBytes));
-      print("PRODUTO DELETADO COM SUCESSO $responseData");
+      print("[API] Produto deletado com sucesso!");
       return responseData;
     }on Exception catch(error){
-      print("Algo de errado na API Products");
+      print("[API] Erro ao deletar o produto!");
       return null;
     }
   }
@@ -116,13 +117,14 @@ class ProductApi{
       if(response.statusCode == 200){
         var responseData = json.decode(utf8.decode(response.bodyBytes));
         Product product = Product.fromJson(responseData);
-        print("PRODUTO ATUALIZADO COM SUCESSO");
+        print("[API] Produto atualizado com sucesso!");
         return product;
       }else{
         return null;
       }
 
     } on Exception catch(error){
+      print("[API] Erro ao atualizar o produto!");
       return null;
     }
   }

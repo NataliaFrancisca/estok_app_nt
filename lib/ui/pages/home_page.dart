@@ -1,15 +1,15 @@
-import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:flutter/material.dart';
 import 'package:estok_app_natalia_francisca/models/historic_model.dart';
 import 'package:estok_app_natalia_francisca/models/stock_model.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/historic_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/new_stock_page.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/perfil_page.dart';
 import 'package:estok_app_natalia_francisca/ui/tabs/home_tab.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_bottom_nav_bar.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_navigation_drawer.dart';
-import 'package:flutter/material.dart';
+import 'package:estok_app_natalia_francisca/colors.dart';
 
 class HomePage extends StatefulWidget {
+  final bool isMenuNavigator;
+  HomePage({this.isMenuNavigator = false});
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -21,9 +21,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   @override
   void initState(){
     super.initState();
-    _tabController = TabController(initialIndex: 0, length: 4, vsync: this);
-    StockModel.of(context).fetch('todos');
+
+    if(!widget.isMenuNavigator){
+      StockModel.of(context).fetch('todos');
+    }
+
     HistoricModel.of(context).checkHistoricLength();
+    _tabController = TabController(initialIndex: 0, length: 4, vsync: this);
   }
 
   _reloadData(){
@@ -44,21 +48,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
         ),
 
         leading: IconButton(
-            icon: Icon(
-              Icons.menu, 
-              color: AppColors.primaryColor
-            ),
-            onPressed: () {
-              _scaffoldKey.currentState.openDrawer();
-            },
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          icon: Icon(Icons.menu, color: AppColors.primaryColor),
+          onPressed: () {
+            _scaffoldKey.currentState.openDrawer();
+          },
+          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
         ),
         
         centerTitle: true,
-        backgroundColor: new Color(0xFFF7F2F8),
+        backgroundColor: AppColors.lightPurpleColor,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(84),
-
           child: TabBar(
             controller: _tabController,
             labelColor: AppColors.primaryColor,
@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
       bottomNavigationBar: CustomBottomNavBar('home_page'),
   
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Increment Counter',
+        tooltip: 'Add New Stock',
         child: const Icon(Icons.add),
         onPressed: () async {
           String refresh = await Navigator.push(context, MaterialPageRoute(builder: (context) => NewStockPage()));

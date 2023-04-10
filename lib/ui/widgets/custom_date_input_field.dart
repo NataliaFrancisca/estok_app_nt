@@ -1,6 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
-import 'package:flutter/material.dart';
+
+final customBorderStyle = OutlineInputBorder(
+  borderSide: BorderSide(width: 1, color: AppColors.primaryColor),
+  borderRadius: BorderRadius.circular(15.0),
+);
 
 class CustomDateInputField extends StatefulWidget {
   final DateTime firstDate;
@@ -36,46 +41,31 @@ class _CustomDateInputFieldState extends State<CustomDateInputField> {
       readOnly: true,
 
       decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
+        enabledBorder: customBorderStyle,
+        errorMaxLines: 4,
+        focusedBorder: customBorderStyle,
+        errorBorder: customBorderStyle,
 
-          errorMaxLines: 4,
+        labelStyle: TextStyle(
+            fontSize: 15.0,
+            fontWeight: FontWeight.w400,
+        ),
 
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
+        hintText: widget.hintText,
+        hintStyle: TextStyle(
+            fontSize: 15.0,
+            fontWeight: FontWeight.w300,
+            color: Colors.grey[600],
+        ),
 
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-
-          labelStyle: TextStyle(
-              fontSize: 15.0,
-              fontWeight: FontWeight.w400,
-              fontFamily: "Montserrat",
-          ),
-
-          hintText: widget.hintText,
-          hintStyle: TextStyle(
-              fontSize: 15.0,
-              fontWeight: FontWeight.w300,
-              color: Colors.grey[600],
-          ),
-
-          alignLabelWithHint: true,
-          contentPadding: EdgeInsets.symmetric(horizontal: 17, vertical: 18),
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          
+        alignLabelWithHint: true,
+        contentPadding: EdgeInsets.symmetric(horizontal: 17, vertical: 18),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
       
 
       onTap: () async{
         FocusScope.of(context).requestFocus(new FocusNode());
-
           DateTime pickedDate = await showDatePicker(
             context: context,
             initialDate: DateTime.now(), 
@@ -98,10 +88,9 @@ class _CustomDateInputFieldState extends State<CustomDateInputField> {
             setState(() {
               widget.controller.text = tranformDate(pickedDate); 
             });
-
-        }else{
+          }else{
             FocusManager.instance.primaryFocus.unfocus();
-        }
+          }
       },
 
     );

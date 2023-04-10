@@ -11,6 +11,8 @@ class ProductValidator{
     if(value.length < 3){
       return messageLength(3);
     }
+
+    return null;
   }
 
   String validateDescription(String value){
@@ -21,6 +23,8 @@ class ProductValidator{
     if(value.length < 8){
       return messageLength(8);
     }
+
+    return null;
   }
 
   String validateValueItem(String value){
@@ -31,6 +35,8 @@ class ProductValidator{
     if(double.parse(value) <= 0){
       return messageValueZero();
     }
+
+    return null;
   }
 
   String validateValueUnit(String value){
@@ -41,6 +47,8 @@ class ProductValidator{
     if(double.parse(value) <= 0){
       return messageValueZero();
     }
+
+    return null;
   }
 
   String validateQuantity(String value){
@@ -51,9 +59,11 @@ class ProductValidator{
     if(int.parse(value) <= 0){
       return 'O campo deve ter valores maiores que 0';
     }
+
+    return null;
   }
 
-  String validateSite(String value){
+  String validateWebSite(String value){
     if(value.isEmpty){
       return messageIsEmpty('site');
     }
@@ -61,5 +71,7 @@ class ProductValidator{
     if(!RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+').hasMatch(value)){
       return 'Digite uma URL valída';
     }
+
+    return null;
   }
 }

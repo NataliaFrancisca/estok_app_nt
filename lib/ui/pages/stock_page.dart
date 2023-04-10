@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/entities/product.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
@@ -6,15 +8,12 @@ import 'package:estok_app_natalia_francisca/models/stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/new_product_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/new_stock_page.dart';
-import 'package:estok_app_natalia_francisca/ui/tile/product.tile.dart';
+import 'package:estok_app_natalia_francisca/ui/tile/product_tile.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/format_money.dart';
 import 'package:estok_app_natalia_francisca/ui/validator/stock_status_validator.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_product_updater.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_stock_details.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
-import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class StockPage extends StatefulWidget {
   final Stock _stock;
@@ -44,9 +43,9 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
           title: Text(
             '${widget._stock.descricao}',
             style: TextStyle(
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.w700,
-                fontSize: 15),
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.w700,
+              fontSize: 15),
           ),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
@@ -55,16 +54,15 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
               Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
             },
           ),
-          actions: [],
           centerTitle: true,
-          backgroundColor: new Color(0xFFF7F2F8),
+          backgroundColor: AppColors.lightPurpleColor,
         ),
 
         floatingActionButton: FloatingActionButton(
           onPressed: () => {
             Navigator.push(context, MaterialPageRoute(builder: (context) => NewProductPage(stock: widget._stock)))
           },
-          tooltip: 'Add New Product',
+          tooltip: 'Add New Stock',
           child: const Icon(Icons.add)
         ),
 
@@ -94,64 +92,63 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 10),
 
-                                children: [
-                                  SizedBox(height: 10),
+                                Text(
+                                  "${widget._stock.quantidade_total}",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.blackTextColor
+                                    ),
+                                ),
 
-                                  Text(
-                                    "${widget._stock.quantidade_total}",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.blackTextColor
-                                      ),
-                                  ),
+                                SizedBox(height: 10),
 
-                                  SizedBox(height: 10),
+                                Text(
+                                  '${status(widget._stock.quantidade_total)['message']}'.toUpperCase(),
+                                    style: TextStyle(
+                                      color: status(widget._stock.quantidade_total)['color'],
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500
+                                    )
+                                ),
 
-                                  Text(
-                                    '${status(widget._stock.quantidade_total)['message']}'.toUpperCase(),
-                                      style: TextStyle(
-                                        color: status(widget._stock.quantidade_total)['color'],
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500
-                                      )
-                                  ),
+                                SizedBox(height: 17),
 
-                                  SizedBox(height: 17),
-
-                                  IconButton(
-                                    icon: Icon(Icons.edit, color: Colors.black),
-                                    onPressed: (){
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                                        return NewStockPage(
-                                          stockEdit: widget._stock,
-                                          isEditStock: true,
-                                        );
-                                      })); 
-                                    },
-                                  ),
-
-                                  SizedBox(height: 17),
-
-                                  IconButton(
-                                    icon: Icon(Icons.delete, color: Colors.black),
-                                    onPressed: (){
-                                      Message.alertDialog(
-                                        context,
-                                        title: 'Deseja excuir o estoque?',
-                                        textOkButton: 'Sim',
-                                        onPressedOkButton: (){
-                                          deleteStock();
-                                          Navigator.of(context).pop();
-                                        },
-                                        onPressedNoButton: (){
-                                          Navigator.of(context).pop();
-                                        }
+                                IconButton(
+                                  icon: Icon(Icons.edit, color: Colors.black),
+                                  onPressed: (){
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                                      return NewStockPage(
+                                        stockEdit: widget._stock,
+                                        isEditStock: true,
                                       );
-                                    }
-                                  ) 
-                                ],
+                                    })); 
+                                  },
+                                ),
+
+                                SizedBox(height: 17),
+
+                                IconButton(
+                                  icon: Icon(Icons.delete, color: Colors.black),
+                                  onPressed: (){
+                                    Message.alertDialog(
+                                      context,
+                                      title: 'Deseja excuir o estoque?',
+                                      textOkButton: 'Sim',
+                                      onPressedOkButton: (){
+                                        deleteStock();
+                                        Navigator.of(context).pop();
+                                      },
+                                      onPressedNoButton: (){
+                                        Navigator.of(context).pop();
+                                      }
+                                    );
+                                  }
+                                ) 
+                              ],
                             )
                           ]
                         );
@@ -170,7 +167,6 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
-                          fontFamily: "Montserrat",
                         ),
                       ),
                       Expanded(
@@ -198,7 +194,6 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                               return Message.alert("Não foi possivel obter os dados necessários");
                             case ConnectionState.waiting:
                               return Message.loading(context, color: AppColors.primaryColor);
-                            
                             default:
                               if(snapshot.hasError){
                                 return Message.alert("Não foi possível obter os dados do servidor");
@@ -211,7 +206,7 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
                                     onRefresh: () async{
                                       this._reload();
                                     },
-
+                                    
                                     child: ListView.builder(
                                       itemCount: snapshot.data.length,
                                       itemBuilder: (context, index) {

@@ -11,7 +11,7 @@ class LoginValidator{
     return null;
   }
 
-  String validateSenha(String value){
+  String validatePassword(String value){
     if(value.isEmpty){
       return "Campo vazio, digite sua senha";
     }

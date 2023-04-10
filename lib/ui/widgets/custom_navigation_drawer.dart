@@ -1,21 +1,22 @@
-import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/models/user_model.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/perfil_page.dart';
-import 'package:estok_app_natalia_francisca/ui/utils/logout_function.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class CustomNavigationDrawer extends StatelessWidget {
+import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app_natalia_francisca/models/user_model.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/historic_page.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/perfil_page.dart';
+import 'package:estok_app_natalia_francisca/ui/utils/logout_function.dart';
 
+final TextStyle customNavigationTextStyle = TextStyle(
+  fontWeight: FontWeight.w400,
+  fontSize: 16,
+  color: AppColors.primaryColor
+);
+
+class CustomNavigationDrawer extends StatelessWidget {
   final _homeScaffoldKey;
   CustomNavigationDrawer(this._homeScaffoldKey);
-
-  final TextStyle customNavigationTextStyle = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 16,
-    color: AppColors.primaryColor
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,7 @@ class CustomNavigationDrawer extends StatelessWidget {
                     leading: Icon(Icons.account_circle_rounded),
                     title: Text(
                       'Meu Perfil',
-                      style: this.customNavigationTextStyle,
+                      style: customNavigationTextStyle,
                     ),
                     trailing: Icon(Icons.arrow_forward_ios, size: 20),
                     onTap: (){
@@ -86,12 +87,12 @@ class CustomNavigationDrawer extends StatelessWidget {
                   leading: Icon(Icons.store),
                   title: Text(
                     'Estoques',
-                    style: this.customNavigationTextStyle,
+                    style: customNavigationTextStyle,
                   ),
                   trailing: Icon(Icons.arrow_forward_ios, size: 20),
                   onTap: (){
                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-                      return HomePage();
+                      return HomePage(isMenuNavigator: true);
                     }));
                   },
               ),
@@ -103,10 +104,13 @@ class CustomNavigationDrawer extends StatelessWidget {
                   leading: Icon(Icons.playlist_add),
                   title: Text(
                     'Histórico',
-                    style: this.customNavigationTextStyle,
+                    style: customNavigationTextStyle,
                   ),
                   trailing: Icon(Icons.arrow_forward_ios, size: 20),
                   onTap: (){
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
+                      return HistoricPage();
+                    }));
                 },
               ),
             ),

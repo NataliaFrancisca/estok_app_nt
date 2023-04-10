@@ -1,10 +1,9 @@
-import 'dart:convert' as convert;
-import 'dart:io';
-
-import 'package:estok_app_natalia_francisca/entities/user.dart';
-import 'package:estok_app_natalia_francisca/repository/local/user_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
+import 'dart:convert' as convert;
+import 'dart:io';
+import 'package:estok_app_natalia_francisca/entities/user.dart';
+import 'package:estok_app_natalia_francisca/repository/local/user_repository.dart';
 
 class UploadApi{
   static final UploadApi instance = UploadApi._();

@@ -1,7 +1,5 @@
-import 'package:estok_app_natalia_francisca/entities/stock.dart';
-import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:estok_app_natalia_francisca/entities/stock.dart';
 
 class StockRepository{
   static final StockRepository instance = StockRepository._();
@@ -11,7 +9,7 @@ class StockRepository{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String encodedData = Stock.encode(stock);
     await prefs.setString('stock.prefs', encodedData);
-    print("[LOG] $encodedData - STOCK SALVO COM SUCESSO");
+    print("[ESTOQUE REPOSITORY] Estoque foi salvo com sucesso");
   }
 
   Future<List<Stock>> getStock() async{

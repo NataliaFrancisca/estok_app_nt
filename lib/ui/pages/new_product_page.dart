@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'dart:io';
 
 import 'package:estok_app_natalia_francisca/colors.dart';
@@ -9,9 +12,6 @@ import 'package:estok_app_natalia_francisca/ui/validator/product_validator.dart'
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_label_input.field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class NewProductPage extends StatefulWidget {
   final Stock stock;
@@ -108,9 +108,8 @@ class _NewProductPageState extends State<NewProductPage> with ProductValidator{
           },
         ),
 
-        actions: [],
         centerTitle: true,
-        backgroundColor: new Color(0xFFF7F2F8),
+        backgroundColor: AppColors.lightPurpleColor,
       ),
 
       body: SingleChildScrollView(
@@ -147,7 +146,7 @@ class _NewProductPageState extends State<NewProductPage> with ProductValidator{
                 SizedBox(height: 11.0),
 
                 Text(
-                  'Clique na imagem para tirar uma foto',
+                  'Clique na imagem para escolher ou tirar uma foto',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -182,7 +181,7 @@ class _NewProductPageState extends State<NewProductPage> with ProductValidator{
                   labelText: 'Descrição',
                   inputField: CustomTextFormField(
                     controller: this.descriptionProductController,
-                    hintText: 'Uma das melhores marcas em uma casa só',
+                    hintText: 'Uma das melhores marcas',
                     keyboardType: TextInputType.text,
                     focusNode: _focusDescription,
                     previousFocus: _focusName,
@@ -218,7 +217,6 @@ class _NewProductPageState extends State<NewProductPage> with ProductValidator{
                     focusNode: _focusPriceUnit,
                     previousFocus: _focusPriceItem,
                     nextFocus: _focusQuantity,
-                    
                     behaviorLabel: FloatingLabelBehavior.never,
                     inputPadding: EdgeInsets.only(left: 25, top: 18, bottom: 18),
                     validator: validateValueUnit,
@@ -250,7 +248,7 @@ class _NewProductPageState extends State<NewProductPage> with ProductValidator{
                     previousFocus: _focusQuantity,
                     behaviorLabel: FloatingLabelBehavior.never,
                     inputPadding: EdgeInsets.only(left: 25, top: 18, bottom: 18),
-                    validator: validateSite,
+                    validator: validateWebSite,
                   )
                 ),
 
@@ -276,12 +274,10 @@ class _NewProductPageState extends State<NewProductPage> with ProductValidator{
                           ),
                           elevation: MaterialStateProperty.all(0.0),
                           padding: MaterialStateProperty.all(EdgeInsets.all(16)),
-                          backgroundColor: MaterialStateProperty.all(new Color(0xFFF7F2F8)),
+                          backgroundColor: MaterialStateProperty.all(AppColors.lightPurpleColor),
                         )
                     )
                 ),
-
-
               ]
             ),
           )
@@ -409,7 +405,7 @@ class _NewProductPageState extends State<NewProductPage> with ProductValidator{
       onSuccess: (){
         Message.onSuccess(
           scaffoldKey: _scaffoldKey,
-          message: "Produto salvo com sucesso",
+          message: "Produto registrado com sucesso",
           seconds: 2,
           onPop: (value){
             Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {

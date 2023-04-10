@@ -1,16 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:estok_app_natalia_francisca/entities/historic.dart';
 import 'package:estok_app_natalia_francisca/entities/product.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
-import 'package:estok_app_natalia_francisca/models/historic_model.dart';
-import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
 import 'package:estok_app_natalia_francisca/repository/api/product_api.dart';
 import 'package:estok_app_natalia_francisca/repository/api/stock_api.dart';
 import 'package:estok_app_natalia_francisca/repository/local/historic_repository.dart';
 import 'package:estok_app_natalia_francisca/repository/local/stock_repository.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/filter_tab.dart';
-import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
-import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
+
 
 class StockModel extends Model{
   Future<List<Stock>> futureStock;
@@ -29,17 +27,10 @@ class StockModel extends Model{
 
     if(listStock != null){
       await StockRepository.instance.saveStock(listStock);
-      print("STOCK SALVO COM SUCESSO");
+      print("Estoque salvo com sucesso");
     }
 
     filterStock(type);
-
-    // this.futureStock = Future.delayed(Duration(seconds: Duration.millisecondsPerDay));
-    // setState();
-    // this.futureStock = StockApi.instance.getAll();
-    // setState();
-
-    // print("GETTING ALL");
   }
 
   void addStock(Stock stock, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
@@ -49,7 +40,7 @@ class StockModel extends Model{
       onSuccess();
       saveHistoric(stock.descricao, 'ADD');
     }else{
-      onFail('Algo deu errado ao tentar salvar o estoque');
+      onFail('Algo de errado ao tentar salvar o estoque');
     }
   }
 
@@ -62,7 +53,7 @@ class StockModel extends Model{
       onSuccess();
       saveHistoric(stock.descricao, 'DELETE');
     }else{
-      onFail("Algo de eraddo na hora de deletar o estoque");
+      onFail("Algo de errado ao tentar deletar o estoque");
     }
   }
 
@@ -90,7 +81,6 @@ class StockModel extends Model{
       ProductApi.instance.delete(product);
     });
   }
-
 
   void saveHistoric(String nameStock, String action) async{
     Historic historic = Historic(

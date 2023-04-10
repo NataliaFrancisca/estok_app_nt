@@ -1,11 +1,9 @@
 import 'dart:convert';
-
-import 'package:estok_app_natalia_francisca/entities/stock.dart';
-import 'package:estok_app_natalia_francisca/entities/user.dart';
-import 'package:estok_app_natalia_francisca/repository/api/product_api.dart';
-import 'package:estok_app_natalia_francisca/repository/local/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:estok_app_natalia_francisca/entities/stock.dart';
+import 'package:estok_app_natalia_francisca/entities/user.dart';
+import 'package:estok_app_natalia_francisca/repository/local/user_repository.dart';
 
 class StockApi{
   static final StockApi instance = StockApi._();
@@ -39,9 +37,10 @@ class StockApi{
         return Stock.fromJson(json as Map<String, dynamic>);
       })?.toList();
 
+      print('[API] Fetch de produtos realizado com sucesso!');
       return stock;
     } on Exception catch(error){
-      print('Algo de errado na API');
+      print('[API] Erro ao fazer o fetch de produtos!');
       return null;
     }
   }
@@ -53,8 +52,6 @@ class StockApi{
       User user = await UserRepository.instance.getUsuario();
       String authorization = 'Bearer ${user.token}';
 
-       print("LOG[UserApi.singIng] - ${user.token}");
-
       var response = await http.post(url,
         headers: {
           'Content-type': 'application/json',
@@ -63,15 +60,13 @@ class StockApi{
         body: encode
       );
 
-      print("STATUS ENCODE $encode");
-      print("STATUS CODE ${response.statusCode}");
-
       if(response.statusCode == 200){
         var responseData = json.decode(utf8.decode(response.bodyBytes));
         Stock stock = Stock.fromJson(responseData);
-        print("LOG[STOCKAPI] - stock salvo");
+        print("[API] Estoque salvo com sucesso");
         return stock;
       }else{
+        print("[API] Erro ao salvar o estoque");
         return null;
       }
     }on Exception catch(error){
@@ -94,11 +89,13 @@ class StockApi{
 
       if(response.statusCode == 200){
         var responseData = json.decode(utf8.decode(response.bodyBytes));
+        print('[API] Estoque deletado com sucesso!');
         return responseData;
       }else{
         return null;
       }
     } on Exception catch(error){
+      print('[API] Erro ao deletar o estoque!');
       return null;
     }
   }
@@ -121,12 +118,13 @@ class StockApi{
       if(response.statusCode == 200){
         var responseData = json.decode(utf8.decode(response.bodyBytes));
         Stock stock = Stock.fromJson(responseData);
-        print("LOG[STOCKAPI] - stock atualizado");
+        print("[API] Estoque atualizado com sucesso!");
         return stock;
       }else{
         return null;
       }
     }on Exception catch(error){
+      print("[API] Erro ao deletar o estoque!");
       return null;
     }
   }

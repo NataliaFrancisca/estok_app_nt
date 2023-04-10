@@ -1,16 +1,15 @@
+import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
+import 'package:flutter/material.dart';
+
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
 import 'package:estok_app_natalia_francisca/models/stock_model.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/stock_page.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
 import 'package:estok_app_natalia_francisca/ui/validator/stock_validator.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_date_input_field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_label_input.field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
-import 'package:flutter/material.dart';
-
-import 'home_page.dart';
 
 class NewStockPage extends StatefulWidget {
   final Stock stockEdit;
@@ -29,7 +28,8 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
   TextEditingController descriptionController = TextEditingController();
   TextEditingController entryDateController = TextEditingController();
   TextEditingController expirationDateController = TextEditingController();
-  String selectedValue = "Grade";
+
+  String selectedValue = "GRADE";
 
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -48,14 +48,8 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
       descriptionController.text = widget.stockEdit.descricao;
       entryDateController.text = widget.stockEdit.data_entrada;
       expirationDateController.text = widget.stockEdit.data_validade;
-      selectedValue = captalize(widget.stockEdit.tipo);
+      selectedValue = widget.stockEdit.tipo;
     }
-  }
-
-  String captalize(String value){
-    var firstLetter = value[0].toUpperCase();
-    var restPhrase = value.substring(1, value.length).toLowerCase();
-    return firstLetter + restPhrase;
   }
 
   @override
@@ -83,7 +77,7 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
           ),
           actions: [],
           centerTitle: true,
-          backgroundColor: new Color(0xFFF7F2F8),
+          backgroundColor: AppColors.lightPurpleColor,
       ),
 
       body: SingleChildScrollView(
@@ -179,9 +173,9 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
                         icon: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
                         value: selectedValue,
                         items: [
-                          DropdownMenuItem(child: Center(child: Text("Pacote".toUpperCase())), value: "Pacote"),
-                          DropdownMenuItem(child: Center(child: Text("Grade".toUpperCase())) ,value: "Grade"),
-                          DropdownMenuItem(child: Center(child: Text("Caixa".toUpperCase())), value: "Caixa"),
+                          DropdownMenuItem(child: Center(child: Text("PACOTE")), value: "PACOTE"),
+                          DropdownMenuItem(child: Center(child: Text("GRADE")) ,value: "GRADE"),
+                          DropdownMenuItem(child: Center(child: Text("CAIXA")), value: "CAIXA"),
                         ],
                         onChanged: (String newValue){
                           setState(() {
@@ -214,7 +208,7 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
                           ),
                           elevation: MaterialStateProperty.all(0.0),
                           padding: MaterialStateProperty.all(EdgeInsets.all(16)),
-                          backgroundColor: MaterialStateProperty.all(new Color(0xFFF7F2F8)),
+                          backgroundColor: MaterialStateProperty.all(AppColors.lightPurpleColor),
                         )
                     )
                 ),

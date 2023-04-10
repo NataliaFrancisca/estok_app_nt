@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/entities/product.dart';
-import 'package:flutter/material.dart';
 
 class CustomProductUpdater extends StatefulWidget {
   final Product product;
@@ -28,7 +29,7 @@ class _CustomProductUpdaterState extends State<CustomProductUpdater> {
 
   void _decrement(){
     setState(() {
-       if(this.counter != 0){
+      if(this.counter != 0){
         this.counter--;
       }
     });
@@ -98,7 +99,7 @@ class _CustomProductUpdaterState extends State<CustomProductUpdater> {
               child: Text(
                 'Cancelar',
                 style: TextStyle(
-                  color: Color(0xFF555353),
+                  color: AppColors.greyTextColor,
                   fontSize: 14,
                   fontWeight: FontWeight.w600
                 ),

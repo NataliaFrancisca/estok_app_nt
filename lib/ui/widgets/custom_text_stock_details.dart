@@ -13,7 +13,6 @@ class CustomTextStockDetails extends StatelessWidget {
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w400,
-          fontFamily: "Montserrat"
         )
       ),
     );

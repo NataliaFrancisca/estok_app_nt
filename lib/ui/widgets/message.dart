@@ -1,5 +1,5 @@
-import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:estok_app_natalia_francisca/colors.dart';
 
 class Message extends StatelessWidget {
   @override
@@ -11,16 +11,15 @@ class Message extends StatelessWidget {
     @required GlobalKey<ScaffoldState> scaffoldKey,
     @required String message, int seconds, Function onPop }){
 
-      scaffoldKey.currentState.showSnackBar(SnackBar(
-          content: Text(message),
-          backgroundColor: Theme.of(scaffoldKey.currentContext).accentColor,
-          duration: Duration(seconds: seconds ?? 3),
-      ));
+    scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(message),
+      backgroundColor: Theme.of(scaffoldKey.currentContext).accentColor,
+      duration: Duration(seconds: seconds ?? 3),
+    ));
 
-      if(onPop != null){
-          Future.delayed(Duration(seconds: seconds ?? 3))
-              .then((onPop));
-      }
+    if(onPop != null){
+      Future.delayed(Duration(seconds: seconds ?? 3)).then((onPop));
+    }
   }
 
   static void onFail({
@@ -130,8 +129,6 @@ class Message extends StatelessWidget {
 
                 onPressed: onPressedOkButton
               ),
-
-              
             ],
           ),
         );

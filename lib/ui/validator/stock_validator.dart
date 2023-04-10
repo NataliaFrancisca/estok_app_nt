@@ -8,9 +8,11 @@ class StockValidator{
       return messageIsEmpty('descrição');
     }
 
-     if(value.length < 3){
+    if(value.length < 3){
       return 'O campo deve ter no mínimo 3 caracteres';
     }
+
+    return null;
   }
 
   String validateEntryDate(String entryDateString, String expirationDateString){
@@ -30,6 +32,8 @@ class StockValidator{
         return 'A data de entrada não pode ser no mesmo dia da validade';
       }
     }
+
+    return null;
   }
 
   String validateExpirationDate(String entryDateString, String expirationDateString){
@@ -49,5 +53,7 @@ class StockValidator{
         return 'A data de validade não pode ser no mesmo dia da data de entrada';
       }
     }
+
+    return null;
   }
 }

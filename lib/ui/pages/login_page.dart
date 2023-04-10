@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/models/user_model.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
-import 'package:estok_app_natalia_francisca/ui/validator/login_validator.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
-import 'package:flutter/material.dart';
-import '../../colors.dart';
-import 'home_page.dart';
+import 'package:estok_app_natalia_francisca/ui/validator/login_validator.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,10 +13,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> with LoginValidator{
   final _loginController = TextEditingController();
-  final _senhaController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   final FocusNode _focusLogin = FocusNode();
-  final FocusNode _focusSenha = FocusNode();
+  final FocusNode _focusPassword = FocusNode();
 
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -34,10 +34,8 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-
                 children: [
                   SizedBox(height: 20.0),
-
                   Text(
                     "ESTOK APP",
                     style: TextStyle(
@@ -68,49 +66,49 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
                     inputIcon: Icon(Icons.person, size: 22, color: AppColors.iconPrimaryColor),
                     validator: validateLogin,
                     focusNode: _focusLogin,
-                    nextFocus: _focusSenha,
+                    nextFocus: _focusPassword,
                     previousFocus: _focusLogin,
                   ),
 
                   SizedBox(height: 20.0),
 
                   CustomTextFormField(
-                    controller: _senhaController,
+                    controller: _passwordController,
                     labelText: 'Senha',
                     hintText: 'Senha',
                     obscureText: true,
                     keyboardType: TextInputType.visiblePassword,
                     inputIcon: Icon(Icons.lock, size: 22, color: AppColors.iconPrimaryColor),
-                    focusNode: _focusSenha,
+                    focusNode: _focusPassword,
                     previousFocus: _focusLogin,
-                    validator: validateSenha
+                    validator: validatePassword
                   ),
 
                   SizedBox(height: 38.0),
 
                   SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                          onPressed: (){
-                           _loginOnPressed(context);
-                          },
-                          child: Text(
-                              'Entrar'.toUpperCase(),
-                            style: TextStyle(fontSize: 15,
-                            color: AppColors.blackTextColor)
-                          ),
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: (){
+                          _loginOnPressed(context);
+                        },
+                        child: Text(
+                          'Entrar'.toUpperCase(),
+                          style: TextStyle(fontSize: 15,
+                          color: AppColors.blackTextColor)
+                        ),
 
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
-                            elevation: MaterialStateProperty.all(0.0),
-                            padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-                            backgroundColor: MaterialStateProperty.all(new Color(0xFFF7F2F8)),
-                          )
-                      )
+                          ),
+                          elevation: MaterialStateProperty.all(0.0),
+                          padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 10, vertical: 16)),
+                          backgroundColor: MaterialStateProperty.all(AppColors.lightPurpleColor),
+                        )
+                    )
                   ),
                 ],
               )
@@ -128,23 +126,24 @@ class _LoginPageState extends State<LoginPage> with LoginValidator{
       return;
     }
 
-    UserModel.of(context).login(_loginController.text, _senhaController.text,
+    UserModel.of(context).login(_loginController.text, _passwordController.text,
       onSuccess: () {
         Message.onSuccess(
-            scaffoldKey: _scaffoldKey,
-            message: "Usuário logado com sucesso!",
-            onPop: (value) {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-            }
+          scaffoldKey: _scaffoldKey,
+          message: "Usuário logado com sucesso!",
+          onPop: (value) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+          }
         );
         return;
-      }, onFail: (String message) {
+      },
+      onFail: (String message) {
         Message.onFail(
-            scaffoldKey: _scaffoldKey,
-            message: message,
-            onPop: (value){
-              print("Algo de errado com o login!");
-            }
+          scaffoldKey: _scaffoldKey,
+          message: message,
+          onPop: (value){
+            print("Algo de errado com o login, tente novamente!");
+          }
         );
         return;
       });

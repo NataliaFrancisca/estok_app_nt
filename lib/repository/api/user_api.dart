@@ -16,26 +16,23 @@ class UserApi{
 
       var encode = json.encode(encodeString);
       String url = "http://54.90.203.92/auth/login";
-      print("LOG[UserApi.singIng] - $encode");
 
       var response = await http.post(url,
         headers: {'Content-type': 'application/json'},
         body: encode,
       );
 
-      print(response.statusCode);
-
       if(response.statusCode == 200){
         var responseData = json.decode(utf8.decode(response.bodyBytes));
         var data = responseData['data'];
         User user = User.fromJson(data);
-        print("LOG[UserApi.singIng] - $responseData");
+        print("[API] Usuário logado com sucesso!");
         return user;
       }else{
         return null;
       }
     } on Exception catch(error){
-      print("LOG[UserApi.singIng] - $error");
+      print("[API] Erro ao fazer login!");
       return null;
     }
   }
@@ -46,8 +43,6 @@ class UserApi{
       User user = await UserRepository.instance.getUsuario();
       String authorization = 'Bearer ${user.token}';
 
-      print("LOG[UserApi.singOut]");
-
       var response = await http.post(url,
         headers: {
           'Content-type': 'application/json',
@@ -55,18 +50,16 @@ class UserApi{
         },
       );
 
-      print(response.statusCode);
-
       if(response.statusCode == 200){
         var responseData = json.decode(utf8.decode(response.bodyBytes));
         User user = User.fromJson(responseData);
-        print("LOG[UserApi.signOut] - $responseData");
+        print("[API] Logout realizado com sucesso!");
         return user;
       }else{
         return null;
       }
     } on Exception catch(error){
-      print("LOG[UserApi.singIng] - $error");
+      print("[API] Erro ao fazer logout!");
       return null;
     }
   }

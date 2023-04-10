@@ -1,11 +1,10 @@
-import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:estok_app_natalia_francisca/colors.dart';
 
 final borderStyle = (Color borderColor) => OutlineInputBorder(
   borderSide: BorderSide(width: 1, color: borderColor),
   borderRadius: BorderRadius.circular(15.0),
 );
-
 
 class CustomTextFormField extends StatefulWidget {
   final String labelText;
@@ -61,38 +60,38 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       },
 
       decoration: InputDecoration(
-          enabledBorder: borderStyle(AppColors.primaryColor),
-          focusedBorder: borderStyle(AppColors.primaryColor),
+        enabledBorder: borderStyle(AppColors.primaryColor),
+        focusedBorder: borderStyle(AppColors.primaryColor),
 
-          errorBorder: borderStyle(Colors.red),
-          focusedErrorBorder: borderStyle(Colors.red),
+        errorBorder: borderStyle(Colors.red),
+        focusedErrorBorder: borderStyle(Colors.red),
 
-          labelText: widget.labelText,
-          labelStyle: TextStyle(
-              fontSize: 15.0,
-              fontWeight: FontWeight.w400,
-          ),
+        labelText: widget.labelText,
+        labelStyle: TextStyle(
+          fontSize: 15.0,
+          fontWeight: FontWeight.w400,
+        ),
 
-          hintText: widget.hintText,
-          hintStyle: TextStyle(
-              fontSize: 15.0,
-              fontWeight: FontWeight.w300,
-              color: Colors.grey[600]
-          ),
+        hintText: widget.hintText,
+        hintStyle: TextStyle(
+          fontSize: 15.0,
+          fontWeight: FontWeight.w300,
+          color: Colors.grey[600]
+        ),
 
-          alignLabelWithHint: true,
-          contentPadding: widget.inputPadding,
-          prefixIcon: widget.inputIcon,
-          floatingLabelBehavior: widget.behaviorLabel,
+        alignLabelWithHint: true,
+        contentPadding: widget.inputPadding,
+        prefixIcon: widget.inputIcon,
+        floatingLabelBehavior: widget.behaviorLabel,
 
-          suffixIcon: widget.obscureText ? new GestureDetector(
-            onTap:(){
-              setState(() {
-                _obscureText = !_obscureText;
-              });
-            },
-            child: new Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-          ) : null
+        suffixIcon: widget.obscureText ? new GestureDetector(
+          onTap:(){
+            setState(() {
+              _obscureText = !_obscureText;
+            });
+          },
+          child: new Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+        ) : null
       ),
 
     );

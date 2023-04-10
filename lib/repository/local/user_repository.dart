@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:estok_app_natalia_francisca/entities/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:estok_app_natalia_francisca/entities/user.dart';
 
 class UserRepository{
   static final UserRepository instance = UserRepository._();
@@ -10,7 +10,7 @@ class UserRepository{
     String userString = json.encode(usuario.toJson());
     var instance = await SharedPreferences.getInstance();
     await instance.setString("user.prefs",userString);
-    print("usuario: $userString salvo com sucesso");
+    print("[USER REPOSITORY] Usuário salvo com sucesso");
   }
 
   Future<User> getUsuario() async{

@@ -1,8 +1,10 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/models/user_model.dart';
+import 'package:estok_app_natalia_francisca/ui/pages/login_page.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/logout_function.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_bottom_nav_bar.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_navigation_drawer.dart';
+import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -22,12 +24,11 @@ class PerfilPage extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: new Color(0xFFF7F2F8),
+        backgroundColor: AppColors.lightPurpleColor,
       ),
 
       bottomNavigationBar: CustomBottomNavBar('perfil_page'),
       drawer: CustomNavigationDrawer(_scaffoldKey),
-
       body: Center(
         child: 
           ScopedModelDescendant(
@@ -65,7 +66,7 @@ class PerfilPage extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
-                          color: new Color(0xFF555353)
+                          color: AppColors.greyTextColor
                         ),
                       ),
 
@@ -143,7 +144,7 @@ class PerfilPage extends StatelessWidget {
                           logOut(context, _scaffoldKey);
                         },
                         child: Text(
-                            'Sair',
+                          'Sair',
                           style: TextStyle(
                             fontSize: 14,
                             color: AppColors.aWhiteTextColor

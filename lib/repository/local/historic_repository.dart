@@ -1,14 +1,9 @@
-
-
-
 import 'dart:async';
-
+import 'package:sqflite/sqflite.dart';
 import 'package:estok_app_natalia_francisca/entities/historic.dart';
 import 'package:estok_app_natalia_francisca/repository/local/database/init_bd.dart';
-import 'package:sqflite/sqflite.dart';
 
 class HistoricRepository{
-
   static final String tableName = "historic_tb";
   static final String idColumn = "id";
   static final String nameColumn = "name";
@@ -25,7 +20,6 @@ class HistoricRepository{
     if(_database == null){
       _database = await InitDB.initDatabase();
     }
-
     return _database;
   }
 

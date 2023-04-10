@@ -1,8 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
-import 'package:estok_app_natalia_francisca/models/stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/stock_page.dart';
 import 'package:estok_app_natalia_francisca/ui/validator/stock_status_validator.dart';
-import 'package:flutter/material.dart';
 
 class StockTile extends StatelessWidget with StockStatusValidator{
   final Stock _stock;
@@ -45,8 +44,8 @@ class StockTile extends StatelessWidget with StockStatusValidator{
                     SizedBox(height: 13.0),
 
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                       Text(
                         'Total: ${this._stock.quantidade_total}'.toUpperCase(),
@@ -59,8 +58,8 @@ class StockTile extends StatelessWidget with StockStatusValidator{
                       Text(
                         'TIPO: ${this._stock.tipo}'.toUpperCase(),
                           style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400
                           )
                       ),
                       ]

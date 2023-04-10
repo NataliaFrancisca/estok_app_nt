@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+
 import 'package:estok_app_natalia_francisca/colors.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/historic_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/perfil_page.dart';
-import 'package:flutter/material.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   final String _currentPage;
@@ -15,12 +16,6 @@ class CustomBottomNavBar extends StatefulWidget {
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   int _selectedIndex = 0;
 
-  static List _widgetOptions = <Widget>[
-    HomePage(),
-    HistoricPage(),
-    PerfilPage(),
-  ];
-
   Map<String, int> pageIndex = {
     'home_page': 0,
     'historic_page': 1,
@@ -28,8 +23,14 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   };
 
   void _onItemTapped(int index) {
+    List _pagesOptions = <Widget>[
+      HomePage(isMenuNavigator: true),
+      HistoricPage(),
+      PerfilPage()
+    ];
+    
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-      return _widgetOptions[index];
+      return _pagesOptions[index];
     }));
   }
 

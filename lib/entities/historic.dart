@@ -1,9 +1,3 @@
-enum Action{
-  add,
-  update,
-  delete,
-}
-
 class Historic{
   int id;
   String name;
