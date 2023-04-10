@@ -41,7 +41,7 @@ class PerfilPage extends StatelessWidget {
                       ),
 
                       Image.asset(
-                        'assets/images/default_user.png',
+                        'assets/images/default_user_grey.png',
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
