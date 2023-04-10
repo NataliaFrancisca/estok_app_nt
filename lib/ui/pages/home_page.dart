@@ -1,4 +1,5 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app_natalia_francisca/models/historic_model.dart';
 import 'package:estok_app_natalia_francisca/models/stock_model.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/historic_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/new_stock_page.dart';
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
     super.initState();
     _tabController = TabController(initialIndex: 0, length: 4, vsync: this);
     StockModel.of(context).fetch('todos');
+    HistoricModel.of(context).checkHistoricLength();
   }
 
   _reloadData(){
