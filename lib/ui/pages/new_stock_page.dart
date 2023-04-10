@@ -46,8 +46,8 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
     super.initState();
     if(widget.isEditStock){
       descriptionController.text = widget.stockEdit.descricao;
-      entryDateController.text = widget.stockEdit.data_entrada;
-      expirationDateController.text = widget.stockEdit.data_validade;
+      entryDateController.text = tranformDate(DateTime.parse(widget.stockEdit.data_entrada));
+      expirationDateController.text = tranformDate(DateTime.parse(widget.stockEdit.data_validade));
       selectedValue = widget.stockEdit.tipo;
     }
   }
