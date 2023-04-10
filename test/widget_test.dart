@@ -5,6 +5,7 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:estok_app_natalia_francisca/models/historic_model.dart';
 import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
 import 'package:estok_app_natalia_francisca/models/stock_model.dart';
 import 'package:estok_app_natalia_francisca/models/user_model.dart';
@@ -16,7 +17,7 @@ import 'package:estok_app_natalia_francisca/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(UserModel(), StockModel(), ProductStockModel()));
+    await tester.pumpWidget(MyApp(UserModel(), StockModel(), ProductStockModel(), HistoricModel()));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
