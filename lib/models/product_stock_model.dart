@@ -89,7 +89,7 @@ class ProductStockModel extends Model{
 
     if(productUpdated != null && stockUpdated){
       onSuccess();
-      saveHistoric(product.descricao, 'UPDATE');
+      saveHistoric(product.nome, 'UPDATE');
     }else{
       onFail('Erro ao atualizar o produto');
     }
