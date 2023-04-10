@@ -43,14 +43,14 @@ class _HistoricPageState extends State<HistoricPage> {
                   case ConnectionState.none:
                     return Message.alert("Não foi possivel obter os dados necessários");
                   case ConnectionState.waiting:
-                    return Message.loading(context, color: Colors.red);
+                    return Message.loading(context, color: AppColors.primaryColor);
                   default:
                     if(snapshot.hasError){
                       return Message.alert("Não foi possível obter os dados do servidor");
                     } else if(!snapshot.hasData){
-                      return Message.alert("Não foi possivel obter os dados dos carros");
+                      return Message.alert("Não foi possivel obter os dados de histórico");
                     } else if(snapshot.data.isEmpty){
-                      return Message.alert("Nenhum carro encontrado", fontSize: 16);
+                      return Message.alert("Nenhum histórico encontrado", fontSize: 16);
                     }else {
                       return ListView.builder(
                         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
