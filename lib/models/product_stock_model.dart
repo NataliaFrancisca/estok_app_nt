@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:estok_app_natalia_francisca/entities/historic.dart';
 import 'package:estok_app_natalia_francisca/entities/product.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
 import 'package:estok_app_natalia_francisca/repository/api/product_api.dart';
 import 'package:estok_app_natalia_francisca/repository/api/stock_api.dart';
 import 'package:estok_app_natalia_francisca/repository/api/upload_api.dart';
+import 'package:estok_app_natalia_francisca/repository/local/historic_repository.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -48,8 +50,8 @@ class ProductStockModel extends Model{
     }
 
     if(productSaved != null && shouldUpdateStock){
-      product = productSaved;
       onSuccess();
+      saveHistoric(product.nome, 'ADD');
     }else{
       onFail('Erro ao adicionar o produto');
     }
@@ -85,8 +87,8 @@ class ProductStockModel extends Model{
     }
 
     if(productUpdated != null && stockUpdated){
-      product = productUpdated;
       onSuccess();
+      saveHistoric(product.descricao, 'UPDATE');
     }else{
       onFail('Erro ao atualizar o produto');
     }
@@ -100,6 +102,7 @@ class ProductStockModel extends Model{
 
     if(productDelete != null && updatedCountStockTotalProducts != null){
       onSuccess();
+      saveHistoric(product.nome, 'DELETE');
     }else{
       onFail('Erro ao deletar o produto');
     }
@@ -153,6 +156,17 @@ class ProductStockModel extends Model{
 
     this.priceStock = sumPrice;
     setState();
+  }
+
+  void saveHistoric(String nameProduct, String action) async{
+    Historic historic = Historic(
+      name: nameProduct,
+      date: DateTime.now().toString(),
+      type: 'PRODUTO',
+      action: action
+    );
+
+    await HistoricRepository.instance.save(historic);
   }
   
 }
