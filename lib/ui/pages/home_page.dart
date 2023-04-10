@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   void initState(){
     super.initState();
     _tabController = TabController(initialIndex: 0, length: 4, vsync: this);
-    // StockModel.of(context).fetch('todos');
+    StockModel.of(context).fetch('todos');
   }
 
   _reloadData(){
