@@ -9,6 +9,7 @@ import 'package:estok_app_natalia_francisca/repository/local/historic_repository
 import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/login_page.dart';
 import 'package:estok_app_natalia_francisca/ui/pages/stock_page.dart';
+import 'package:estok_app_natalia_francisca/ui/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -48,7 +49,7 @@ class _MyAppState extends State<MyApp> {
                     
                   ),
                     debugShowCheckedModeBanner: false,
-                  home: LoginPage()
+                  home: SplashScreen()
               ),
             ),
         ),
