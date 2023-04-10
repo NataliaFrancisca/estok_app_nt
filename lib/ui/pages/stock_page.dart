@@ -281,7 +281,7 @@ class _StockPageState extends State<StockPage> with StockStatusValidator {
 
   void deleteStock(){
     StockModel.of(context).deleteStock(
-      widget._stock.id,
+      widget._stock,
        onSuccess: (){
         Message.onSuccess(
           scaffoldKey: _scaffoldKey,
