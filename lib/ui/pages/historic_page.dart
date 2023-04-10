@@ -1,11 +1,9 @@
 import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/models/user_model.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/perfil_page.dart';
+import 'package:estok_app_natalia_francisca/entities/historic.dart';
+import 'package:estok_app_natalia_francisca/models/historic_model.dart';
 import 'package:estok_app_natalia_francisca/ui/tile/historic_tile.dart';
-import 'package:estok_app_natalia_francisca/ui/utils/logout_function.dart';
 import 'package:estok_app_natalia_francisca/ui/widgets/custom_bottom_nav_bar.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_navigation_drawer.dart';
+import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -37,22 +35,36 @@ class _HistoricPageState extends State<HistoricPage> {
       bottomNavigationBar: CustomBottomNavBar('historic_page'),
     
       body: Center(
-        child: 
-          ScopedModelDescendant(
-            builder: (BuildContext context, Widget child, UserModel userModel){
-              return Center(
-                child: ListView(
-                  children: [
-                    SizedBox(height: 20),
-                    HistoricTile(),
-                    HistoricTile(),
-                  ],
-                )
-              );
-            }
-          )
+        child: ScopedModelDescendant<HistoricModel>(builder: (context, child, historicModel) {
+            return FutureBuilder(
+              future: historicModel.getList(),
+              builder: (BuildContext context, AsyncSnapshot<List<Historic>> snapshot) {
+                switch(snapshot.connectionState){
+                  case ConnectionState.none:
+                    return Message.alert("Não foi possivel obter os dados necessários");
+                  case ConnectionState.waiting:
+                    return Message.loading(context, color: Colors.red);
+                  default:
+                    if(snapshot.hasError){
+                      return Message.alert("Não foi possível obter os dados do servidor");
+                    } else if(!snapshot.hasData){
+                      return Message.alert("Não foi possivel obter os dados dos carros");
+                    } else if(snapshot.data.isEmpty){
+                      return Message.alert("Nenhum carro encontrado", fontSize: 16);
+                    }else {
+                      return ListView.builder(
+                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return HistoricTile(snapshot.data[index]);
+                        }
+                      );
+                    }
+                }
+              },
+            );
+          })
       )
-      
     );
   }
 }
