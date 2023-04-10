@@ -1,8 +1,11 @@
+import 'package:estok_app_natalia_francisca/entities/historic.dart';
 import 'package:estok_app_natalia_francisca/entities/product.dart';
 import 'package:estok_app_natalia_francisca/entities/stock.dart';
+import 'package:estok_app_natalia_francisca/models/historic_model.dart';
 import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
 import 'package:estok_app_natalia_francisca/repository/api/product_api.dart';
 import 'package:estok_app_natalia_francisca/repository/api/stock_api.dart';
+import 'package:estok_app_natalia_francisca/repository/local/historic_repository.dart';
 import 'package:estok_app_natalia_francisca/repository/local/stock_repository.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/filter_tab.dart';
 import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
@@ -41,21 +44,23 @@ class StockModel extends Model{
 
   void addStock(Stock stock, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
     Stock stockSave = await StockApi.instance.save(stock);
-
+    
     if(stockSave != null){
       onSuccess();
+      saveHistoric(stock.descricao, 'ADD');
     }else{
       onFail('Algo deu errado ao tentar salvar o estoque');
     }
   }
 
-  void deleteStock(int id, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
-    deleteAllProductFromStock(id);
-    var stockDelete = await StockApi.instance.delete(id);
-    List<Product> listProductsDeleted = await ProductApi.instance.getAll(id);
+  void deleteStock(Stock stock, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{
+    deleteAllProductFromStock(stock.id);
+    var stockDelete = await StockApi.instance.delete(stock.id);
+    List<Product> listProductsDeleted = await ProductApi.instance.getAll(stock.id);
 
     if(stockDelete != null && listProductsDeleted.isEmpty){
       onSuccess();
+      saveHistoric(stock.descricao, 'DELETE');
     }else{
       onFail("Algo de eraddo na hora de deletar o estoque");
     }
@@ -66,6 +71,7 @@ class StockModel extends Model{
 
     if(stockUpdated != null){
       onSuccess();
+      saveHistoric(stock.descricao, 'UPDATE');
     }else{
       onFail('Algo de errado ao tentar atualizar o estoque');
     }
@@ -83,6 +89,18 @@ class StockModel extends Model{
     listProducts.forEach((Product product) {
       ProductApi.instance.delete(product);
     });
+  }
+
+
+  void saveHistoric(String nameStock, String action) async{
+    Historic historic = Historic(
+      name: nameStock,
+      date: DateTime.now().toString(),
+      type: 'ESTOQUE',
+      action: action
+    );
+
+    await HistoricRepository.instance.save(historic);
   }
 
 
