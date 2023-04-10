@@ -280,7 +280,7 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
           message: 'Estoque atualizado com sucesso',
           seconds: 2,
           onPop: (value){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
           }
         );
         return;
