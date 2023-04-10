@@ -16,6 +16,14 @@ class HistoricModel extends Model{
 
   Future<List<Historic>> getList() async{
     List<Historic> list = await HistoricRepository.instance.list();
+    list.sort((a,b) => b.date.compareTo(a.date));
     return list;
+  }
+
+  void checkHistoricLength() async{
+    int length = await HistoricRepository.instance.length();
+    if(length == 100){
+      await HistoricRepository.instance.delete();
+    }
   }
 }
