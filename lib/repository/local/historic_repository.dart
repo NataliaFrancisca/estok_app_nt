@@ -16,8 +16,6 @@ class HistoricRepository{
   static final String typeColumn = "type";
   static final String actionColumn = "action";
 
-  // static final String isFavoriteColumn = "is_favorite";
-
   static final HistoricRepository instance = HistoricRepository._();
   HistoricRepository._();
 
@@ -37,20 +35,9 @@ class HistoricRepository{
     return historic;
   }
 
-  Future<Historic> update(Historic historic) async{
+  Future<void> delete() async{
     Database db = await database;
-    historic.id = await db.update(tableName,
-      historic.toJson(),
-      where: "$idColumn = ?",
-      whereArgs: [historic.id]
-    );
-    return historic;
-  }
-
-  Future<int> delete(int id) async{
-    Database db = await database;
-    int idDeleted = await db.delete(tableName, where: "$idColumn = ?", whereArgs: [id]);
-    return idDeleted;
+    await db.delete(tableName);
   }
 
   Future<List<Historic>> list() async{
@@ -63,26 +50,14 @@ class HistoricRepository{
     return historic;
   }
 
-  Future<Historic> findById(int id) async{
+  Future<int> length() async{
     Database db = await database;
-    List<Map> maps = await db.query(tableName, 
-      columns: [idColumn, nameColumn, dateColumn, typeColumn, actionColumn],
-      where: '$idColumn = ?',
-      whereArgs: [id]
-    );
-
-    if(maps.length > 0){
-      return Historic.fromJson(maps.first);
-    }else{
-      return null;
-    }
+    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tableName'));
   }
 
   Future<void> close() async{
     Database db = await database;
     db.close();
   }
-
-
 
 }
