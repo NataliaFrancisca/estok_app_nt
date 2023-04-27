@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/entities/product.dart';
-import 'package:estok_app_natalia_francisca/entities/stock.dart';
-import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/new_product_page.dart';
-import 'package:estok_app_natalia_francisca/ui/utils/format_money.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_product_updater.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
+import 'package:estok_app/colors.dart';
+import 'package:estok_app/entities/product.dart';
+import 'package:estok_app/entities/stock.dart';
+import 'package:estok_app/models/product_stock_model.dart';
+import 'package:estok_app/ui/pages/new_product_page.dart';
+import 'package:estok_app/ui/utils/format_money.dart';
+import 'package:estok_app/ui/widgets/custom_product_updater.dart';
+import 'package:estok_app/ui/widgets/message.dart';
 
 class ProductTile extends StatefulWidget {
   final Product _product;

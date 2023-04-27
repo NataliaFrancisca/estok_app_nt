@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app/colors.dart';
 
 class CustomLabelInput extends StatefulWidget {
   final String labelText;

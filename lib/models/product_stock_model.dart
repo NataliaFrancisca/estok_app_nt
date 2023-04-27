@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:estok_app_natalia_francisca/entities/historic.dart';
-import 'package:estok_app_natalia_francisca/entities/product.dart';
-import 'package:estok_app_natalia_francisca/entities/stock.dart';
-import 'package:estok_app_natalia_francisca/repository/api/product_api.dart';
-import 'package:estok_app_natalia_francisca/repository/api/stock_api.dart';
-import 'package:estok_app_natalia_francisca/repository/api/upload_api.dart';
-import 'package:estok_app_natalia_francisca/repository/local/historic_repository.dart';
-import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
+import 'package:estok_app/entities/historic.dart';
+import 'package:estok_app/entities/product.dart';
+import 'package:estok_app/entities/stock.dart';
+import 'package:estok_app/repository/api/product_api.dart';
+import 'package:estok_app/repository/api/stock_api.dart';
+import 'package:estok_app/repository/api/upload_api.dart';
+import 'package:estok_app/repository/local/historic_repository.dart';
+import 'package:estok_app/ui/utils/format_date.dart';
 
 
 class ProductStockModel extends Model{

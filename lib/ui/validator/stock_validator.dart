@@ -1,4 +1,4 @@
-import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
+import 'package:estok_app/ui/utils/format_date.dart';
 
 final messageIsEmpty = (String inputLabel) => 'O campo $inputLabel precisa ser preenchido';
 

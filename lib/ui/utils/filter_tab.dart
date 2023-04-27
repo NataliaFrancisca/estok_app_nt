@@ -1,5 +1,5 @@
-import 'package:estok_app_natalia_francisca/entities/stock.dart';
-import 'package:estok_app_natalia_francisca/repository/local/stock_repository.dart';
+import 'package:estok_app/entities/stock.dart';
+import 'package:estok_app/repository/local/stock_repository.dart';
 
 Future<List<Stock>> filterDataTab(String type) async{
   List<Stock> filteredData = [];

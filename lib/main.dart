@@ -1,12 +1,11 @@
+import 'package:estok_app/colors.dart';
+import 'package:estok_app/models/historic_model.dart';
+import 'package:estok_app/models/product_stock_model.dart';
+import 'package:estok_app/models/stock_model.dart';
+import 'package:estok_app/models/user_model.dart';
+import 'package:estok_app/ui/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/models/historic_model.dart';
-import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
-import 'package:estok_app_natalia_francisca/models/stock_model.dart';
-import 'package:estok_app_natalia_francisca/models/user_model.dart';
-import 'package:estok_app_natalia_francisca/ui/screen/splash_screen.dart';
-
 
 void main() async {
   runApp(MyApp(UserModel(), StockModel(), ProductStockModel(), HistoricModel()));

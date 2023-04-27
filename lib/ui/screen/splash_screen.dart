@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/login_page.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
+import 'package:estok_app/colors.dart';
+import 'package:estok_app/ui/pages/login_page.dart';
+import 'package:estok_app/ui/widgets/message.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

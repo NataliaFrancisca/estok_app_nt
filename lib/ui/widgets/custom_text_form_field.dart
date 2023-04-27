@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app/colors.dart';
 
 final borderStyle = (Color borderColor) => OutlineInputBorder(
   borderSide: BorderSide(width: 1, color: borderColor),
@@ -46,6 +46,8 @@ class CustomTextFormField extends StatefulWidget {
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
   bool _obscureText = true;
 
+  final customTextFormField = GlobalKey<FormFieldState>();
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -54,6 +56,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       validator: widget.validator,
       controller: widget.controller,
       maxLines: widget.maxLines,
+      key: customTextFormField,
 
       onFieldSubmitted: (term){
         _fieldFocusChange(context, widget.previousFocus, widget.nextFocus);

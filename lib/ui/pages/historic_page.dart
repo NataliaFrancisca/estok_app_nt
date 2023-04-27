@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/entities/historic.dart';
-import 'package:estok_app_natalia_francisca/models/historic_model.dart';
-import 'package:estok_app_natalia_francisca/ui/tile/historic_tile.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_bottom_nav_bar.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
+import 'package:estok_app/colors.dart';
+import 'package:estok_app/entities/historic.dart';
+import 'package:estok_app/models/historic_model.dart';
+import 'package:estok_app/ui/tile/historic_tile.dart';
+import 'package:estok_app/ui/widgets/custom_bottom_nav_bar.dart';
+import 'package:estok_app/ui/widgets/message.dart';
 
 class HistoricPage extends StatefulWidget {
   @override

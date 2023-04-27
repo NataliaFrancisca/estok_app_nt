@@ -1,4 +1,4 @@
-import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app/colors.dart';
 
 class StockStatusValidator{
   Map status(int stock){

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/entities/product.dart';
+import 'package:estok_app/colors.dart';
+import 'package:estok_app/entities/product.dart';
 
 class CustomProductUpdater extends StatefulWidget {
   final Product product;

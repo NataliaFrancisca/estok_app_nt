@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:estok_app_natalia_francisca/entities/user.dart';
+import 'package:estok_app/entities/user.dart';
 
 class UserRepository{
   static final UserRepository instance = UserRepository._();

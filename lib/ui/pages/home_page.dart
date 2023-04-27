@@ -1,11 +1,14 @@
+import 'package:estok_app/models/stock_model.dart';
+import 'package:estok_app/ui/tabs/em_aviso_tab.dart';
+import 'package:estok_app/ui/tabs/em_estoque_tab.dart';
+import 'package:estok_app/ui/tabs/em_falta_tab.dart';
+import 'package:estok_app/ui/tabs/todos_tab.dart';
 import 'package:flutter/material.dart';
-import 'package:estok_app_natalia_francisca/models/historic_model.dart';
-import 'package:estok_app_natalia_francisca/models/stock_model.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/new_stock_page.dart';
-import 'package:estok_app_natalia_francisca/ui/tabs/home_tab.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_bottom_nav_bar.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_navigation_drawer.dart';
-import 'package:estok_app_natalia_francisca/colors.dart';
+import 'package:estok_app/models/historic_model.dart';
+import 'package:estok_app/ui/pages/new_stock_page.dart';
+import 'package:estok_app/ui/widgets/custom_bottom_nav_bar.dart';
+import 'package:estok_app/ui/widgets/custom_navigation_drawer.dart';
+import 'package:estok_app/colors.dart';
 
 class HomePage extends StatefulWidget {
   final bool isMenuNavigator;
@@ -22,16 +25,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   void initState(){
     super.initState();
 
-    if(!widget.isMenuNavigator){
-      StockModel.of(context).fetch('todos');
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if(widget.isMenuNavigator == false){
+        StockModel.of(context).fetch('todos');
+      }
+      HistoricModel.of(context).checkHistoricLength();
+    });
 
-    HistoricModel.of(context).checkHistoricLength();
     _tabController = TabController(initialIndex: 0, length: 4, vsync: this);
   }
 
   _reloadData(){
     StockModel.of(context).fetch('todos');
+    _tabController.animateTo(0);
   }
 
   Widget build(BuildContext context) {
@@ -81,12 +87,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
       ),
 
       body: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
           children: [
-            HomeTab('todos'),
-            HomeTab('Em estoque'),
-            HomeTab('Em aviso'),
-            HomeTab('Em falta'),
+            TodosTab(),
+            EmEstoqueTab(),
+            EmAvisoTab(),
+            EmFaltaTab()
           ],
       ),
 

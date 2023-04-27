@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:estok_app_natalia_francisca/entities/stock.dart';
-import 'package:estok_app_natalia_francisca/entities/user.dart';
-import 'package:estok_app_natalia_francisca/repository/local/user_repository.dart';
+import 'package:estok_app/entities/stock.dart';
+import 'package:estok_app/entities/user.dart';
+import 'package:estok_app/repository/local/user_repository.dart';
 
 class StockApi{
   static final StockApi instance = StockApi._();

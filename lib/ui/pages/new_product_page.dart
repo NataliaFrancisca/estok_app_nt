@@ -3,15 +3,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:io';
 
-import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/entities/product.dart';
-import 'package:estok_app_natalia_francisca/entities/stock.dart';
-import 'package:estok_app_natalia_francisca/models/product_stock_model.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/stock_page.dart';
-import 'package:estok_app_natalia_francisca/ui/validator/product_validator.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_label_input.field.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
+import 'package:estok_app/colors.dart';
+import 'package:estok_app/entities/product.dart';
+import 'package:estok_app/entities/stock.dart';
+import 'package:estok_app/models/product_stock_model.dart';
+import 'package:estok_app/ui/pages/stock_page.dart';
+import 'package:estok_app/ui/validator/product_validator.dart';
+import 'package:estok_app/ui/widgets/custom_label_input.field.dart';
+import 'package:estok_app/ui/widgets/custom_text_form_field.dart';
+import 'package:estok_app/ui/widgets/message.dart';
 
 class NewProductPage extends StatefulWidget {
   final Stock stock;

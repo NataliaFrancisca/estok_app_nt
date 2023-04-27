@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/entities/historic.dart';
-import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
+import 'package:estok_app/colors.dart';
+import 'package:estok_app/entities/historic.dart';
+import 'package:estok_app/ui/utils/format_date.dart';
 
 
 class HistoricTile extends StatelessWidget {

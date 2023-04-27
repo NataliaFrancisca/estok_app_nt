@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/models/user_model.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/historic_page.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/perfil_page.dart';
-import 'package:estok_app_natalia_francisca/ui/utils/logout_function.dart';
+import 'package:estok_app/colors.dart';
+import 'package:estok_app/models/user_model.dart';
+import 'package:estok_app/ui/pages/historic_page.dart';
+import 'package:estok_app/ui/pages/home_page.dart';
+import 'package:estok_app/ui/pages/perfil_page.dart';
+import 'package:estok_app/ui/utils/logout_function.dart';
 
 final TextStyle customNavigationTextStyle = TextStyle(
   fontWeight: FontWeight.w400,

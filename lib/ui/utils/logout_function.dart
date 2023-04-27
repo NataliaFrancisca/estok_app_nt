@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:estok_app_natalia_francisca/models/user_model.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/login_page.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
+import 'package:estok_app/models/user_model.dart';
+import 'package:estok_app/ui/pages/login_page.dart';
+import 'package:estok_app/ui/widgets/message.dart';
 
 void logOut(context, GlobalKey scaffolKey){
   UserModel.of(context).logOut(

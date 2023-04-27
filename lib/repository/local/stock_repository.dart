@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:estok_app_natalia_francisca/entities/stock.dart';
+import 'package:estok_app/entities/stock.dart';
 
 class StockRepository{
   static final StockRepository instance = StockRepository._();

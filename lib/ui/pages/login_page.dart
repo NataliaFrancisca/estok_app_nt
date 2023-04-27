@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/models/user_model.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
-import 'package:estok_app_natalia_francisca/ui/validator/login_validator.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
+import 'package:estok_app/colors.dart';
+import 'package:estok_app/models/user_model.dart';
+import 'package:estok_app/ui/widgets/message.dart';
+import 'package:estok_app/ui/widgets/custom_text_form_field.dart';
+import 'package:estok_app/ui/validator/login_validator.dart';
+import 'package:estok_app/ui/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:estok_app_natalia_francisca/entities/historic.dart';
-import 'package:estok_app_natalia_francisca/entities/product.dart';
-import 'package:estok_app_natalia_francisca/entities/stock.dart';
-import 'package:estok_app_natalia_francisca/repository/api/product_api.dart';
-import 'package:estok_app_natalia_francisca/repository/api/stock_api.dart';
-import 'package:estok_app_natalia_francisca/repository/local/historic_repository.dart';
-import 'package:estok_app_natalia_francisca/repository/local/stock_repository.dart';
-import 'package:estok_app_natalia_francisca/ui/utils/filter_tab.dart';
+import 'package:estok_app/entities/historic.dart';
+import 'package:estok_app/entities/product.dart';
+import 'package:estok_app/entities/stock.dart';
+import 'package:estok_app/repository/api/product_api.dart';
+import 'package:estok_app/repository/api/stock_api.dart';
+import 'package:estok_app/repository/local/historic_repository.dart';
+import 'package:estok_app/repository/local/stock_repository.dart';
+import 'package:estok_app/ui/utils/filter_tab.dart';
 
 
 class StockModel extends Model{
@@ -22,7 +22,7 @@ class StockModel extends Model{
     notifyListeners();
   }
 
-  Future<void> fetch(type) async{
+  Future<List<Stock>> fetch(type) async{
     List<Stock> listStock = await StockApi.instance.getAll();
 
     if(listStock != null){
@@ -30,7 +30,8 @@ class StockModel extends Model{
       print("Estoque salvo com sucesso");
     }
 
-    filterStock(type);
+    Future<List<Stock>> filteredData = filterDataTab(type);
+    return filteredData;
   }
 
   void addStock(Stock stock, {VoidCallback onSuccess, VoidCallback onFail(String message)}) async{

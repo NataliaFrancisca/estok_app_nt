@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:estok_app_natalia_francisca/entities/stock.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/stock_page.dart';
-import 'package:estok_app_natalia_francisca/ui/validator/stock_status_validator.dart';
+import 'package:estok_app/entities/stock.dart';
+import 'package:estok_app/ui/pages/stock_page.dart';
+import 'package:estok_app/ui/validator/stock_status_validator.dart';
 
 class StockTile extends StatelessWidget with StockStatusValidator{
   final Stock _stock;

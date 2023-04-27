@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:estok_app_natalia_francisca/entities/product.dart';
-import 'package:estok_app_natalia_francisca/entities/user.dart';
-import 'package:estok_app_natalia_francisca/repository/local/user_repository.dart';
+import 'package:estok_app/entities/product.dart';
+import 'package:estok_app/entities/user.dart';
+import 'package:estok_app/repository/local/user_repository.dart';
 
 class ProductApi{
   static final ProductApi instance  = ProductApi._();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/historic_page.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
-import 'package:estok_app_natalia_francisca/ui/pages/perfil_page.dart';
+import 'package:estok_app/colors.dart';
+import 'package:estok_app/ui/pages/historic_page.dart';
+import 'package:estok_app/ui/pages/home_page.dart';
+import 'package:estok_app/ui/pages/perfil_page.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   final String _currentPage;
@@ -28,10 +28,26 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       HistoricPage(),
       PerfilPage()
     ];
-    
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context){
-      return _pagesOptions[index];
-    }));
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (BuildContext context, Animation animation, Animation secondaryAnimation) {
+          return _pagesOptions[index];
+        },
+
+        transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+          return new SlideTransition(
+            position: new Tween<Offset>(
+              begin: const Offset(0.0, 0.1),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        }
+      ),
+
+    (Route route) => false);
   }
 
   @override

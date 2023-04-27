@@ -2,8 +2,8 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 import 'dart:convert' as convert;
 import 'dart:io';
-import 'package:estok_app_natalia_francisca/entities/user.dart';
-import 'package:estok_app_natalia_francisca/repository/local/user_repository.dart';
+import 'package:estok_app/entities/user.dart';
+import 'package:estok_app/repository/local/user_repository.dart';
 
 class UploadApi{
   static final UploadApi instance = UploadApi._();
@@ -14,8 +14,6 @@ class UploadApi{
       String url = 'http://54.90.203.92/images/upload';
       User user = await UserRepository.instance.getUsuario();
       String authorization = 'Bearer ${user.token}';
-
-      print(authorization);
 
       List<int> imageBytes = file.readAsBytesSync();
       String imageBase64 = convert.base64Encode(imageBytes);

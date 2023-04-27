@@ -1,15 +1,14 @@
-import 'package:estok_app_natalia_francisca/ui/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-import 'package:estok_app_natalia_francisca/colors.dart';
-import 'package:estok_app_natalia_francisca/entities/stock.dart';
-import 'package:estok_app_natalia_francisca/models/stock_model.dart';
-import 'package:estok_app_natalia_francisca/ui/utils/format_date.dart';
-import 'package:estok_app_natalia_francisca/ui/validator/stock_validator.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_date_input_field.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_label_input.field.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/custom_text_form_field.dart';
-import 'package:estok_app_natalia_francisca/ui/widgets/message.dart';
+import 'package:estok_app/colors.dart';
+import 'package:estok_app/entities/stock.dart';
+import 'package:estok_app/models/stock_model.dart';
+import 'package:estok_app/ui/utils/format_date.dart';
+import 'package:estok_app/ui/validator/stock_validator.dart';
+import 'package:estok_app/ui/widgets/custom_date_input_field.dart';
+import 'package:estok_app/ui/widgets/custom_label_input.field.dart';
+import 'package:estok_app/ui/widgets/custom_text_form_field.dart';
+import 'package:estok_app/ui/widgets/message.dart';
 
 class NewStockPage extends StatefulWidget {
   final Stock stockEdit;
@@ -70,9 +69,7 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
             icon: Icon(Icons.arrow_back),
             color: AppColors.primaryColor,
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                return HomePage();
-            } ));  
+              widget.isEditStock ? Navigator.pop(context) : Navigator.pop(context, 'refresh');
             },       
           ),
           actions: [],
@@ -274,7 +271,7 @@ class _NewStockPageState extends State<NewStockPage> with StockValidator{
           message: 'Estoque atualizado com sucesso',
           seconds: 2,
           onPop: (value){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+            Navigator.pop(context, 'refresh');
           }
         );
         return;

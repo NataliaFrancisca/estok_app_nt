@@ -1,4 +1,4 @@
-import 'package:estok_app_natalia_francisca/repository/local/historic_repository.dart';
+import 'package:estok_app/repository/local/historic_repository.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
