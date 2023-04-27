@@ -1,16 +1,20 @@
-# estok_app_natalia_francisca
+# 🏪Estok App
 
-A new Flutter project.
+#### Aplicativo de controle de estoque de produtos
 
-## Getting Started
+##### **Esse aplicativo foi desenvolvido como trabalho final para um processo seletivo de Trainee.**
 
-This project is a starting point for a Flutter application.
+## Funcionalidades
 
-A few resources to get you started if this is your first Flutter project:
+- Login e Logout de funcionário
+- CRUD de estoque e produtos
+- Adicionar foto ou tirar foto
+- Filtro dos estoques (em estoque, em aviso, em falta)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Stack utilizada
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter;
+- Dart;
+- API para os processos de CRUD, login, logout e salvar as fotos;
+
+
