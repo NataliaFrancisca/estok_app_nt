@@ -1,6 +1,6 @@
 # 🏪Estok App
 
-#### Aplicativo de controle de estoque de produtos
+#### Aplicativo de controle de estoque e produtos
 
 ##### **Esse aplicativo foi desenvolvido como trabalho final para um processo seletivo de Trainee.**
 
